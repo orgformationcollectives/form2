@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>استمارة مسؤول السّاحة</title>
+  <style>
+    @font-face { font-family: 'Thmanyah'; src: url('fonts/thmanyahsans-Regular.otf') format('opentype'); font-weight: 400; }
+    @font-face { font-family: 'Thmanyah'; src: url('fonts/thmanyahsans-Medium.otf')  format('opentype'); font-weight: 500; }
+    @font-face { font-family: 'Thmanyah'; src: url('fonts/thmanyahsans-Bold.otf')    format('opentype'); font-weight: 700; }
+    @font-face { font-family: 'Thmanyah'; src: url('fonts/thmanyahsans-Light.otf')   format('opentype'); font-weight: 300; }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      color-scheme: light;
+      --brand:       #185FA5;
+      --brand-light: #E6F1FB;
+      --brand-dark:  #114880;
+      --bg:          #F5F4F2;
+      --surface:     #FFFFFF;
+      --border:      rgba(0,0,0,0.09);
+      --border-s:    rgba(0,0,0,0.14);
+      --text-1:      #1A1A1A;
+      --text-2:      #555550;
+      --text-3:      #999994;
+      --danger:      #D03B3B;
+    }
+
+    html, body {
+      min-height: 100vh; background: var(--bg);
+      font-family: 'Thmanyah', 'Tajawal', Arial, sans-serif;
+      color: var(--text-1); direction: rtl;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .page { max-width: 680px; margin: 0 auto; padding: 1.5rem 1rem 4rem; }
+
+    .back-link {
+      display: inline-flex; align-items: center; gap: 5px;
+      font-size: 13px; color: var(--text-2); text-decoration: none;
+      margin-bottom: 1.25rem; font-weight: 500;
+    }
+    .back-link svg { width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 2; }
+    .back-link:hover { color: var(--brand); }
+
+    .form-header { text-align: center; margin-bottom: 2rem; }
+    .form-icon {
+      width: 60px; height: 60px; background: var(--brand);
+      border-radius: 16px; display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 1rem; box-shadow: 0 4px 18px rgba(24,95,165,0.28);
+    }
+    .form-icon svg { width: 28px; height: 28px; fill: none; stroke: #fff; stroke-width: 2; }
+    .form-header h1 { font-size: 19px; font-weight: 700; color: var(--brand); margin-bottom: 2px; }
+    .form-header p  { font-size: 13px; color: var(--text-3); }
+
+    .card {
+      background: var(--surface); border: 1.5px solid var(--border);
+      border-radius: 16px; padding: 1.25rem 1.25rem 1rem; margin-bottom: 1rem;
+    }
+    .card-title {
+      font-size: 13px; font-weight: 700; color: var(--text-2); letter-spacing: 0.03em;
+      margin-bottom: 1rem; padding-bottom: 8px; border-bottom: 1px solid var(--border);
+    }
+
+    .field { margin-bottom: 1rem; }
+    .field:last-child { margin-bottom: 0; }
+    .field-row { display: grid; gap: 12px; grid-template-columns: 1fr 1fr; }
+    @media (max-width: 480px) { .field-row { grid-template-columns: 1fr; } }
+    .field-label { display: block; font-size: 12.5px; font-weight: 600; color: var(--text-2); margin-bottom: 5px; }
+    .opt-tag { font-weight: 400; color: var(--text-3); }
+    .field-value {
+      width: 100%; padding: 10px 12px;
+      border: 1.5px solid var(--border-s); border-radius: 9px;
+      background: var(--bg); color: var(--text-1);
+      font-family: inherit; font-size: 14px; direction: rtl;
+      outline: none; transition: border-color 0.15s;
+    }
+    .field-value:focus { border-color: var(--brand); }
+    .field-value::placeholder { color: var(--text-3); }
+    select.field-value { cursor: pointer; }
+    .field-value[type="date"] { direction: ltr; text-align: right; }
+    .field-value[type="time"] { direction: ltr; text-align: right; }
+    .field-value[readonly] { opacity: 0.7; cursor: default; }
+    .elapsed-display { font-size:11px; color:var(--text-3); text-align:center; margin-top:4px; min-height:16px; }
+
+    .weekday-tag {
+      display: inline-block; background: var(--brand-light); color: var(--brand);
+      font-size: 12px; font-weight: 700; border-radius: 6px; padding: 3px 10px; margin-top: 4px;
+    }
+
+    /* Lesson cards */
+    .works-header { display: flex; align-items: center; margin-bottom: 10px; }
+    .works-title  { font-size: 14px; font-weight: 700; }
+
+    .lesson-card {
+      background: var(--surface); border: 1.5px solid var(--border);
+      border-radius: 14px; margin-bottom: 10px; overflow: hidden;
+    }
+    .lesson-head {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 10px 14px; background: var(--brand-light); gap: 10px;
+    }
+    .lesson-num { font-size: 12px; font-weight: 700; color: var(--brand); }
+    .lesson-btns { display: flex; gap: 6px; }
+    .lc-btn {
+      padding: 4px 10px; border-radius: 7px; border: 1.5px solid transparent;
+      font-family: inherit; font-size: 12px; font-weight: 600; cursor: pointer;
+      display: flex; align-items: center; gap: 4px;
+      transition: background 0.13s, color 0.13s;
+    }
+    .lc-btn svg { width: 12px; height: 12px; stroke: currentColor; fill: none; stroke-width: 2; }
+    .lc-btn-dup { background: var(--surface); color: var(--brand);  border-color: var(--brand); }
+    .lc-btn-del { background: var(--surface); color: var(--danger); border-color: var(--danger); }
+    .lc-btn-dup:hover { background: var(--brand);  color: #fff; }
+    .lc-btn-del:hover { background: var(--danger); color: #fff; }
+
+    .lesson-body { padding: 12px 14px; }
+
+    .add-lesson-btn {
+      width: 100%; padding: 11px; background: none;
+      border: 1.5px dashed var(--brand); border-radius: 10px;
+      color: var(--brand); font-family: inherit; font-size: 14px; font-weight: 700;
+      cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 6px;
+      transition: background 0.13s; margin-bottom: 1.25rem;
+    }
+    .add-lesson-btn:hover { background: var(--brand-light); }
+    .add-lesson-btn svg { width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 2.5; }
+
+    .submit-btn {
+      width: 100%; padding: 14px; background: var(--brand); color: #fff;
+      border: none; border-radius: 11px; font-family: inherit;
+      font-size: 15px; font-weight: 700; cursor: pointer;
+      transition: background 0.15s;
+    }
+    .submit-btn:hover    { background: var(--brand-dark); }
+    .submit-btn:disabled { opacity: 0.6; cursor: not-allowed; }
+
+    .status-msg {
+      display: none; text-align: center; font-size: 13px; font-weight: 600;
+      padding: 10px; border-radius: 8px; margin-top: 10px;
+    }
+
+    .modal-overlay {
+      display: none; position: fixed; inset: 0;
+      background: rgba(0,0,0,0.45); z-index: 100;
+      align-items: center; justify-content: center; padding: 1.5rem;
+    }
+    .modal-overlay.open { display: flex; }
+    .modal {
+      background: var(--surface); border-radius: 18px;
+      padding: 2rem 1.75rem; width: 100%; max-width: 360px;
+      box-shadow: 0 8px 40px rgba(0,0,0,0.18); text-align: center;
+    }
+    .modal-icon {
+      width: 52px; height: 52px; background: #FFF8E6;
+      border-radius: 14px; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem;
+    }
+    .modal-icon svg { width: 26px; height: 26px; stroke: #B45309; fill: none; stroke-width: 2; }
+    .modal-title { font-size: 17px; font-weight: 700; margin-bottom: 6px; }
+    .modal-sub   { font-size: 13px; color: var(--text-2); margin-bottom: 1.5rem; }
+    .modal-btns  { display: flex; gap: 10px; }
+    .modal-no  {
+      flex: 1; padding: 12px; border: 1.5px solid var(--border-s);
+      border-radius: 10px; background: none; font-family: inherit;
+      font-size: 14px; font-weight: 600; cursor: pointer; color: var(--text-2);
+    }
+    .modal-yes {
+      flex: 1; padding: 12px; background: var(--brand); color: #fff;
+      border: none; border-radius: 10px; font-family: inherit;
+      font-size: 14px; font-weight: 700; cursor: pointer;
+    }
+    .modal-yes:hover { background: var(--brand-dark); }
+
+    /* Receipt overlay */
+    .receipt-overlay { display:none; position:fixed; inset:0; z-index:800; background:rgba(0,0,0,0.55); align-items:center; justify-content:center; direction:rtl; }
+    .receipt-overlay.open { display:flex; }
+    .receipt-card { background:#fff; border-radius:16px; padding:28px 24px; max-width:420px; width:90%; max-height:82vh; overflow-y:auto; }
+    .receipt-icon { width:52px; height:52px; background:#EEF7E6; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:26px; margin:0 auto 12px; color:#3B6D11; }
+    .receipt-title { font-size:18px; font-weight:700; text-align:center; margin-bottom:3px; }
+    .receipt-sub { font-size:12px; color:#888; text-align:center; margin-bottom:18px; }
+    .receipt-section { margin-bottom:12px; }
+    .receipt-section-title { font-size:11px; font-weight:700; color:#888; margin-bottom:6px; letter-spacing:.04em; }
+    .receipt-item { font-size:13px; padding:7px 10px; background:#F5F4F2; border-radius:7px; margin-bottom:4px; }
+    .receipt-item strong { display:block; font-size:12px; color:#444; margin-bottom:2px; }
+    .receipt-home-btn { width:100%; background:var(--brand); color:#fff; border:none; border-radius:10px; padding:12px; font-size:15px; font-weight:700; cursor:pointer; font-family:inherit; margin-top:8px; }
+    .receipt-home-btn:hover { opacity:.9; }
+  </style>
+</head>
+<body>
+<div class="page">
+  <a class="back-link" href="portal.html">
+    <svg viewBox="0 0 24 24"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+    العودة إلى البوابة
+  </a>
+
+  <header class="form-header">
+    <div class="form-icon">
+      <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/><path d="m9 11 2 2 4-4"/></svg>
+    </div>
+    <h1>استمارة مسؤول السّاحة</h1>
+    <p>يُرجى تعبئة جميع الحقول بدقة</p>
+  </header>
+
+  <!-- Basic info -->
+  <div class="card">
+    <div class="card-title">المعلومات الأساسيّة</div>
+    <div class="field">
+      <label class="field-label">اسم المسؤول</label>
+      <input class="field-value" type="text" id="responderName" readonly />
+    </div>
+    <div class="field-row">
+      <div class="field">
+        <label class="field-label">اسم السّاحة</label>
+        <select class="field-value" id="sahahSelect">
+          <option value="">— اختر الساحة —</option>
+          <option value="ساحة (1)">ساحة (1)</option>
+          <option value="ساحة (2)">ساحة (2)</option>
+        </select>
+      </div>
+      <div class="field">
+        <label class="field-label">تاريخ اليوم</label>
+        <input class="field-value" type="date" id="workDate" oninput="onDateChange()" />
+        <div id="weekdayTag" class="weekday-tag" style="display:none"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Lessons -->
+  <div class="works-header"><span class="works-title">الدّروس</span></div>
+  <div id="lessonList"></div>
+  <button class="add-lesson-btn" onclick="addLesson()">
+    <svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>
+    إضافة درس
+  </button>
+
+  <button class="submit-btn" onclick="showConfirm()">إرسال الاستمارة</button>
+  <div class="status-msg" id="statusMsg"></div>
+</div>
+
+<div class="modal-overlay" id="confirmModal">
+  <div class="modal">
+    <div class="modal-icon">
+      <svg viewBox="0 0 24 24"><path d="M12 9v4m0 4h.01M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/></svg>
+    </div>
+    <div class="modal-title">هل راجعت البيانات قبل الاستمرار؟</div>
+    <div class="modal-sub">تأكد من صحة جميع المعلومات المدخلة قبل الإرسال.</div>
+    <div class="modal-btns">
+      <button class="modal-no"  onclick="closeConfirm()">لا، مراجعة</button>
+      <button class="modal-yes" onclick="confirmSubmit()">نعم، إرسال</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  const SHEET_URL = "https://script.google.com/macros/s/AKfycbxoQ_WHVfd9FyzDHoLzZrTCoUOYQts66YuBNTdlEiKOe1Vem8kzpeF7qN96xM5_Q2eE/exec";
+  const FORM_ID   = "مسؤول السّاحة";
+
+  const _user = JSON.parse(sessionStorage.getItem('user') || 'null');
+  if (!_user) window.location.href = 'index.html';
+  const RESPONDER_NAME = _user ? _user.full_name : '';
+  const USER_ID        = _user ? String(_user.user_id) : '';
+  document.getElementById('responderName').value = RESPONDER_NAME;
+
+  const WEEKDAYS = ['الأحد','الإثنين','الثلاثاء','الأربعاء','الخميس','الجمعة','السبت'];
+
+  function onDateChange() {
+    const val = document.getElementById('workDate').value;
+    const tag = document.getElementById('weekdayTag');
+    if (!val) { tag.style.display = 'none'; return; }
+    tag.textContent = WEEKDAYS[new Date(val).getDay()];
+    tag.style.display = 'inline-block';
+  }
+
+  let lessonCounter = 0;
+  function toAr(n) { return n.toString().replace(/\d/g, d => '٠١٢٣٤٥٦٧٨٩'[d]); }
+  function esc(s)  { return String(s||'').replace(/"/g,'&quot;'); }
+
+  /* Time validator: returns error string or null */
+  function checkTime(start, end, label) {
+    if (!start || !end) return null;
+    if (end <= start) return `وقت الانتهاء يجب أن يكون بعد وقت البدء${label ? ' — ' + label : ''}`;
+    return null;
+  }
+
+  const _HW=['','ساعة','ساعتان','ثلاث ساعات','أربع ساعات','خمس ساعات','ست ساعات','سبع ساعات','ثماني ساعات','تسع ساعات','عشر ساعات','إحدى عشرة ساعة','اثنتا عشرة ساعة'];
+  const _MW=['','دقيقة','دقيقتان','ثلاث دقائق','أربع دقائق','خمس دقائق','ست دقائق','سبع دقائق','ثماني دقائق','تسع دقائق','عشر دقائق','إحدى عشرة دقيقة','اثنتا عشرة دقيقة','ثلاث عشرة دقيقة','أربع عشرة دقيقة','خمس عشرة دقيقة','ست عشرة دقيقة','سبع عشرة دقيقة','ثماني عشرة دقيقة','تسع عشرة دقيقة'];
+  const _MT=['','عشر','عشرون','ثلاثون','أربعون','خمسون'];
+  const _MO=['','واحدة','اثنتان','ثلاث','أربع','خمس','ست','سبع','ثماني','تسع'];
+  function arabicMinutes(n){if(!n)return'';if(n<20)return _MW[n];const t=Math.floor(n/10),o=n%10;return o?_MO[o]+' و'+_MT[t]+' دقيقة':_MT[t]+' دقيقة';}
+  function arabicHours(n){if(!n)return'';return n<=12?_HW[n]:n+' ساعة';}
+  function arabicElapsed(s,e){if(!s||!e)return'';const[sh,sm]=s.split(':').map(Number),[eh,em]=e.split(':').map(Number);if(isNaN(sh)||isNaN(em))return'';const tot=(eh*60+em)-(sh*60+sm);if(tot<=0)return'';const h=Math.floor(tot/60),m=tot%60;const p=[];if(h)p.push(arabicHours(h));if(m)p.push(arabicMinutes(m));return p.join(' و');}
+
+  function addLesson(clone) {
+    lessonCounter++;
+    const id = lessonCounter;
+    const div = document.createElement('div');
+    div.className = 'lesson-card';
+    div.dataset.lid = id;
+    div.innerHTML = `
+      <div class="lesson-head">
+        <span class="lesson-num">درس ${toAr(id)}</span>
+        <div class="lesson-btns">
+          <button class="lc-btn lc-btn-dup" onclick="duplicateLesson(${id})">
+            <svg viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>نسخ
+          </button>
+          <button class="lc-btn lc-btn-del" onclick="removeLesson(${id})">
+            <svg viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6m5 0V4h4v2"/></svg>حذف
+          </button>
+        </div>
+      </div>
+      <div class="lesson-body">
+        <div class="field-row">
+          <div class="field">
+            <label class="field-label">وقت البدء</label>
+            <input class="field-value" type="time" id="lstart_${id}" value="${esc(clone&&clone.start||'')}" />
+          </div>
+          <div class="field">
+            <label class="field-label">وقت الانتهاء</label>
+            <input class="field-value" type="time" id="lend_${id}" value="${esc(clone&&clone.end||'')}" />
+          </div>
+        </div>
+        <div class="elapsed-display" id="lelapsed_${id}"></div>
+        <div class="field">
+          <label class="field-label">اسم الكتاب</label>
+          <input class="field-value" type="text" id="lbook_${id}" placeholder="أدخل اسم الكتاب..."
+            value="${esc(clone&&clone.book||'')}" />
+        </div>
+        <div class="field-row">
+          <div class="field">
+            <label class="field-label">عدد الحضور <span class="opt-tag">(اختياري)</span></label>
+            <input class="field-value" type="number" id="lpresent_${id}" placeholder="0" min="0"
+              value="${esc(clone&&clone.present||'')}" />
+          </div>
+          <div class="field">
+            <label class="field-label">عدد الغياب <span class="opt-tag">(اختياري)</span></label>
+            <input class="field-value" type="number" id="labsent_${id}" placeholder="0" min="0"
+              value="${esc(clone&&clone.absent||'')}" />
+          </div>
+        </div>
+        <div class="field">
+          <label class="field-label">ملاحظات <span class="opt-tag">(اختياري)</span></label>
+          <input class="field-value" type="text" id="lnotes_${id}" placeholder="ملاحظات إضافية..."
+            value="${esc(clone&&clone.notes||'')}" />
+        </div>
+      </div>`;
+    document.getElementById('lessonList').appendChild(div);
+    const _updEl5 = () => {
+      const s = document.getElementById(`lstart_${id}`)?.value;
+      const e = document.getElementById(`lend_${id}`)?.value;
+      const el = document.getElementById(`lelapsed_${id}`);
+      if (el) { const t = arabicElapsed(s,e); el.textContent = t ? 'الوقت المستغرق: '+t : ''; }
+    };
+    document.getElementById(`lstart_${id}`)?.addEventListener('change', _updEl5);
+    document.getElementById(`lend_${id}`)?.addEventListener('change', _updEl5);
+    if (clone && (clone.start || clone.end)) _updEl5();
+    refreshNums();
+  }
+
+  function removeLesson(id) {
+    const el = document.querySelector(`.lesson-card[data-lid="${id}"]`);
+    if (el) el.remove();
+    refreshNums();
+  }
+
+  function duplicateLesson(id) { addLesson(collectLesson(id)); }
+
+  function refreshNums() {
+    document.querySelectorAll('.lesson-card').forEach((c, i) => {
+      c.querySelector('.lesson-num').textContent = 'درس ' + toAr(i + 1);
+    });
+  }
+
+  function collectLesson(id) {
+    const g = sid => (document.getElementById(sid)||{}).value||'';
+    return { start: g(`lstart_${id}`), end: g(`lend_${id}`), book: g(`lbook_${id}`),
+             present: g(`lpresent_${id}`), absent: g(`labsent_${id}`), notes: g(`lnotes_${id}`) };
+  }
+
+  function showConfirm() {
+    const sahah = document.getElementById('sahahSelect').value;
+    if (!sahah) { showStatus('⚠️ يرجى اختيار اسم الساحة', '#D03B3B'); return; }
+    const date  = document.getElementById('workDate').value;
+    if (!date)  { showStatus('⚠️ يرجى اختيار تاريخ اليوم', '#D03B3B'); return; }
+    const cards = [...document.querySelectorAll('.lesson-card')];
+    if (!cards.length) { showStatus('⚠️ يرجى إضافة درس واحد على الأقل', '#D03B3B'); return; }
+
+    // Time validation
+    for (const c of cards) {
+      const lid   = +c.dataset.lid;
+      const label = c.querySelector('.lesson-num').textContent;
+      const start = document.getElementById(`lstart_${lid}`).value;
+      const end   = document.getElementById(`lend_${lid}`).value;
+      if (!start) { showStatus(`⚠️ يرجى إدخال وقت البدء في ${label}`, '#D03B3B'); return; }
+      if (!end)   { showStatus(`⚠️ يرجى إدخال وقت الانتهاء في ${label}`, '#D03B3B'); return; }
+      const err   = checkTime(start, end, label);
+      if (err) { showStatus('⚠️ ' + err, '#D03B3B'); return; }
+    }
+
+    document.getElementById('confirmModal').classList.add('open');
+  }
+  function closeConfirm() { document.getElementById('confirmModal').classList.remove('open'); }
+
+  async function confirmSubmit() {
+    closeConfirm();
+    const btn = document.querySelector('.submit-btn');
+    btn.disabled = true;
+    showStatus('⏳ جاري الإرسال...', 'var(--text-2)');
+
+    const date    = document.getElementById('workDate').value;
+    const weekday = WEEKDAYS[new Date(date).getDay()];
+    const sahah   = document.getElementById('sahahSelect').value;
+    const lessons = [...document.querySelectorAll('.lesson-card')].map(c => collectLesson(+c.dataset.lid));
+
+    try {
+      await fetch(SHEET_URL, {
+        method: 'POST', mode: 'no-cors',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ formId: FORM_ID, timestamp: new Date().toLocaleString('ar-EG'),
+          responder: RESPONDER_NAME, userId: USER_ID,
+          submissionId: 'sid_' + Date.now() + '_' + Math.random().toString(36).slice(2,6),
+          ...(IS_EDIT_MODE ? { editMode: true } : {}),
+          sahah, date, weekday, lessons }),
+      });
+      showStatus('✅ تم الإرسال بنجاح!', '#0F6E56');
+      showReceipt(`${weekday}، ${date.split('-').reverse().join('/')} — ${FORM_ID}`, buildReceipt(sahah, lessons));
+    } catch {
+      showStatus('❌ حدث خطأ. حاول مجددًا.', '#D03B3B');
+      btn.disabled = false;
+    }
+  }
+
+  function showReceipt(sub, bodyHtml) {
+    document.getElementById('receiptSub').textContent = sub;
+    document.getElementById('receiptBody').innerHTML = bodyHtml;
+    document.getElementById('receiptOverlay').classList.add('open');
+  }
+  function buildReceipt(sahah, lessons) {
+    let h = `<div class="receipt-section"><div class="receipt-section-title">الساحة</div><div class="receipt-item">${sahah}</div></div>`;
+    if (lessons.length) {
+      h += `<div class="receipt-section"><div class="receipt-section-title">الدروس (${lessons.length})</div>`;
+      lessons.forEach(l => {
+        const time = l.start && l.end ? `${l.start}–${l.end}` : '';
+        const att  = (l.present || l.absent) ? `حضر ${l.present||0} / غاب ${l.absent||0}` : '';
+        h += `<div class="receipt-item"><strong>${l.book||''}</strong>${[time, att].filter(Boolean).join(' · ')}</div>`;
+      });
+      h += `</div>`;
+    }
+    return h;
+  }
+
+  function showStatus(msg, color) {
+    const el = document.getElementById('statusMsg');
+    el.textContent = msg; el.style.color = color;
+    el.style.background = color.startsWith('#') ? color + '18' : '#F5F4F2';
+    el.style.display = 'block';
+  }
+
+  let IS_EDIT_MODE = false;
+  (async () => {
+    const _p = new URLSearchParams(location.search);
+    if (_p.get('editMode')) {
+      IS_EDIT_MODE = true;
+      const editDate = _p.get('editDate') || '';
+      const dateEl = document.getElementById('workDate');
+      dateEl.value = editDate; dateEl.readOnly = true;
+      onDateChange();
+      document.querySelector('.submit-btn').textContent = 'حفظ التعديلات';
+      try {
+        const url = `${SHEET_URL}?action=submissionData&form=${encodeURIComponent(FORM_ID)}&userId=${encodeURIComponent(USER_ID)}&date=${encodeURIComponent(editDate)}`;
+        const res  = await fetch(url, { redirect: 'follow' });
+        const json = await res.json();
+        if (json.status === 'ok' && json.data && json.data.lessons) {
+          if (json.data.sahah) document.getElementById('sahahSelect').value = json.data.sahah;
+          document.getElementById('lessonList').innerHTML = '';
+          json.data.lessons.forEach(l => addLesson(l));
+          if (!json.data.lessons.length) addLesson();
+        } else { addLesson(); }
+      } catch { addLesson(); }
+    } else {
+      document.getElementById('workDate').value = new Date().toISOString().slice(0, 10);
+      onDateChange();
+      addLesson();
+    }
+  })();
+</script>
+<div id="receiptOverlay" class="receipt-overlay">
+  <div class="receipt-card">
+    <div class="receipt-icon">✓</div>
+    <div class="receipt-title">تم الإرسال بنجاح</div>
+    <div class="receipt-sub" id="receiptSub"></div>
+    <div id="receiptBody"></div>
+    <button class="receipt-home-btn" onclick="window.location.href='portal.html'">العودة للرئيسية</button>
+  </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>استمارة مسؤول المعهد</title>
+  <style>
+    @font-face { font-family: 'Thmanyah'; src: url('fonts/thmanyahsans-Regular.otf') format('opentype'); font-weight: 400; }
+    @font-face { font-family: 'Thmanyah'; src: url('fonts/thmanyahsans-Medium.otf')  format('opentype'); font-weight: 500; }
+    @font-face { font-family: 'Thmanyah'; src: url('fonts/thmanyahsans-Bold.otf')    format('opentype'); font-weight: 700; }
+    @font-face { font-family: 'Thmanyah'; src: url('fonts/thmanyahsans-Light.otf')   format('opentype'); font-weight: 300; }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      color-scheme: light;
+      --brand:       #3B6D11;
+      --brand-light: #EAF3DE;
+      --brand-dark:  #2C5209;
+      --bg:          #F5F4F2;
+      --surface:     #FFFFFF;
+      --border:      rgba(0,0,0,0.09);
+      --border-s:    rgba(0,0,0,0.14);
+      --text-1:      #1A1A1A;
+      --text-2:      #555550;
+      --text-3:      #999994;
+      --danger:      #D03B3B;
+    }
+
+    html, body {
+      min-height: 100vh; background: var(--bg);
+      font-family: 'Thmanyah', 'Tajawal', Arial, sans-serif;
+      color: var(--text-1); direction: rtl;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .page { max-width: 680px; margin: 0 auto; padding: 1.5rem 1rem 4rem; }
+
+    .back-link {
+      display: inline-flex; align-items: center; gap: 5px;
+      font-size: 13px; color: var(--text-2); text-decoration: none;
+      margin-bottom: 1.25rem; font-weight: 500;
+    }
+    .back-link svg { width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 2; }
+    .back-link:hover { color: var(--brand); }
+
+    .form-header { text-align: center; margin-bottom: 2rem; }
+    .form-icon {
+      width: 60px; height: 60px; background: var(--brand);
+      border-radius: 16px; display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 1rem; box-shadow: 0 4px 18px rgba(59,109,17,0.28);
+    }
+    .form-icon svg { width: 28px; height: 28px; fill: none; stroke: #fff; stroke-width: 2; }
+    .form-header h1 { font-size: 19px; font-weight: 700; color: var(--brand); margin-bottom: 2px; }
+    .form-header p  { font-size: 13px; color: var(--text-3); }
+
+    .card {
+      background: var(--surface); border: 1.5px solid var(--border);
+      border-radius: 16px; padding: 1.25rem 1.25rem 1rem; margin-bottom: 1rem;
+    }
+    .card-title {
+      font-size: 13px; font-weight: 700; color: var(--text-2); letter-spacing: 0.03em;
+      margin-bottom: 1rem; padding-bottom: 8px; border-bottom: 1px solid var(--border);
+    }
+
+    .field { margin-bottom: 1rem; }
+    .field:last-child { margin-bottom: 0; }
+    .field-row { display: grid; gap: 12px; grid-template-columns: 1fr 1fr; }
+    @media (max-width: 480px) { .field-row { grid-template-columns: 1fr; } }
+    .field-label { display: block; font-size: 12.5px; font-weight: 600; color: var(--text-2); margin-bottom: 5px; }
+    .opt-tag { font-weight: 400; color: var(--text-3); }
+    .field-value {
+      width: 100%; padding: 10px 12px;
+      border: 1.5px solid var(--border-s); border-radius: 9px;
+      background: var(--bg); color: var(--text-1);
+      font-family: inherit; font-size: 14px; direction: rtl;
+      outline: none; transition: border-color 0.15s;
+    }
+    .field-value:focus { border-color: var(--brand); }
+    .field-value::placeholder { color: var(--text-3); }
+    select.field-value { cursor: pointer; }
+    .field-value[type="date"] { direction: ltr; text-align: right; }
+    .field-value[readonly] { opacity: 0.7; cursor: default; }
+    .f-textarea {
+      width: 100%; padding: 10px 12px;
+      border: 1.5px solid var(--border-s); border-radius: 9px;
+      background: var(--bg); color: var(--text-1);
+      font-family: inherit; font-size: 14px; direction: rtl;
+      outline: none; resize: vertical; min-height: 90px; transition: border-color 0.15s;
+    }
+    .f-textarea:focus { border-color: var(--brand); }
+    .f-textarea::placeholder { color: var(--text-3); }
+
+    .weekday-tag {
+      display: inline-block; background: var(--brand-light); color: var(--brand);
+      font-size: 12px; font-weight: 700; border-radius: 6px; padding: 3px 10px; margin-top: 4px;
+    }
+
+    /* Mustawa cards */
+    .works-header { display: flex; align-items: center; margin-bottom: 10px; }
+    .works-title  { font-size: 14px; font-weight: 700; }
+
+    .mustawa-card {
+      background: var(--surface); border: 1.5px solid var(--border);
+      border-radius: 14px; margin-bottom: 10px; overflow: hidden;
+    }
+    .mustawa-head {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 10px 14px; background: var(--brand-light); gap: 10px;
+    }
+    .mustawa-num { font-size: 12px; font-weight: 700; color: var(--brand); }
+    .mustawa-btns { display: flex; gap: 6px; }
+    .mc-btn {
+      padding: 4px 10px; border-radius: 7px; border: 1.5px solid transparent;
+      font-family: inherit; font-size: 12px; font-weight: 600; cursor: pointer;
+      display: flex; align-items: center; gap: 4px;
+      transition: background 0.13s, color 0.13s;
+    }
+    .mc-btn svg { width: 12px; height: 12px; stroke: currentColor; fill: none; stroke-width: 2; }
+    .mc-btn-dup { background: var(--surface); color: var(--brand);  border-color: var(--brand); }
+    .mc-btn-del { background: var(--surface); color: var(--danger); border-color: var(--danger); }
+    .mc-btn-dup:hover { background: var(--brand);  color: #fff; }
+    .mc-btn-del:hover { background: var(--danger); color: #fff; }
+
+    .mustawa-body { padding: 12px 14px; }
+
+    /* Hissa cards (inside mustawa) */
+    .hissa-list { margin-top: 10px; }
+    .hissa-card {
+      background: var(--bg); border: 1.5px solid var(--border);
+      border-radius: 10px; margin-bottom: 8px; overflow: hidden;
+    }
+    .hissa-head {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 7px 12px; background: rgba(59,109,17,0.06); gap: 8px;
+    }
+    .hissa-num { font-size: 11px; font-weight: 700; color: var(--brand); }
+    .hissa-btns { display: flex; gap: 5px; }
+    .hc-btn {
+      padding: 3px 8px; border-radius: 6px; border: 1.5px solid transparent;
+      font-family: inherit; font-size: 11px; font-weight: 600; cursor: pointer;
+      display: flex; align-items: center; gap: 3px;
+      transition: background 0.13s, color 0.13s;
+    }
+    .hc-btn svg { width: 11px; height: 11px; stroke: currentColor; fill: none; stroke-width: 2; }
+    .hc-btn-dup { background: var(--surface); color: var(--brand);  border-color: var(--brand); }
+    .hc-btn-del { background: var(--surface); color: var(--danger); border-color: var(--danger); }
+    .hc-btn-dup:hover { background: var(--brand);  color: #fff; }
+    .hc-btn-del:hover { background: var(--danger); color: #fff; }
+
+    .hissa-body { padding: 10px 12px; }
+    .hissa-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 8px; }
+    @media (max-width: 480px) { .hissa-grid { grid-template-columns: 1fr; } }
+
+    .add-hissa-btn {
+      width: 100%; padding: 8px; background: none;
+      border: 1.5px dashed var(--brand); border-radius: 8px;
+      color: var(--brand); font-family: inherit; font-size: 13px; font-weight: 700;
+      cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 5px;
+      transition: background 0.13s; margin-top: 8px;
+    }
+    .add-hissa-btn:hover { background: var(--brand-light); }
+    .add-hissa-btn svg { width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 2.5; }
+
+    .add-mustawa-btn {
+      width: 100%; padding: 11px; background: none;
+      border: 1.5px dashed var(--brand); border-radius: 10px;
+      color: var(--brand); font-family: inherit; font-size: 14px; font-weight: 700;
+      cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 6px;
+      transition: background 0.13s; margin-bottom: 1.25rem;
+    }
+    .add-mustawa-btn:hover { background: var(--brand-light); }
+    .add-mustawa-btn svg { width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 2.5; }
+
+    .submit-btn {
+      width: 100%; padding: 14px; background: var(--brand); color: #fff;
+      border: none; border-radius: 11px; font-family: inherit;
+      font-size: 15px; font-weight: 700; cursor: pointer;
+      transition: background 0.15s;
+    }
+    .submit-btn:hover    { background: var(--brand-dark); }
+    .submit-btn:disabled { opacity: 0.6; cursor: not-allowed; }
+
+    .status-msg {
+      display: none; text-align: center; font-size: 13px; font-weight: 600;
+      padding: 10px; border-radius: 8px; margin-top: 10px;
+    }
+
+    /* Confirm modal */
+    .modal-overlay {
+      display: none; position: fixed; inset: 0;
+      background: rgba(0,0,0,0.45); z-index: 100;
+      align-items: center; justify-content: center; padding: 1.5rem;
+    }
+    .modal-overlay.open { display: flex; }
+    .modal {
+      background: var(--surface); border-radius: 18px;
+      padding: 2rem 1.75rem; width: 100%; max-width: 360px;
+      box-shadow: 0 8px 40px rgba(0,0,0,0.18); text-align: center;
+    }
+    .modal-icon {
+      width: 52px; height: 52px; background: #FFF8E6;
+      border-radius: 14px; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem;
+    }
+    .modal-icon svg { width: 26px; height: 26px; stroke: #B45309; fill: none; stroke-width: 2; }
+    .modal-title { font-size: 17px; font-weight: 700; margin-bottom: 6px; }
+    .modal-sub   { font-size: 13px; color: var(--text-2); margin-bottom: 1.5rem; }
+    .modal-btns  { display: flex; gap: 10px; }
+    .modal-no  {
+      flex: 1; padding: 12px; border: 1.5px solid var(--border-s);
+      border-radius: 10px; background: none; font-family: inherit;
+      font-size: 14px; font-weight: 600; cursor: pointer; color: var(--text-2);
+    }
+    .modal-yes {
+      flex: 1; padding: 12px; background: var(--brand); color: #fff;
+      border: none; border-radius: 10px; font-family: inherit;
+      font-size: 14px; font-weight: 700; cursor: pointer;
+    }
+    .modal-yes:hover { background: var(--brand-dark); }
+
+    /* Receipt overlay */
+    .receipt-overlay { display:none; position:fixed; inset:0; z-index:800; background:rgba(0,0,0,0.55); align-items:center; justify-content:center; direction:rtl; }
+    .receipt-overlay.open { display:flex; }
+    .receipt-card { background:#fff; border-radius:16px; padding:28px 24px; max-width:420px; width:90%; max-height:82vh; overflow-y:auto; }
+    .receipt-icon { width:52px; height:52px; background:#EEF7E6; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:26px; margin:0 auto 12px; color:#3B6D11; }
+    .receipt-title { font-size:18px; font-weight:700; text-align:center; margin-bottom:3px; }
+    .receipt-sub { font-size:12px; color:#888; text-align:center; margin-bottom:18px; }
+    .receipt-section { margin-bottom:12px; }
+    .receipt-section-title { font-size:11px; font-weight:700; color:#888; margin-bottom:6px; letter-spacing:.04em; }
+    .receipt-item { font-size:13px; padding:7px 10px; background:#F5F4F2; border-radius:7px; margin-bottom:4px; }
+    .receipt-item strong { display:block; font-size:12px; color:#444; margin-bottom:2px; }
+    .receipt-home-btn { width:100%; background:var(--brand); color:#fff; border:none; border-radius:10px; padding:12px; font-size:15px; font-weight:700; cursor:pointer; font-family:inherit; margin-top:8px; }
+    .receipt-home-btn:hover { opacity:.9; }
+  </style>
+</head>
+<body>
+<div class="page">
+  <a class="back-link" href="portal.html">
+    <svg viewBox="0 0 24 24"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+    العودة إلى البوابة
+  </a>
+
+  <header class="form-header">
+    <div class="form-icon">
+      <svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/><path d="M12 12v4m-2-2h4"/></svg>
+    </div>
+    <h1>استمارة مسؤول المعهد</h1>
+    <p>يُرجى تعبئة جميع الحقول بدقة</p>
+  </header>
+
+  <!-- Basic info -->
+  <div class="card">
+    <div class="card-title">المعلومات الأساسيّة</div>
+    <div class="field">
+      <label class="field-label">اسم المسؤول</label>
+      <input class="field-value" type="text" id="responderName" readonly />
+    </div>
+    <div class="field-row">
+      <div class="field">
+        <label class="field-label">الساحة</label>
+        <select class="field-value" id="sahahSelect">
+          <option value="">— اختر الساحة —</option>
+          <option value="ساحة (1)">ساحة (1)</option>
+          <option value="ساحة (2)">ساحة (2)</option>
+        </select>
+      </div>
+      <div class="field">
+        <label class="field-label">تاريخ اليوم</label>
+        <input class="field-value" type="date" id="workDate" oninput="onDateChange()" />
+        <div id="weekdayTag" class="weekday-tag" style="display:none"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mustawayat -->
+  <div class="works-header"><span class="works-title">المستويات</span></div>
+  <div id="mustawaList"></div>
+  <button class="add-mustawa-btn" onclick="addMustawa()">
+    <svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>
+    إضافة مستوى
+  </button>
+
+  <!-- General notes -->
+  <div class="card">
+    <div class="card-title">أبرز الملاحظات خلال اليوم</div>
+    <div class="field">
+      <textarea class="f-textarea" id="generalNotes" placeholder="اكتب أبرز الملاحظات خلال هذا اليوم..."></textarea>
+    </div>
+  </div>
+
+  <!-- Recommendations -->
+  <div class="card">
+    <div class="card-title">التّوصيات</div>
+    <div class="field">
+      <textarea class="f-textarea" id="recommendations" placeholder="اكتب توصياتك..."></textarea>
+    </div>
+  </div>
+
+  <button class="submit-btn" onclick="showConfirm()">إرسال الاستمارة</button>
+  <div class="status-msg" id="statusMsg"></div>
+</div>
+
+<!-- Confirmation Modal -->
+<div class="modal-overlay" id="confirmModal">
+  <div class="modal">
+    <div class="modal-icon">
+      <svg viewBox="0 0 24 24"><path d="M12 9v4m0 4h.01M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/></svg>
+    </div>
+    <div class="modal-title">هل راجعت البيانات قبل الاستمرار؟</div>
+    <div class="modal-sub">تأكد من صحة جميع المعلومات المدخلة قبل الإرسال.</div>
+    <div class="modal-btns">
+      <button class="modal-no"  onclick="closeConfirm()">لا، مراجعة</button>
+      <button class="modal-yes" onclick="confirmSubmit()">نعم، إرسال</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  const SHEET_URL = "https://script.google.com/macros/s/AKfycbyx1sJwQM6-aQ8CgZ9TCPohsl7UXIpBR3ehDsMFpQHokE9msH6Mi7zw1BATQgNI1Lu2/exec";
+  const FORM_ID   = "مسؤول المعهد";
+
+  const _user = JSON.parse(sessionStorage.getItem('user') || 'null');
+  if (!_user) window.location.href = 'index.html';
+  const RESPONDER_NAME = _user ? _user.full_name : '';
+  const USER_ID        = _user ? String(_user.user_id) : '';
+  document.getElementById('responderName').value = RESPONDER_NAME;
+
+  const WEEKDAYS = ['الأحد','الإثنين','الثلاثاء','الأربعاء','الخميس','الجمعة','السبت'];
+
+  function onDateChange() {
+    const val = document.getElementById('workDate').value;
+    const tag = document.getElementById('weekdayTag');
+    if (!val) { tag.style.display = 'none'; return; }
+    tag.textContent = WEEKDAYS[new Date(val).getDay()];
+    tag.style.display = 'inline-block';
+  }
+
+  /* ── helpers ── */
+  let mustawaCounter = 0;
+  function toAr(n) { return n.toString().replace(/\d/g, d => '٠١٢٣٤٥٦٧٨٩'[d]); }
+  function esc(s)  { return String(s||'').replace(/"/g,'&quot;'); }
+
+  /* ─────────────────────────────────── MUSTAWA ── */
+  function addMustawa(clone) {
+    mustawaCounter++;
+    const mid = mustawaCounter;
+    const div = document.createElement('div');
+    div.className = 'mustawa-card';
+    div.dataset.mid = mid;
+    div.innerHTML = `
+      <div class="mustawa-head">
+        <span class="mustawa-num">مستوى ${toAr(mid)}</span>
+        <div class="mustawa-btns">
+          <button class="mc-btn mc-btn-dup" onclick="duplicateMustawa(${mid})">
+            <svg viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>نسخ
+          </button>
+          <button class="mc-btn mc-btn-del" onclick="removeMustawa(${mid})">
+            <svg viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6m5 0V4h4v2"/></svg>حذف
+          </button>
+        </div>
+      </div>
+      <div class="mustawa-body">
+        <div class="field">
+          <label class="field-label">اسم المستوى</label>
+          <input class="field-value" type="text" id="mname_${mid}" placeholder="مثال: المستوى الأوّل"
+            value="${esc(clone && clone.name || '')}" />
+        </div>
+        <div class="hissa-list" id="hissaList_${mid}"></div>
+        <button class="add-hissa-btn" onclick="addHissa(${mid})">
+          <svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>
+          إضافة حصّة
+        </button>
+      </div>`;
+    document.getElementById('mustawaList').appendChild(div);
+
+    if (clone && clone.hissas && clone.hissas.length) {
+      clone.hissas.forEach(h => addHissa(mid, h));
+    } else {
+      addHissa(mid);
+    }
+    refreshMusatawaNumbers();
+  }
+
+  function removeMustawa(mid) {
+    const el = document.querySelector(`.mustawa-card[data-mid="${mid}"]`);
+    if (el) el.remove();
+    refreshMusatawaNumbers();
+  }
+
+  function duplicateMustawa(mid) {
+    addMustawa(collectMustawa(mid));
+  }
+
+  function refreshMusatawaNumbers() {
+    document.querySelectorAll('.mustawa-card').forEach((c, i) => {
+      c.querySelector('.mustawa-num').textContent = 'مستوى ' + toAr(i + 1);
+    });
+  }
+
+  /* ─────────────────────────────────── HISSA ── */
+  let hissaCounters = {};
+
+  function addHissa(mid, clone) {
+    if (!hissaCounters[mid]) hissaCounters[mid] = 0;
+    hissaCounters[mid]++;
+    const hid = hissaCounters[mid];
+    const div = document.createElement('div');
+    div.className = 'hissa-card';
+    div.dataset.hid = hid;
+    div.innerHTML = `
+      <div class="hissa-head">
+        <span class="hissa-num">حصّة ${toAr(hid)}</span>
+        <div class="hissa-btns">
+          <button class="hc-btn hc-btn-dup" onclick="duplicateHissa(${mid},${hid})">
+            <svg viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>نسخ
+          </button>
+          <button class="hc-btn hc-btn-del" onclick="removeHissa(${mid},${hid})">
+            <svg viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6m5 0V4h4v2"/></svg>حذف
+          </button>
+        </div>
+      </div>
+      <div class="hissa-body">
+        <div class="field">
+          <label class="field-label">اسم المادّة</label>
+          <input class="field-value" type="text" id="hmaddah_${mid}_${hid}" placeholder="مثال: الفقه"
+            value="${esc(clone && clone.maddah || '')}" />
+        </div>
+        <div class="field">
+          <label class="field-label">من / إلى</label>
+          <input class="field-value" type="text" id="hfromto_${mid}_${hid}" placeholder="مثال: صفحة ١٢ — ٢٥ ..."
+            value="${esc(clone && clone.fromTo || '')}" />
+        </div>
+        <div class="hissa-grid">
+          <div class="field">
+            <label class="field-label">الحضور <span class="opt-tag">(اختياري)</span></label>
+            <input class="field-value" type="number" id="hpresent_${mid}_${hid}" placeholder="0" min="0"
+              value="${esc(clone && clone.present || '')}" />
+          </div>
+          <div class="field">
+            <label class="field-label">الغياب <span class="opt-tag">(اختياري)</span></label>
+            <input class="field-value" type="number" id="habsent_${mid}_${hid}" placeholder="0" min="0"
+              value="${esc(clone && clone.absent || '')}" />
+          </div>
+        </div>
+        <div class="field" style="margin-top:8px">
+          <label class="field-label">ملاحظات <span class="opt-tag">(اختياري)</span></label>
+          <input class="field-value" type="text" id="hnotes_${mid}_${hid}" placeholder="ملاحظات..."
+            value="${esc(clone && clone.notes || '')}" />
+        </div>
+      </div>`;
+    document.getElementById(`hissaList_${mid}`).appendChild(div);
+    refreshHissaNumbers(mid);
+  }
+
+  function removeHissa(mid, hid) {
+    const el = document.querySelector(`#hissaList_${mid} .hissa-card[data-hid="${hid}"]`);
+    if (el) el.remove();
+    refreshHissaNumbers(mid);
+  }
+
+  function duplicateHissa(mid, hid) {
+    addHissa(mid, collectHissa(mid, hid));
+  }
+
+  function refreshHissaNumbers(mid) {
+    const list = document.getElementById(`hissaList_${mid}`);
+    if (!list) return;
+    list.querySelectorAll('.hissa-card').forEach((c, i) => {
+      c.querySelector('.hissa-num').textContent = 'حصّة ' + toAr(i + 1);
+    });
+  }
+
+  function collectHissa(mid, hid) {
+    const g = id => (document.getElementById(id) || {}).value || '';
+    return {
+      maddah:  g(`hmaddah_${mid}_${hid}`),
+      fromTo:  g(`hfromto_${mid}_${hid}`),
+      present: g(`hpresent_${mid}_${hid}`),
+      absent:  g(`habsent_${mid}_${hid}`),
+      notes:   g(`hnotes_${mid}_${hid}`),
+    };
+  }
+
+  function collectMustawa(mid) {
+    const name = (document.getElementById(`mname_${mid}`) || {}).value || '';
+    const hissas = [...document.querySelectorAll(`#hissaList_${mid} .hissa-card`)]
+      .map(c => collectHissa(mid, +c.dataset.hid));
+    return { name, hissas };
+  }
+
+  /* ── Confirm / Submit ── */
+  function showConfirm() {
+    const sahah = document.getElementById('sahahSelect').value;
+    if (!sahah) { showStatus('⚠️ يرجى اختيار الساحة', '#D03B3B'); return; }
+    const date  = document.getElementById('workDate').value;
+    if (!date)  { showStatus('⚠️ يرجى اختيار تاريخ اليوم', '#D03B3B'); return; }
+    const cards = [...document.querySelectorAll('.mustawa-card')];
+    if (!cards.length) { showStatus('⚠️ يرجى إضافة مستوى واحد على الأقل', '#D03B3B'); return; }
+    const missingName = cards.some(c => !document.getElementById(`mname_${c.dataset.mid}`).value.trim());
+    if (missingName) { showStatus('⚠️ يرجى إدخال اسم المستوى لجميع المستويات', '#D03B3B'); return; }
+    document.getElementById('confirmModal').classList.add('open');
+  }
+  function closeConfirm() { document.getElementById('confirmModal').classList.remove('open'); }
+
+  async function confirmSubmit() {
+    closeConfirm();
+    const btn = document.querySelector('.submit-btn');
+    btn.disabled = true;
+    showStatus('⏳ جاري الإرسال...', 'var(--text-2)');
+
+    const date    = document.getElementById('workDate').value;
+    const weekday = WEEKDAYS[new Date(date).getDay()];
+    const sahah   = document.getElementById('sahahSelect').value;
+    const mustawayat = [...document.querySelectorAll('.mustawa-card')]
+      .map(c => collectMustawa(+c.dataset.mid));
+
+    try {
+      await fetch(SHEET_URL, {
+        method: 'POST', mode: 'no-cors',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          formId: FORM_ID,
+          timestamp: new Date().toLocaleString('ar-EG'),
+          responder: RESPONDER_NAME, userId: USER_ID,
+          submissionId: 'sid_' + Date.now() + '_' + Math.random().toString(36).slice(2,6),
+          ...(IS_EDIT_MODE ? { editMode: true } : {}),
+          sahah, date, weekday, mustawayat,
+          generalNotes:    document.getElementById('generalNotes').value.trim(),
+          recommendations: document.getElementById('recommendations').value.trim(),
+        }),
+      });
+      const gn = document.getElementById('generalNotes').value.trim();
+      const rc = document.getElementById('recommendations').value.trim();
+      showStatus('✅ تم الإرسال بنجاح!', '#0F6E56');
+      showReceipt(`${weekday}، ${date.split('-').reverse().join('/')} — ${FORM_ID}`, buildReceipt(sahah, mustawayat, gn, rc));
+    } catch {
+      showStatus('❌ حدث خطأ. حاول مجددًا.', '#D03B3B');
+      btn.disabled = false;
+    }
+  }
+
+  function showReceipt(sub, bodyHtml) {
+    document.getElementById('receiptSub').textContent = sub;
+    document.getElementById('receiptBody').innerHTML = bodyHtml;
+    document.getElementById('receiptOverlay').classList.add('open');
+  }
+  function buildReceipt(sahah, mustawayat, generalNotes, recommendations) {
+    let h = `<div class="receipt-section"><div class="receipt-section-title">الساحة</div><div class="receipt-item">${sahah}</div></div>`;
+    if (mustawayat.length) {
+      h += `<div class="receipt-section"><div class="receipt-section-title">المستويات (${mustawayat.length})</div>`;
+      mustawayat.forEach(m => {
+        const hissaCount = m.hissas ? m.hissas.length : 0;
+        h += `<div class="receipt-item"><strong>${m.name||''}</strong>${hissaCount ? hissaCount + ' حصّة' : ''}</div>`;
+      });
+      h += `</div>`;
+    }
+    if (generalNotes) h += `<div class="receipt-section"><div class="receipt-section-title">ملاحظات عامّة</div><div class="receipt-item">${generalNotes}</div></div>`;
+    if (recommendations) h += `<div class="receipt-section"><div class="receipt-section-title">توصيات</div><div class="receipt-item">${recommendations}</div></div>`;
+    return h;
+  }
+
+  function showStatus(msg, color) {
+    const el = document.getElementById('statusMsg');
+    el.textContent = msg; el.style.color = color;
+    el.style.background = color.startsWith('#') ? color + '18' : '#F5F4F2';
+    el.style.display = 'block';
+  }
+
+  // Init
+  let IS_EDIT_MODE = false;
+  (async () => {
+    const _p = new URLSearchParams(location.search);
+    if (_p.get('editMode')) {
+      IS_EDIT_MODE = true;
+      const editDate = _p.get('editDate') || '';
+      const dateEl = document.getElementById('workDate');
+      dateEl.value = editDate; dateEl.readOnly = true;
+      onDateChange();
+      document.querySelector('.submit-btn').textContent = 'حفظ التعديلات';
+      try {
+        const url = `${SHEET_URL}?action=submissionData&form=${encodeURIComponent(FORM_ID)}&userId=${encodeURIComponent(USER_ID)}&date=${encodeURIComponent(editDate)}`;
+        const res  = await fetch(url, { redirect: 'follow' });
+        const json = await res.json();
+        if (json.status === 'ok' && json.data && json.data.mustawayat) {
+          const d = json.data;
+          if (d.sahah)           document.getElementById('sahahSelect').value    = d.sahah;
+          if (d.generalNotes)    document.getElementById('generalNotes').value   = d.generalNotes;
+          if (d.recommendations) document.getElementById('recommendations').value = d.recommendations;
+          document.getElementById('mustawaList').innerHTML = '';
+          d.mustawayat.forEach(m => addMustawa(m));
+          if (!d.mustawayat.length) addMustawa();
+        } else { addMustawa(); }
+      } catch { addMustawa(); }
+    } else {
+      document.getElementById('workDate').value = new Date().toISOString().slice(0, 10);
+      onDateChange();
+      addMustawa();
+    }
+  })();
+</script>
+<div id="receiptOverlay" class="receipt-overlay">
+  <div class="receipt-card">
+    <div class="receipt-icon">✓</div>
+    <div class="receipt-title">تم الإرسال بنجاح</div>
+    <div class="receipt-sub" id="receiptSub"></div>
+    <div id="receiptBody"></div>
+    <button class="receipt-home-btn" onclick="window.location.href='portal.html'">العودة للرئيسية</button>
+  </div>
+</div>
+</body>
+</html>

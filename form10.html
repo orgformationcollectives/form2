@@ -1,0 +1,511 @@
+﻿<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>استمارة برنامج التشغيل</title>
+  <style>
+    @font-face { font-family: 'Thmanyah'; src: url('fonts/thmanyahsans-Regular.otf') format('opentype'); font-weight: 400; }
+    @font-face { font-family: 'Thmanyah'; src: url('fonts/thmanyahsans-Medium.otf')  format('opentype'); font-weight: 500; }
+    @font-face { font-family: 'Thmanyah'; src: url('fonts/thmanyahsans-Bold.otf')    format('opentype'); font-weight: 700; }
+    @font-face { font-family: 'Thmanyah'; src: url('fonts/thmanyahsans-Light.otf')   format('opentype'); font-weight: 300; }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      color-scheme: light;
+      --brand:       #993C1D;
+      --brand-light: #FAECE7;
+      --brand-dark:  #7A2E14;
+      --bg:          #F5F4F2;
+      --surface:     #FFFFFF;
+      --border:      rgba(0,0,0,0.09);
+      --border-s:    rgba(0,0,0,0.14);
+      --text-1:      #1A1A1A;
+      --text-2:      #555550;
+      --text-3:      #999994;
+      --danger:      #D03B3B;
+    }
+
+    html, body {
+      min-height: 100vh; background: var(--bg);
+      font-family: 'Thmanyah', 'Tajawal', Arial, sans-serif;
+      color: var(--text-1); direction: rtl;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .page { max-width: 680px; margin: 0 auto; padding: 1.5rem 1rem 4rem; }
+
+    .back-link {
+      display: inline-flex; align-items: center; gap: 5px;
+      font-size: 13px; color: var(--text-2); text-decoration: none;
+      margin-bottom: 1.25rem; font-weight: 500;
+    }
+    .back-link svg { width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 2; }
+    .back-link:hover { color: var(--brand); }
+
+    .form-header { text-align: center; margin-bottom: 2rem; }
+    .form-icon {
+      width: 60px; height: 60px; background: var(--brand);
+      border-radius: 16px; display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 1rem; box-shadow: 0 4px 18px rgba(153,60,29,0.28);
+    }
+    .form-icon svg { width: 28px; height: 28px; fill: none; stroke: #fff; stroke-width: 2; }
+    .form-header h1 { font-size: 19px; font-weight: 700; color: var(--brand); margin-bottom: 2px; }
+    .form-header p  { font-size: 13px; color: var(--text-3); }
+
+    .card {
+      background: var(--surface); border: 1.5px solid var(--border);
+      border-radius: 16px; padding: 1.25rem 1.25rem 1rem; margin-bottom: 1rem;
+    }
+    .card-title {
+      font-size: 13px; font-weight: 700; color: var(--text-2); letter-spacing: 0.03em;
+      margin-bottom: 1rem; padding-bottom: 8px; border-bottom: 1px solid var(--border);
+    }
+
+    .field { margin-bottom: 1rem; }
+    .field:last-child { margin-bottom: 0; }
+    .field-row { display: grid; gap: 12px; grid-template-columns: 1fr 1fr; }
+    @media (max-width: 480px) { .field-row { grid-template-columns: 1fr; } }
+    .field-label { display: block; font-size: 12.5px; font-weight: 600; color: var(--text-2); margin-bottom: 5px; }
+    .opt-tag { font-weight: 400; color: var(--text-3); }
+    .field-value {
+      width: 100%; padding: 10px 12px;
+      border: 1.5px solid var(--border-s); border-radius: 9px;
+      background: var(--bg); color: var(--text-1);
+      font-family: inherit; font-size: 14px; direction: rtl;
+      outline: none; transition: border-color 0.15s;
+    }
+    .field-value:focus { border-color: var(--brand); }
+    .field-value::placeholder { color: var(--text-3); }
+    select.field-value { cursor: pointer; }
+    .field-value[type="date"] { direction: ltr; text-align: right; }
+    .field-value[type="time"] { direction: ltr; text-align: right; }
+    .field-value[readonly] { opacity: 0.7; cursor: default; }
+    .elapsed-display { font-size:11px; color:var(--text-3); text-align:center; margin-top:4px; min-height:16px; }
+    .f-textarea {
+      width: 100%; padding: 10px 12px;
+      border: 1.5px solid var(--border-s); border-radius: 9px;
+      background: var(--bg); color: var(--text-1);
+      font-family: inherit; font-size: 14px; direction: rtl;
+      outline: none; resize: vertical; min-height: 90px; transition: border-color 0.15s;
+    }
+    .f-textarea:focus { border-color: var(--brand); }
+    .f-textarea::placeholder { color: var(--text-3); }
+
+    .weekday-tag {
+      display: inline-block; background: var(--brand-light); color: var(--brand);
+      font-size: 12px; font-weight: 700; border-radius: 6px; padding: 3px 10px; margin-top: 4px;
+    }
+
+    /* Work cards */
+    .works-header { display: flex; align-items: center; margin-bottom: 10px; }
+    .works-title  { font-size: 14px; font-weight: 700; }
+
+    .work-card {
+      background: var(--surface); border: 1.5px solid var(--border);
+      border-radius: 14px; margin-bottom: 10px; overflow: hidden;
+    }
+    .work-card-head {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 10px 14px; background: var(--brand-light); gap: 10px;
+    }
+    .work-card-num { font-size: 12px; font-weight: 700; color: var(--brand); }
+    .work-card-btns { display: flex; gap: 6px; }
+    .wc-btn {
+      padding: 4px 10px; border-radius: 7px; border: 1.5px solid transparent;
+      font-family: inherit; font-size: 12px; font-weight: 600; cursor: pointer;
+      display: flex; align-items: center; gap: 4px;
+      transition: background 0.13s, color 0.13s;
+    }
+    .wc-btn svg { width: 12px; height: 12px; stroke: currentColor; fill: none; stroke-width: 2; }
+    .wc-btn-dup { background: var(--surface); color: var(--brand);  border-color: var(--brand); }
+    .wc-btn-del { background: var(--surface); color: var(--danger); border-color: var(--danger); }
+    .wc-btn-dup:hover { background: var(--brand);  color: #fff; }
+    .wc-btn-del:hover { background: var(--danger); color: #fff; }
+
+    .work-card-body { padding: 12px 14px; }
+
+    .add-work-btn {
+      width: 100%; padding: 11px; background: none;
+      border: 1.5px dashed var(--brand); border-radius: 10px;
+      color: var(--brand); font-family: inherit; font-size: 14px; font-weight: 700;
+      cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 6px;
+      transition: background 0.13s; margin-bottom: 1.25rem;
+    }
+    .add-work-btn:hover { background: var(--brand-light); }
+    .add-work-btn svg { width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 2.5; }
+
+    .submit-btn {
+      width: 100%; padding: 14px; background: var(--brand); color: #fff;
+      border: none; border-radius: 11px; font-family: inherit;
+      font-size: 15px; font-weight: 700; cursor: pointer;
+      transition: background 0.15s;
+    }
+    .submit-btn:hover    { background: var(--brand-dark); }
+    .submit-btn:disabled { opacity: 0.6; cursor: not-allowed; }
+
+    .status-msg {
+      display: none; text-align: center; font-size: 13px; font-weight: 600;
+      padding: 10px; border-radius: 8px; margin-top: 10px;
+    }
+
+    /* Confirm modal */
+    .modal-overlay {
+      display: none; position: fixed; inset: 0;
+      background: rgba(0,0,0,0.45); z-index: 100;
+      align-items: center; justify-content: center; padding: 1.5rem;
+    }
+    .modal-overlay.open { display: flex; }
+    .modal {
+      background: var(--surface); border-radius: 18px;
+      padding: 2rem 1.75rem; width: 100%; max-width: 360px;
+      box-shadow: 0 8px 40px rgba(0,0,0,0.18); text-align: center;
+    }
+    .modal-icon {
+      width: 52px; height: 52px; background: #FFF8E6;
+      border-radius: 14px; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem;
+    }
+    .modal-icon svg { width: 26px; height: 26px; stroke: #B45309; fill: none; stroke-width: 2; }
+    .modal-title { font-size: 17px; font-weight: 700; margin-bottom: 6px; }
+    .modal-sub   { font-size: 13px; color: var(--text-2); margin-bottom: 1.5rem; }
+    .modal-btns  { display: flex; gap: 10px; }
+    .modal-no  {
+      flex: 1; padding: 12px; border: 1.5px solid var(--border-s);
+      border-radius: 10px; background: none; font-family: inherit;
+      font-size: 14px; font-weight: 600; cursor: pointer; color: var(--text-2);
+    }
+    .modal-yes {
+      flex: 1; padding: 12px; background: var(--brand); color: #fff;
+      border: none; border-radius: 10px; font-family: inherit;
+      font-size: 14px; font-weight: 700; cursor: pointer;
+    }
+    .modal-yes:hover { background: var(--brand-dark); }
+
+    /* Receipt overlay */
+    .receipt-overlay { display:none; position:fixed; inset:0; z-index:800; background:rgba(0,0,0,0.55); align-items:center; justify-content:center; direction:rtl; }
+    .receipt-overlay.open { display:flex; }
+    .receipt-card { background:#fff; border-radius:16px; padding:28px 24px; max-width:420px; width:90%; max-height:82vh; overflow-y:auto; }
+    .receipt-icon { width:52px; height:52px; background:#EEF7E6; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:26px; margin:0 auto 12px; color:#3B6D11; }
+    .receipt-title { font-size:18px; font-weight:700; text-align:center; margin-bottom:3px; }
+    .receipt-sub { font-size:12px; color:#888; text-align:center; margin-bottom:18px; }
+    .receipt-section { margin-bottom:12px; }
+    .receipt-section-title { font-size:11px; font-weight:700; color:#888; margin-bottom:6px; letter-spacing:.04em; }
+    .receipt-item { font-size:13px; padding:7px 10px; background:#F5F4F2; border-radius:7px; margin-bottom:4px; }
+    .receipt-item strong { display:block; font-size:12px; color:#444; margin-bottom:2px; }
+    .receipt-home-btn { width:100%; background:var(--brand); color:#fff; border:none; border-radius:10px; padding:12px; font-size:15px; font-weight:700; cursor:pointer; font-family:inherit; margin-top:8px; }
+    .receipt-home-btn:hover { opacity:.9; }
+  </style>
+</head>
+<body>
+<div class="page">
+  <a class="back-link" href="portal.html">
+    <svg viewBox="0 0 24 24"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+    العودة إلى البوابة
+  </a>
+
+  <header class="form-header">
+    <div class="form-icon">
+      <svg viewBox="0 0 24 24"><rect x="4" y="2" width="16" height="20" rx="2"/><path d="M9 22v-4h6v4M8 6h.01M12 6h.01M16 6h.01M8 10h.01M12 10h.01M16 10h.01M8 14h.01M12 14h.01M16 14h.01"/></svg>
+    </div>
+    <h1>استمارة برنامج التشغيل</h1>
+    <p>يُرجى تعبئة جميع الحقول بدقة</p>
+  </header>
+
+  <!-- Basic info -->
+  <div class="card">
+    <div class="card-title">المعلومات الأساسيّة</div>
+    <div class="field">
+      <label class="field-label">اسم المستجيب</label>
+      <input class="field-value" type="text" id="responderName" readonly />
+    </div>
+    <div class="field-row">
+      <div class="field">
+        <label class="field-label">الموقع</label>
+        <select class="field-value" id="locationSelect">
+          <option value="">— اختر الموقع —</option>
+          <option value="برنامج تشغيل مبنى مدينة نصر">مبنى مدينة نصر</option>
+          <option value="برنامج تشغيل ساحة (1)">ساحة (1)</option>
+        </select>
+      </div>
+      <div class="field">
+        <label class="field-label">تاريخ اليوم</label>
+        <input class="field-value" type="date" id="workDate" oninput="onDateChange()" />
+        <div id="weekdayTag" class="weekday-tag" style="display:none"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Works list -->
+  <div class="works-header"><span class="works-title">الأعمال</span></div>
+  <div id="worksList"></div>
+  <button class="add-work-btn" onclick="addWork()">
+    <svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>
+    إضافة عمل
+  </button>
+
+  <!-- General notes -->
+  <div class="card">
+    <div class="card-title">ملاحظات عامّة <span class="opt-tag">(اختياري)</span></div>
+    <div class="field">
+      <textarea class="f-textarea" id="generalNotes" placeholder="أي ملاحظات إضافية..."></textarea>
+    </div>
+  </div>
+
+  <button class="submit-btn" onclick="showConfirm()">إرسال الاستمارة</button>
+  <div class="status-msg" id="statusMsg"></div>
+</div>
+
+<!-- Confirmation Modal -->
+<div class="modal-overlay" id="confirmModal">
+  <div class="modal">
+    <div class="modal-icon">
+      <svg viewBox="0 0 24 24"><path d="M12 9v4m0 4h.01M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/></svg>
+    </div>
+    <div class="modal-title">هل راجعت البيانات قبل الاستمرار؟</div>
+    <div class="modal-sub">تأكد من صحة جميع المعلومات المدخلة قبل الإرسال.</div>
+    <div class="modal-btns">
+      <button class="modal-no"  onclick="closeConfirm()">لا، مراجعة</button>
+      <button class="modal-yes" onclick="confirmSubmit()">نعم، إرسال</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  const SHEET_URL = "https://script.google.com/macros/s/AKfycbyx1sJwQM6-aQ8CgZ9TCPohsl7UXIpBR3ehDsMFpQHokE9msH6Mi7zw1BATQgNI1Lu2/exec";
+
+  const _user = JSON.parse(sessionStorage.getItem('user') || 'null');
+  if (!_user) window.location.href = 'index.html';
+  const RESPONDER_NAME = _user ? _user.full_name : '';
+  const USER_ID        = _user ? String(_user.user_id) : '';
+  document.getElementById('responderName').value = RESPONDER_NAME;
+
+  const WEEKDAYS = ['الأحد','الإثنين','الثلاثاء','الأربعاء','الخميس','الجمعة','السبت'];
+
+  function onDateChange() {
+    const val = document.getElementById('workDate').value;
+    const tag = document.getElementById('weekdayTag');
+    if (!val) { tag.style.display = 'none'; return; }
+    tag.textContent = WEEKDAYS[new Date(val).getDay()];
+    tag.style.display = 'inline-block';
+  }
+
+  let workCounter = 0;
+  function toAr(n) { return n.toString().replace(/\d/g, d => '٠١٢٣٤٥٦٧٨٩'[d]); }
+  function esc(s)  { return String(s||'').replace(/"/g,'&quot;'); }
+
+  const _HW=['','ساعة','ساعتان','ثلاث ساعات','أربع ساعات','خمس ساعات','ست ساعات','سبع ساعات','ثماني ساعات','تسع ساعات','عشر ساعات','إحدى عشرة ساعة','اثنتا عشرة ساعة'];
+  const _MW=['','دقيقة','دقيقتان','ثلاث دقائق','أربع دقائق','خمس دقائق','ست دقائق','سبع دقائق','ثماني دقائق','تسع دقائق','عشر دقائق','إحدى عشرة دقيقة','اثنتا عشرة دقيقة','ثلاث عشرة دقيقة','أربع عشرة دقيقة','خمس عشرة دقيقة','ست عشرة دقيقة','سبع عشرة دقيقة','ثماني عشرة دقيقة','تسع عشرة دقيقة'];
+  const _MT=['','عشر','عشرون','ثلاثون','أربعون','خمسون'];
+  const _MO=['','واحدة','اثنتان','ثلاث','أربع','خمس','ست','سبع','ثماني','تسع'];
+  function arabicMinutes(n){if(!n)return'';if(n<20)return _MW[n];const t=Math.floor(n/10),o=n%10;return o?_MO[o]+' و'+_MT[t]+' دقيقة':_MT[t]+' دقيقة';}
+  function arabicHours(n){if(!n)return'';return n<=12?_HW[n]:n+' ساعة';}
+  function arabicElapsed(s,e){if(!s||!e)return'';const[sh,sm]=s.split(':').map(Number),[eh,em]=e.split(':').map(Number);if(isNaN(sh)||isNaN(em))return'';const tot=(eh*60+em)-(sh*60+sm);if(tot<=0)return'';const h=Math.floor(tot/60),m=tot%60;const p=[];if(h)p.push(arabicHours(h));if(m)p.push(arabicMinutes(m));return p.join(' و');}
+
+  function addWork(clone) {
+    workCounter++;
+    const id = workCounter;
+    const div = document.createElement('div');
+    div.className = 'work-card';
+    div.dataset.wid = id;
+    div.innerHTML = `
+      <div class="work-card-head">
+        <span class="work-card-num">عمل ${toAr(id)}</span>
+        <div class="work-card-btns">
+          <button class="wc-btn wc-btn-dup" onclick="duplicateWork(${id})">
+            <svg viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>نسخ
+          </button>
+          <button class="wc-btn wc-btn-del" onclick="removeWork(${id})">
+            <svg viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6m5 0V4h4v2"/></svg>حذف
+          </button>
+        </div>
+      </div>
+      <div class="work-card-body">
+        <div class="field">
+          <label class="field-label">عنوان العمل</label>
+          <input class="field-value" type="text" id="title_${id}" placeholder="أدخل عنوان العمل..."
+            value="${esc(clone && clone.title || '')}" />
+        </div>
+        <div class="field-row">
+          <div class="field">
+            <label class="field-label">وقت البدء <span class="opt-tag">(اختياري)</span></label>
+            <input class="field-value" type="time" id="start_${id}"
+              value="${esc(clone && clone.start || '')}" />
+          </div>
+          <div class="field">
+            <label class="field-label">وقت الانتهاء <span class="opt-tag">(اختياري)</span></label>
+            <input class="field-value" type="time" id="end_${id}"
+              value="${esc(clone && clone.end || '')}" />
+          </div>
+        </div>
+        <div class="elapsed-display" id="elapsed_${id}"></div>
+        <div class="field">
+          <label class="field-label">ملاحظات <span class="opt-tag">(اختياري)</span></label>
+          <input class="field-value" type="text" id="notes_${id}" placeholder="ملاحظات..."
+            value="${esc(clone && clone.notes || '')}" />
+        </div>
+      </div>`;
+    document.getElementById('worksList').appendChild(div);
+    const _updEl10 = () => {
+      const s = document.getElementById(`start_${id}`)?.value;
+      const e = document.getElementById(`end_${id}`)?.value;
+      const el = document.getElementById(`elapsed_${id}`);
+      if (el) { const t = arabicElapsed(s,e); el.textContent = t ? 'الوقت المستغرق: '+t : ''; }
+    };
+    document.getElementById(`start_${id}`)?.addEventListener('change', _updEl10);
+    document.getElementById(`end_${id}`)?.addEventListener('change', _updEl10);
+    if (clone && (clone.start || clone.end)) _updEl10();
+    refreshNums();
+  }
+
+  function removeWork(id) {
+    const el = document.querySelector(`.work-card[data-wid="${id}"]`);
+    if (el) el.remove();
+    refreshNums();
+  }
+
+  function duplicateWork(id) { addWork(collectWork(id)); }
+
+  function refreshNums() {
+    document.querySelectorAll('.work-card').forEach((c, i) => {
+      c.querySelector('.work-card-num').textContent = 'عمل ' + toAr(i + 1);
+    });
+  }
+
+  function collectWork(id) {
+    const g = sid => (document.getElementById(sid) || {}).value || '';
+    return { title: g(`title_${id}`), start: g(`start_${id}`), end: g(`end_${id}`), notes: g(`notes_${id}`) };
+  }
+
+  function checkTime(start, end, label) {
+    if (!start || !end) return null;
+    if (end <= start) return `وقت الانتهاء يجب أن يكون بعد وقت البدء${label ? ' — ' + label : ''}`;
+    return null;
+  }
+
+  function showConfirm() {
+    const loc  = document.getElementById('locationSelect').value;
+    if (!loc)  { showStatus('⚠️ يرجى اختيار الموقع', '#D03B3B'); return; }
+    const date = document.getElementById('workDate').value;
+    if (!date) { showStatus('⚠️ يرجى اختيار تاريخ اليوم', '#D03B3B'); return; }
+    const cards = [...document.querySelectorAll('.work-card')];
+    if (!cards.length) { showStatus('⚠️ يرجى إضافة عمل واحد على الأقل', '#D03B3B'); return; }
+    const missingTitle = cards.some(c => !document.getElementById(`title_${c.dataset.wid}`).value.trim());
+    if (missingTitle) { showStatus('⚠️ يرجى إدخال عنوان العمل لجميع الأعمال', '#D03B3B'); return; }
+    for (const c of cards) {
+      const wid   = +c.dataset.wid;
+      const label = c.querySelector('.work-card-num')?.textContent || '';
+      const start = document.getElementById(`start_${wid}`)?.value;
+      const end   = document.getElementById(`end_${wid}`)?.value;
+      if (!start) { showStatus(`⚠️ يرجى إدخال وقت البدء في ${label}`, '#D03B3B'); return; }
+      if (!end)   { showStatus(`⚠️ يرجى إدخال وقت الانتهاء في ${label}`, '#D03B3B'); return; }
+      const err   = checkTime(start, end, label);
+      if (err) { showStatus('⚠️ ' + err, '#D03B3B'); return; }
+    }
+    document.getElementById('confirmModal').classList.add('open');
+  }
+  function closeConfirm() { document.getElementById('confirmModal').classList.remove('open'); }
+
+  async function confirmSubmit() {
+    closeConfirm();
+    const btn = document.querySelector('.submit-btn');
+    btn.disabled = true;
+    showStatus('⏳ جاري الإرسال...', 'var(--text-2)');
+
+    const date    = document.getElementById('workDate').value;
+    const weekday = WEEKDAYS[new Date(date).getDay()];
+    const formId  = document.getElementById('locationSelect').value;
+    const works   = [...document.querySelectorAll('.work-card')].map(c => collectWork(+c.dataset.wid));
+
+    try {
+      await fetch(SHEET_URL, {
+        method: 'POST', mode: 'no-cors',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          formId,
+          timestamp: new Date().toLocaleString('ar-EG'),
+          responder: RESPONDER_NAME, userId: USER_ID,
+          submissionId: 'sid_' + Date.now() + '_' + Math.random().toString(36).slice(2,6),
+          ...(IS_EDIT_MODE ? { editMode: true } : {}),
+          date, weekday, works,
+          generalNotes: document.getElementById('generalNotes').value.trim(),
+        }),
+      });
+      const gn = document.getElementById('generalNotes').value.trim();
+      showStatus('✅ تم الإرسال بنجاح!', '#0F6E56');
+      showReceipt(`${weekday}، ${date.split('-').reverse().join('/')} — ${formId}`, buildReceipt(formId, works, gn));
+    } catch {
+      showStatus('❌ حدث خطأ. حاول مجددًا.', '#D03B3B');
+      btn.disabled = false;
+    }
+  }
+
+  function showReceipt(sub, bodyHtml) {
+    document.getElementById('receiptSub').textContent = sub;
+    document.getElementById('receiptBody').innerHTML = bodyHtml;
+    document.getElementById('receiptOverlay').classList.add('open');
+  }
+  function buildReceipt(formId, works, generalNotes) {
+    let h = `<div class="receipt-section"><div class="receipt-section-title">الموقع</div><div class="receipt-item">${formId}</div></div>`;
+    if (works.length) {
+      h += `<div class="receipt-section"><div class="receipt-section-title">الأعمال (${works.length})</div>`;
+      works.forEach(w => {
+        const time = w.start && w.end ? `${w.start}–${w.end}` : '';
+        h += `<div class="receipt-item"><strong>${w.title||''}</strong>${[time, w.notes].filter(Boolean).join(' · ')}</div>`;
+      });
+      h += `</div>`;
+    }
+    if (generalNotes) h += `<div class="receipt-section"><div class="receipt-section-title">ملاحظات عامّة</div><div class="receipt-item">${generalNotes}</div></div>`;
+    return h;
+  }
+
+  function showStatus(msg, color) {
+    const el = document.getElementById('statusMsg');
+    el.textContent = msg; el.style.color = color;
+    el.style.background = color.startsWith('#') ? color + '18' : '#F5F4F2';
+    el.style.display = 'block';
+  }
+
+  // Init
+  let IS_EDIT_MODE = false;
+  (async () => {
+    const _p = new URLSearchParams(location.search);
+    if (_p.get('editMode')) {
+      IS_EDIT_MODE = true;
+      const editDate = _p.get('editDate') || '';
+      const editForm = _p.get('editForm') || '';
+      const dateEl   = document.getElementById('workDate');
+      dateEl.value = editDate; dateEl.readOnly = true;
+      const locEl = document.getElementById('locationSelect');
+      if (editForm) { locEl.value = editForm; locEl.disabled = true; }
+      onDateChange();
+      document.querySelector('.submit-btn').textContent = 'حفظ التعديلات';
+      try {
+        const url = `${SHEET_URL}?action=submissionData&form=${encodeURIComponent(editForm)}&userId=${encodeURIComponent(USER_ID)}&date=${encodeURIComponent(editDate)}`;
+        const res  = await fetch(url, { redirect: 'follow' });
+        const json = await res.json();
+        if (json.status === 'ok' && json.data && json.data.works) {
+          if (json.data.generalNotes) document.getElementById('generalNotes').value = json.data.generalNotes;
+          document.getElementById('worksList').innerHTML = '';
+          json.data.works.forEach(w => addWork(w));
+          if (!json.data.works.length) addWork();
+        } else { addWork(); }
+      } catch { addWork(); }
+    } else {
+      document.getElementById('workDate').value = new Date().toISOString().slice(0, 10);
+      onDateChange();
+      addWork();
+    }
+  })();
+</script>
+<div id="receiptOverlay" class="receipt-overlay">
+  <div class="receipt-card">
+    <div class="receipt-icon">✓</div>
+    <div class="receipt-title">تم الإرسال بنجاح</div>
+    <div class="receipt-sub" id="receiptSub"></div>
+    <div id="receiptBody"></div>
+    <button class="receipt-home-btn" onclick="window.location.href='portal.html'">العودة للرئيسية</button>
+  </div>
+</div>
+</body>
+</html>

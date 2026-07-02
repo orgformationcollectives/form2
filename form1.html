@@ -1,0 +1,660 @@
+﻿<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>استمارة برنامج الأعمال اليوميّة</title>
+  <style>
+    @font-face { font-family: 'Thmanyah'; src: url('fonts/thmanyahsans-Regular.otf') format('opentype'); font-weight: 400; }
+    @font-face { font-family: 'Thmanyah'; src: url('fonts/thmanyahsans-Medium.otf')  format('opentype'); font-weight: 500; }
+    @font-face { font-family: 'Thmanyah'; src: url('fonts/thmanyahsans-Bold.otf')    format('opentype'); font-weight: 700; }
+    @font-face { font-family: 'Thmanyah'; src: url('fonts/thmanyahsans-Light.otf')   format('opentype'); font-weight: 300; }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      color-scheme: light;
+      --brand:       #534AB7;
+      --brand-light: #EEEDFE;
+      --brand-dark:  #3C3489;
+      --bg:          #F5F4F2;
+      --surface:     #FFFFFF;
+      --border:      rgba(0,0,0,0.09);
+      --border-s:    rgba(0,0,0,0.14);
+      --text-1:      #1A1A1A;
+      --text-2:      #555550;
+      --text-3:      #999994;
+      --danger:      #D03B3B;
+    }
+
+    html, body {
+      min-height: 100vh; background: var(--bg);
+      font-family: 'Thmanyah', 'Tajawal', Arial, sans-serif;
+      color: var(--text-1); direction: rtl;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .page { max-width: 680px; margin: 0 auto; padding: 1.5rem 1rem 4rem; }
+
+    .back-link {
+      display: inline-flex; align-items: center; gap: 5px;
+      font-size: 13px; color: var(--text-2); text-decoration: none;
+      margin-bottom: 1.25rem; font-weight: 500;
+    }
+    .back-link svg { width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 2; }
+    .back-link:hover { color: var(--brand); }
+
+    .form-header { text-align: center; margin-bottom: 2rem; }
+    .form-icon {
+      width: 60px; height: 60px; background: var(--brand);
+      border-radius: 16px; display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 1rem; box-shadow: 0 4px 18px rgba(83,74,183,0.28);
+    }
+    .form-icon svg { width: 28px; height: 28px; fill: none; stroke: #fff; stroke-width: 2; }
+    .form-header h1 { font-size: 19px; font-weight: 700; color: var(--brand); margin-bottom: 2px; }
+    .form-header p  { font-size: 13px; color: var(--text-3); }
+
+    .card {
+      background: var(--surface); border: 1.5px solid var(--border);
+      border-radius: 16px; padding: 1.25rem 1.25rem 1rem; margin-bottom: 1rem;
+    }
+    .card-title {
+      font-size: 13px; font-weight: 700; color: var(--text-2); letter-spacing: 0.03em;
+      margin-bottom: 1rem; padding-bottom: 8px; border-bottom: 1px solid var(--border);
+    }
+
+    .field { margin-bottom: 1rem; }
+    .field:last-child { margin-bottom: 0; }
+    .field-row { display: grid; gap: 12px; grid-template-columns: 1fr 1fr; }
+    @media (max-width: 480px) { .field-row { grid-template-columns: 1fr; } }
+    .field-label { display: block; font-size: 12.5px; font-weight: 600; color: var(--text-2); margin-bottom: 5px; }
+    .field-value {
+      width: 100%; padding: 10px 12px;
+      border: 1.5px solid var(--border-s); border-radius: 9px;
+      background: var(--bg); color: var(--text-1);
+      font-family: inherit; font-size: 14px; direction: rtl;
+      outline: none; transition: border-color 0.15s;
+    }
+    .field-value:focus { border-color: var(--brand); }
+    .field-value::placeholder { color: var(--text-3); }
+    select.field-value { cursor: pointer; }
+    .field-value[type="date"] { direction: ltr; text-align: right; }
+    .field-value[readonly] { opacity: 0.7; cursor: default; }
+    .elapsed-display { font-size:11px; color:var(--text-3); text-align:center; margin-top:4px; min-height:16px; }
+
+    .weekday-tag {
+      display: inline-block; background: var(--brand-light); color: var(--brand);
+      font-size: 12px; font-weight: 700; border-radius: 6px; padding: 3px 10px; margin-top: 4px;
+    }
+
+    /* Work cards */
+    .works-header { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; }
+    .works-title  { font-size: 14px; font-weight: 700; }
+    .sec-badge { width: 22px; height: 22px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700; flex-shrink: 0; }
+    .sec-badge-ok { background: #E8F5E2; color: #2E7D12; }
+    .sec-badge-x  { background: #FEECEC; color: #B03030; }
+    .nf-card .work-card-head { background: #FEECEC; }
+    .nf-card .work-card-num  { color: #B03030; }
+    .nf-card .wc-btn-dup { color: #B03030; border-color: #B03030; }
+    .nf-card .wc-btn-dup:hover { background: #B03030; color: #fff; }
+    .add-nf-btn {
+      width: 100%; padding: 11px; background: none;
+      border: 1.5px dashed #B03030; border-radius: 10px;
+      color: #B03030; font-family: inherit; font-size: 14px; font-weight: 700;
+      cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 6px;
+      transition: background 0.13s; margin-bottom: 1.25rem;
+    }
+    .add-nf-btn:hover { background: #FEECEC; }
+    .add-nf-btn svg { width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 2.5; }
+
+    .work-card {
+      background: var(--surface); border: 1.5px solid var(--border);
+      border-radius: 14px; margin-bottom: 10px; overflow: hidden;
+    }
+    .work-card-head {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 10px 14px; background: var(--brand-light); gap: 10px;
+    }
+    .work-card-num { font-size: 12px; font-weight: 700; color: var(--brand); }
+    .work-card-btns { display: flex; gap: 6px; }
+    .wc-btn {
+      padding: 4px 10px; border-radius: 7px; border: 1.5px solid transparent;
+      font-family: inherit; font-size: 12px; font-weight: 600; cursor: pointer;
+      display: flex; align-items: center; gap: 4px;
+      transition: background 0.13s, color 0.13s;
+    }
+    .wc-btn svg { width: 12px; height: 12px; stroke: currentColor; fill: none; stroke-width: 2; }
+    .wc-btn-dup { background: var(--surface); color: var(--brand);  border-color: var(--brand); }
+    .wc-btn-del { background: var(--surface); color: var(--danger); border-color: var(--danger); }
+    .wc-btn-dup:hover { background: var(--brand);  color: #fff; }
+    .wc-btn-del:hover { background: var(--danger); color: #fff; }
+
+    .work-card-body { padding: 12px 14px; }
+    .cond-field { display: none; }
+    .cond-field.visible { display: block; }
+    .cond-non-mukht { display: none; }
+    .cond-non-mukht.visible { display: block; }
+
+    .add-work-btn {
+      width: 100%; padding: 11px; background: none;
+      border: 1.5px dashed var(--brand); border-radius: 10px;
+      color: var(--brand); font-family: inherit; font-size: 14px; font-weight: 700;
+      cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 6px;
+      transition: background 0.13s; margin-bottom: 1.25rem;
+    }
+    .add-work-btn:hover { background: var(--brand-light); }
+    .add-work-btn svg { width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 2.5; }
+
+    .submit-btn {
+      width: 100%; padding: 14px; background: var(--brand); color: #fff;
+      border: none; border-radius: 11px; font-family: inherit;
+      font-size: 15px; font-weight: 700; cursor: pointer;
+      transition: background 0.15s;
+    }
+    .submit-btn:hover    { background: var(--brand-dark); }
+    .submit-btn:disabled { opacity: 0.6; cursor: not-allowed; }
+
+    .status-msg {
+      display: none; text-align: center; font-size: 13px; font-weight: 600;
+      padding: 10px; border-radius: 8px; margin-top: 10px;
+    }
+
+    /* Confirm modal */
+    .modal-overlay {
+      display: none; position: fixed; inset: 0;
+      background: rgba(0,0,0,0.45); z-index: 100;
+      align-items: center; justify-content: center; padding: 1.5rem;
+    }
+    .modal-overlay.open { display: flex; }
+    .modal {
+      background: var(--surface); border-radius: 18px;
+      padding: 2rem 1.75rem; width: 100%; max-width: 360px;
+      box-shadow: 0 8px 40px rgba(0,0,0,0.18); text-align: center;
+    }
+    .modal-icon {
+      width: 52px; height: 52px; background: #FFF8E6;
+      border-radius: 14px; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem;
+    }
+    .modal-icon svg { width: 26px; height: 26px; stroke: #B45309; fill: none; stroke-width: 2; }
+    .modal-title { font-size: 17px; font-weight: 700; margin-bottom: 6px; }
+    .modal-sub   { font-size: 13px; color: var(--text-2); margin-bottom: 1.5rem; }
+    .modal-btns  { display: flex; gap: 10px; }
+    .modal-no  {
+      flex: 1; padding: 12px; border: 1.5px solid var(--border-s);
+      border-radius: 10px; background: none; font-family: inherit;
+      font-size: 14px; font-weight: 600; cursor: pointer; color: var(--text-2);
+    }
+    .modal-yes {
+      flex: 1; padding: 12px; background: var(--brand); color: #fff;
+      border: none; border-radius: 10px; font-family: inherit;
+      font-size: 14px; font-weight: 700; cursor: pointer;
+    }
+    .modal-yes:hover { background: var(--brand-dark); }
+
+    /* Receipt overlay */
+    .receipt-overlay { display:none; position:fixed; inset:0; z-index:800; background:rgba(0,0,0,0.55); align-items:center; justify-content:center; direction:rtl; }
+    .receipt-overlay.open { display:flex; }
+    .receipt-card { background:#fff; border-radius:16px; padding:28px 24px; max-width:420px; width:90%; max-height:82vh; overflow-y:auto; }
+    .receipt-icon { width:52px; height:52px; background:#EEF7E6; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:26px; margin:0 auto 12px; color:#3B6D11; }
+    .receipt-title { font-size:18px; font-weight:700; text-align:center; margin-bottom:3px; }
+    .receipt-sub { font-size:12px; color:#888; text-align:center; margin-bottom:18px; }
+    .receipt-section { margin-bottom:12px; }
+    .receipt-section-title { font-size:11px; font-weight:700; color:#888; margin-bottom:6px; letter-spacing:.04em; }
+    .receipt-item { font-size:13px; padding:7px 10px; background:#F5F4F2; border-radius:7px; margin-bottom:4px; }
+    .receipt-item strong { display:block; font-size:12px; color:#444; margin-bottom:2px; }
+    .receipt-home-btn { width:100%; background:var(--brand); color:#fff; border:none; border-radius:10px; padding:12px; font-size:15px; font-weight:700; cursor:pointer; font-family:inherit; margin-top:8px; }
+    .receipt-home-btn:hover { opacity:.9; }
+  </style>
+</head>
+<body>
+<div class="page">
+  <a class="back-link" href="portal.html">
+    <svg viewBox="0 0 24 24"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+    العودة إلى البوابة
+  </a>
+
+  <header class="form-header">
+    <div class="form-icon">
+      <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M3 9h18M9 21V9"/></svg>
+    </div>
+    <h1>استمارة برنامج الأعمال اليوميّة</h1>
+    <p>يُرجى تعبئة جميع الحقول بدقة</p>
+  </header>
+
+  <!-- Basic info -->
+  <div class="card">
+    <div class="card-title">المعلومات الأساسيّة</div>
+    <div class="field">
+      <label class="field-label">اسم المستجيب</label>
+      <input class="field-value" type="text" id="responderName" readonly />
+    </div>
+    <div class="field">
+      <label class="field-label">تاريخ اليوم</label>
+      <input class="field-value" type="date" id="workDate" oninput="onDateChange()" />
+      <div id="weekdayTag" class="weekday-tag" style="display:none"></div>
+    </div>
+  </div>
+
+  <!-- Finished works -->
+  <div class="works-header">
+    <span class="sec-badge sec-badge-ok">✓</span>
+    <span class="works-title">الأعمال المنجزة</span>
+  </div>
+  <div id="worksList"></div>
+  <button class="add-work-btn" onclick="addWork()">
+    <svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>
+    إضافة عمل منجز
+  </button>
+
+  <!-- Not-finished works -->
+  <div class="works-header" style="margin-top:0.5rem">
+    <span class="sec-badge sec-badge-x">✗</span>
+    <span class="works-title">الأعمال التي لم تتمّ</span>
+  </div>
+  <div id="nfList"></div>
+  <button class="add-nf-btn" onclick="addNotFinished()">
+    <svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>
+    إضافة عمل لم يتمّ
+  </button>
+
+  <button class="submit-btn" onclick="showConfirm()">إرسال الاستمارة</button>
+  <div class="status-msg" id="statusMsg"></div>
+</div>
+
+<!-- Confirmation Modal -->
+<div class="modal-overlay" id="confirmModal">
+  <div class="modal">
+    <div class="modal-icon">
+      <svg viewBox="0 0 24 24"><path d="M12 9v4m0 4h.01M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/></svg>
+    </div>
+    <div class="modal-title">هل راجعت البيانات قبل الاستمرار؟</div>
+    <div class="modal-sub">تأكد من صحة جميع المعلومات المدخلة قبل الإرسال.</div>
+    <div class="modal-btns">
+      <button class="modal-no"  onclick="closeConfirm()">لا، مراجعة</button>
+      <button class="modal-yes" onclick="confirmSubmit()">نعم، إرسال</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  const SHEET_URL = "https://script.google.com/macros/s/AKfycbyx1sJwQM6-aQ8CgZ9TCPohsl7UXIpBR3ehDsMFpQHokE9msH6Mi7zw1BATQgNI1Lu2/exec";
+  const FORM_ID   = "برنامج الأعمال اليوميّة";
+
+  const _user = JSON.parse(sessionStorage.getItem('user') || 'null');
+  if (!_user) window.location.href = 'index.html';
+  const RESPONDER_NAME = _user ? _user.full_name : '';
+  const USER_ID        = _user ? String(_user.user_id) : '';
+  document.getElementById('responderName').value = RESPONDER_NAME;
+
+  const WEEKDAYS = ['الأحد','الإثنين','الثلاثاء','الأربعاء','الخميس','الجمعة','السبت'];
+
+  function onDateChange() {
+    const val = document.getElementById('workDate').value;
+    const tag = document.getElementById('weekdayTag');
+    if (!val) { tag.style.display = 'none'; return; }
+    tag.textContent = WEEKDAYS[new Date(val).getDay()];
+    tag.style.display = 'inline-block';
+  }
+
+  const WORK_TYPES = [
+    'درس ساحة (1)', 'درس ساحة (2)',
+    'درس مقرأة المطار', 'درس مقرأة الكوم', 'درس مقرأة أوكتوبر', 'درس مقرأة بولاق',
+    'درس مقرأة العزيزية', 'درس مقرأة الدّعوة', 'درس مقرأة المنيب',
+    'درس مقرأة العمرانيّة', 'درس مقرأة الرّضوان',
+    'درس مقرأة ساحة (1)', 'درس مقرأة ساحة (2)',
+    'حصة معهد ساحة (1)', 'حصة معهد ساحة (2)',
+    'درس بيت حضوري', 'درس عن بعد', 'مختلف',
+  ];
+
+  let workCounter = 0;
+
+  function toArabicNum(n) { return n.toString().replace(/\d/g, d => '٠١٢٣٤٥٦٧٨٩'[d]); }
+  function esc(s) { return String(s||'').replace(/"/g,'&quot;'); }
+
+  const _HW=['','ساعة','ساعتان','ثلاث ساعات','أربع ساعات','خمس ساعات','ست ساعات','سبع ساعات','ثماني ساعات','تسع ساعات','عشر ساعات','إحدى عشرة ساعة','اثنتا عشرة ساعة'];
+  const _MW=['','دقيقة','دقيقتان','ثلاث دقائق','أربع دقائق','خمس دقائق','ست دقائق','سبع دقائق','ثماني دقائق','تسع دقائق','عشر دقائق','إحدى عشرة دقيقة','اثنتا عشرة دقيقة','ثلاث عشرة دقيقة','أربع عشرة دقيقة','خمس عشرة دقيقة','ست عشرة دقيقة','سبع عشرة دقيقة','ثماني عشرة دقيقة','تسع عشرة دقيقة'];
+  const _MT=['','عشر','عشرون','ثلاثون','أربعون','خمسون'];
+  const _MO=['','واحدة','اثنتان','ثلاث','أربع','خمس','ست','سبع','ثماني','تسع'];
+  function arabicMinutes(n){if(!n)return'';if(n<20)return _MW[n];const t=Math.floor(n/10),o=n%10;return o?_MO[o]+' و'+_MT[t]+' دقيقة':_MT[t]+' دقيقة';}
+  function arabicHours(n){if(!n)return'';return n<=12?_HW[n]:n+' ساعة';}
+  function arabicElapsed(s,e){if(!s||!e)return'';const[sh,sm]=s.split(':').map(Number),[eh,em]=e.split(':').map(Number);if(isNaN(sh)||isNaN(em))return'';const tot=(eh*60+em)-(sh*60+sm);if(tot<=0)return'';const h=Math.floor(tot/60),m=tot%60;const p=[];if(h)p.push(arabicHours(h));if(m)p.push(arabicMinutes(m));return p.join(' و');}
+
+  function addWork(clone) {
+    workCounter++;
+    const id = workCounter;
+    const div = document.createElement('div');
+    div.className = 'work-card';
+    div.dataset.wid = id;
+    div.innerHTML = `
+      <div class="work-card-head">
+        <span class="work-card-num">عمل ${toArabicNum(id)}</span>
+        <div class="work-card-btns">
+          <button class="wc-btn wc-btn-dup" onclick="duplicateWork(${id})">
+            <svg viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>نسخ
+          </button>
+          <button class="wc-btn wc-btn-del" onclick="removeWork(${id})">
+            <svg viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6m5 0V4h4v2"/></svg>حذف
+          </button>
+        </div>
+      </div>
+      <div class="work-card-body">
+        <div class="field">
+          <label class="field-label">نوع العمل</label>
+          <select class="field-value" id="type_${id}" onchange="onTypeChange(${id})">
+            <option value="">— اختر نوع العمل —</option>
+            ${WORK_TYPES.map(t=>`<option value="${esc(t)}"${clone&&clone.type===t?' selected':''}>${t}</option>`).join('')}
+          </select>
+        </div>
+        <div class="field cond-field" id="descField_${id}">
+          <label class="field-label">وصف العمل</label>
+          <input class="field-value" type="text" id="desc_${id}" placeholder="اكتب وصف العمل..." value="${esc(clone&&clone.desc||'')}" />
+        </div>
+        <div class="cond-non-mukht" id="attendField_${id}">
+          <div class="field">
+            <label class="field-label">المادّة / اسم الكتاب</label>
+            <input class="field-value" type="text" id="book_${id}" placeholder="مثال: رياض الصالحين..." value="${esc(clone&&clone.book||'')}" />
+          </div>
+          <div class="field">
+            <label class="field-label">من / إلى <span style="font-weight:400;color:var(--text-3)">(اختياري)</span></label>
+            <input class="field-value" type="text" id="fromto_${id}" placeholder="مثال: صفحة ١٢ — ٢٥ ..." value="${esc(clone&&clone.fromTo||'')}" />
+          </div>
+          <div class="field-row">
+            <div class="field">
+              <label class="field-label">الحضور <span style="font-weight:400;color:var(--text-3)">(اختياري)</span></label>
+              <input class="field-value" type="number" id="present_${id}" placeholder="عدد الحضور" min="0" value="${esc(clone&&clone.present||'')}" />
+            </div>
+            <div class="field">
+              <label class="field-label">الغياب <span style="font-weight:400;color:var(--text-3)">(اختياري)</span></label>
+              <input class="field-value" type="number" id="absent_${id}" placeholder="عدد الغياب" min="0" value="${esc(clone&&clone.absent||'')}" />
+            </div>
+          </div>
+        </div>
+        <div class="field-row">
+          <div class="field">
+            <label class="field-label">وقت البدء</label>
+            <input class="field-value" type="time" id="start_${id}" value="${esc(clone&&clone.start||'')}" />
+          </div>
+          <div class="field">
+            <label class="field-label">وقت الانتهاء</label>
+            <input class="field-value" type="time" id="end_${id}" value="${esc(clone&&clone.end||'')}" />
+          </div>
+        </div>
+        <div class="elapsed-display" id="elapsed_${id}"></div>
+        <div class="field">
+          <label class="field-label">ملاحظات <span style="font-weight:400;color:var(--text-3)">(اختياري)</span></label>
+          <input class="field-value" type="text" id="notes_${id}" placeholder="ملاحظات إضافية..." value="${esc(clone&&clone.notes||'')}" />
+        </div>
+      </div>`;
+    document.getElementById('worksList').appendChild(div);
+    if (clone && clone.type) { document.getElementById(`type_${id}`).value = clone.type; onTypeChange(id); }
+    const _updEl1 = () => {
+      const s = document.getElementById(`start_${id}`)?.value;
+      const e = document.getElementById(`end_${id}`)?.value;
+      const el = document.getElementById(`elapsed_${id}`);
+      if (el) { const t = arabicElapsed(s,e); el.textContent = t ? 'الوقت المستغرق: '+t : ''; }
+    };
+    document.getElementById(`start_${id}`)?.addEventListener('change', _updEl1);
+    document.getElementById(`end_${id}`)?.addEventListener('change', _updEl1);
+    if (clone && (clone.start || clone.end)) _updEl1();
+    refreshNums();
+  }
+
+  function removeWork(id) {
+    const el = document.querySelector(`.work-card[data-wid="${id}"]`);
+    if (el) el.remove();
+    refreshNums();
+  }
+
+  function duplicateWork(id) { addWork(collectWork(id)); }
+
+  function onTypeChange(id) {
+    const type = document.getElementById(`type_${id}`).value;
+    document.getElementById(`descField_${id}`).classList.toggle('visible',     type === 'مختلف');
+    document.getElementById(`attendField_${id}`).classList.toggle('visible', !!type && type !== 'مختلف');
+  }
+
+  function refreshNums() {
+    document.querySelectorAll('#worksList .work-card').forEach((c, i) => {
+      c.querySelector('.work-card-num').textContent = 'عمل ' + toArabicNum(i + 1);
+    });
+    document.querySelectorAll('#nfList .nf-card').forEach((c, i) => {
+      c.querySelector('.work-card-num').textContent = 'عمل ' + toArabicNum(i + 1);
+    });
+  }
+
+  function collectWork(id) {
+    const g = (sid) => (document.getElementById(sid) || {}).value || '';
+    return { type: g(`type_${id}`), desc: g(`desc_${id}`), book: g(`book_${id}`),
+             fromTo: g(`fromto_${id}`), present: g(`present_${id}`),
+             absent: g(`absent_${id}`), start: g(`start_${id}`), end: g(`end_${id}`), notes: g(`notes_${id}`) };
+  }
+
+  /* ── Not-finished works ── */
+  let nfCounter = 0;
+
+  function addNotFinished(clone) {
+    nfCounter++;
+    const id = nfCounter;
+    const div = document.createElement('div');
+    div.className = 'work-card nf-card';
+    div.dataset.nfid = id;
+    div.innerHTML = `
+      <div class="work-card-head">
+        <span class="work-card-num">عمل ${toArabicNum(id)}</span>
+        <div class="work-card-btns">
+          <button class="wc-btn wc-btn-dup" onclick="duplicateNF(${id})">
+            <svg viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>نسخ
+          </button>
+          <button class="wc-btn wc-btn-del" onclick="removeNF(${id})">
+            <svg viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6m5 0V4h4v2"/></svg>حذف
+          </button>
+        </div>
+      </div>
+      <div class="work-card-body">
+        <div class="field">
+          <label class="field-label">نوع العمل</label>
+          <select class="field-value" id="nftype_${id}" onchange="onNFTypeChange(${id})">
+            <option value="">— اختر نوع العمل —</option>
+            ${WORK_TYPES.map(t=>`<option value="${esc(t)}"${clone&&clone.type===t?' selected':''}>${t}</option>`).join('')}
+          </select>
+        </div>
+        <div class="field cond-field" id="nfdesc_${id}">
+          <label class="field-label">وصف العمل</label>
+          <input class="field-value" type="text" id="nfdescval_${id}" placeholder="اكتب وصف العمل..." value="${esc(clone&&clone.desc||'')}" />
+        </div>
+        <div class="field cond-field" id="nfbook_${id}">
+          <label class="field-label">المادّة / اسم الكتاب</label>
+          <input class="field-value" type="text" id="nfbookval_${id}" placeholder="مثال: رياض الصالحين..." value="${esc(clone&&clone.book||'')}" />
+        </div>
+        <div class="field">
+          <label class="field-label">السبب</label>
+          <input class="field-value" type="text" id="nfreason_${id}" placeholder="اذكر سبب عدم الإتمام..." value="${esc(clone&&clone.reason||'')}" />
+        </div>
+        <div class="field">
+          <label class="field-label">ملاحظات <span style="font-weight:400;color:var(--text-3)">(اختياري)</span></label>
+          <input class="field-value" type="text" id="nfnotes_${id}" placeholder="ملاحظات إضافية..." value="${esc(clone&&clone.notes||'')}" />
+        </div>
+      </div>`;
+    document.getElementById('nfList').appendChild(div);
+    if (clone && clone.type) { document.getElementById(`nftype_${id}`).value = clone.type; onNFTypeChange(id); }
+    refreshNums();
+  }
+
+  function removeNF(id) {
+    const el = document.querySelector(`.nf-card[data-nfid="${id}"]`);
+    if (el) el.remove();
+    refreshNums();
+  }
+
+  function duplicateNF(id) { addNotFinished(collectNF(id)); }
+
+  function onNFTypeChange(id) {
+    const type = document.getElementById(`nftype_${id}`).value;
+    document.getElementById(`nfdesc_${id}`).classList.toggle('visible',  type === 'مختلف');
+    document.getElementById(`nfbook_${id}`).classList.toggle('visible', !!type && type !== 'مختلف');
+  }
+
+  function collectNF(id) {
+    const g = sid => (document.getElementById(sid)||{}).value||'';
+    return { type: g(`nftype_${id}`), desc: g(`nfdescval_${id}`),
+             book: g(`nfbookval_${id}`), reason: g(`nfreason_${id}`), notes: g(`nfnotes_${id}`) };
+  }
+
+  function checkTime(start, end, label) {
+    if (!start || !end) return null;
+    if (end <= start) return `وقت الانتهاء يجب أن يكون بعد وقت البدء${label ? ' — ' + label : ''}`;
+    return null;
+  }
+
+  function showConfirm() {
+    const date = document.getElementById('workDate').value;
+    if (!date) { showStatus('⚠️ يرجى اختيار تاريخ اليوم', '#D03B3B'); return; }
+    const finCards = [...document.querySelectorAll('#worksList .work-card')];
+    const nfCards  = [...document.querySelectorAll('#nfList .nf-card')];
+    if (!finCards.length && !nfCards.length)
+      { showStatus('⚠️ يرجى إضافة عمل واحد على الأقل', '#D03B3B'); return; }
+    if (finCards.some(c => !document.getElementById(`type_${c.dataset.wid}`)?.value))
+      { showStatus('⚠️ يرجى اختيار نوع العمل لجميع الأعمال المنجزة', '#D03B3B'); return; }
+    if (nfCards.some(c => !document.getElementById(`nftype_${c.dataset.nfid}`)?.value))
+      { showStatus('⚠️ يرجى اختيار نوع العمل لجميع الأعمال التي لم تتمّ', '#D03B3B'); return; }
+    for (const c of finCards) {
+      const wid  = +c.dataset.wid;
+      const type = document.getElementById(`type_${wid}`)?.value;
+      const label = c.querySelector('.work-card-num')?.textContent || '';
+      if (type === 'مختلف') {
+        if (!document.getElementById(`desc_${wid}`)?.value?.trim())
+          { showStatus(`⚠️ يرجى إدخال وصف العمل في ${label}`, '#D03B3B'); return; }
+      } else {
+        if (!document.getElementById(`book_${wid}`)?.value?.trim())
+          { showStatus(`⚠️ يرجى إدخال المادّة / اسم الكتاب في ${label}`, '#D03B3B'); return; }
+      }
+      const start = document.getElementById(`start_${wid}`)?.value;
+      const end   = document.getElementById(`end_${wid}`)?.value;
+      if (!start) { showStatus(`⚠️ يرجى إدخال وقت البدء في ${label}`, '#D03B3B'); return; }
+      if (!end)   { showStatus(`⚠️ يرجى إدخال وقت الانتهاء في ${label}`, '#D03B3B'); return; }
+      const err = checkTime(start, end, label);
+      if (err) { showStatus('⚠️ ' + err, '#D03B3B'); return; }
+    }
+    for (const c of nfCards) {
+      const nfid  = +c.dataset.nfid;
+      const type  = document.getElementById(`nftype_${nfid}`)?.value;
+      const label = c.querySelector('.nf-card-num')?.textContent || '';
+      if (type === 'مختلف') {
+        if (!document.getElementById(`nfdescval_${nfid}`)?.value?.trim())
+          { showStatus(`⚠️ يرجى إدخال وصف العمل في ${label}`, '#D03B3B'); return; }
+      } else {
+        if (!document.getElementById(`nfbookval_${nfid}`)?.value?.trim())
+          { showStatus(`⚠️ يرجى إدخال المادّة / اسم الكتاب في ${label}`, '#D03B3B'); return; }
+      }
+      if (!document.getElementById(`nfreason_${nfid}`)?.value?.trim())
+        { showStatus(`⚠️ يرجى إدخال السبب في ${label}`, '#D03B3B'); return; }
+    }
+    document.getElementById('confirmModal').classList.add('open');
+  }
+  function closeConfirm() { document.getElementById('confirmModal').classList.remove('open'); }
+
+  async function confirmSubmit() {
+    closeConfirm();
+    const btn = document.querySelector('.submit-btn');
+    btn.disabled = true;
+    showStatus('⏳ جاري الإرسال...', 'var(--text-2)');
+
+    const date    = document.getElementById('workDate').value;
+    const weekday = WEEKDAYS[new Date(date).getDay()];
+    const ids     = [...document.querySelectorAll('#worksList .work-card')].map(c => +c.dataset.wid);
+    const nfids   = [...document.querySelectorAll('#nfList .nf-card')].map(c => +c.dataset.nfid);
+
+    const works   = ids.map(id => collectWork(id));
+    const nfWorks = nfids.map(id => collectNF(id));
+    try {
+      await fetch(SHEET_URL, {
+        method: 'POST', mode: 'no-cors',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ formId: FORM_ID, timestamp: new Date().toLocaleString('ar-EG'),
+          responder: RESPONDER_NAME, userId: USER_ID,
+          submissionId: 'sid_' + Date.now() + '_' + Math.random().toString(36).slice(2,6),
+          ...(IS_EDIT_MODE ? { editMode: true } : {}),
+          date, weekday, works, notFinished: nfWorks }),
+      });
+      showStatus('✅ تم الإرسال بنجاح!', '#0F6E56');
+      showReceipt(`${weekday}، ${date.split('-').reverse().join('/')} — ${FORM_ID}`, buildReceipt(works, nfWorks));
+    } catch {
+      showStatus('❌ حدث خطأ. حاول مجددًا.', '#D03B3B');
+      btn.disabled = false;
+    }
+  }
+
+  function showReceipt(sub, bodyHtml) {
+    document.getElementById('receiptSub').textContent = sub;
+    document.getElementById('receiptBody').innerHTML = bodyHtml;
+    document.getElementById('receiptOverlay').classList.add('open');
+  }
+  function buildReceipt(works, nfWorks) {
+    let h = '';
+    if (works.length) {
+      h += `<div class="receipt-section"><div class="receipt-section-title">الأعمال المنجزة (${works.length})</div>`;
+      works.forEach(w => {
+        const time = w.start && w.end ? `${w.start}–${w.end}` : '';
+        const att  = (w.present || w.absent) ? `حضر ${w.present||0} / غاب ${w.absent||0}` : '';
+        h += `<div class="receipt-item"><strong>${w.type||''}${w.book ? ' — '+w.book : ''}</strong>${[w.desc, time, att].filter(Boolean).join(' · ')}</div>`;
+      });
+      h += `</div>`;
+    }
+    if (nfWorks.length) {
+      h += `<div class="receipt-section"><div class="receipt-section-title">لم يتمّ (${nfWorks.length})</div>`;
+      nfWorks.forEach(w => {
+        h += `<div class="receipt-item"><strong>${w.type||''}</strong>${[w.desc||w.book, w.reason].filter(Boolean).join(' · ')}</div>`;
+      });
+      h += `</div>`;
+    }
+    return h;
+  }
+
+  function showStatus(msg, color) {
+    const el = document.getElementById('statusMsg');
+    el.textContent = msg; el.style.color = color;
+    el.style.background = color.startsWith('#') ? color + '18' : '#F5F4F2';
+    el.style.display = 'block';
+  }
+
+  // Init
+  let IS_EDIT_MODE = false;
+  (async () => {
+    const _p = new URLSearchParams(location.search);
+    if (_p.get('editMode')) {
+      IS_EDIT_MODE = true;
+      const editDate = _p.get('editDate') || '';
+      const dateEl = document.getElementById('workDate');
+      dateEl.value = editDate; dateEl.readOnly = true;
+      onDateChange();
+      document.querySelector('.submit-btn').textContent = 'حفظ التعديلات';
+      try {
+        const url = `${SHEET_URL}?action=submissionData&form=${encodeURIComponent(FORM_ID)}&userId=${encodeURIComponent(USER_ID)}&date=${encodeURIComponent(editDate)}`;
+        const res  = await fetch(url, { redirect: 'follow' });
+        const json = await res.json();
+        if (json.status === 'ok' && json.data && (json.data.works || json.data.notFinished)) {
+          document.getElementById('worksList').innerHTML = '';
+          document.getElementById('nfList').innerHTML = '';
+          (json.data.works       || []).forEach(w => addWork(w));
+          (json.data.notFinished || []).forEach(w => addNotFinished(w));
+          if (!(json.data.works || []).length) addWork();
+        } else { addWork(); }
+      } catch { addWork(); }
+    } else {
+      addWork();
+      document.getElementById('workDate').value = new Date().toISOString().slice(0, 10);
+      onDateChange();
+    }
+  })();
+</script>
+<div id="receiptOverlay" class="receipt-overlay">
+  <div class="receipt-card">
+    <div class="receipt-icon">✓</div>
+    <div class="receipt-title">تم الإرسال بنجاح</div>
+    <div class="receipt-sub" id="receiptSub"></div>
+    <div id="receiptBody"></div>
+    <button class="receipt-home-btn" onclick="window.location.href='portal.html'">العودة للرئيسية</button>
+  </div>
+</div>
+</body>
+</html>

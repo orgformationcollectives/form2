@@ -1,0 +1,2030 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>بوابة الاستمارات</title>
+  <style>
+    @font-face { font-family: 'Thmanyah'; src: url('fonts/thmanyahsans-Regular.otf') format('opentype'); font-weight: 400; }
+    @font-face { font-family: 'Thmanyah'; src: url('fonts/thmanyahsans-Medium.otf')  format('opentype'); font-weight: 500; }
+    @font-face { font-family: 'Thmanyah'; src: url('fonts/thmanyahsans-Bold.otf')    format('opentype'); font-weight: 700; }
+    @font-face { font-family: 'Thmanyah'; src: url('fonts/thmanyahsans-Light.otf')   format('opentype'); font-weight: 300; }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      color-scheme: light;
+      --brand:       #534AB7;
+      --brand-light: #EEEDFE;
+      --brand-dark:  #3C3489;
+      --bg:          #F5F4F2;
+      --surface:     #FFFFFF;
+      --surface-2:   #F9F9F8;
+      --border:      rgba(0,0,0,0.08);
+      --border-s:    rgba(0,0,0,0.14);
+      --text-1:      #1A1A1A;
+      --text-2:      #555550;
+      --text-3:      #999994;
+      --danger:      #D03B3B;
+      --danger-bg:   #FDEAEA;
+      --radius-card: 16px;
+      --radius-btn:  10px;
+      --c1-bg:#EEEDFE; --c1-fg:#534AB7;
+      --c2-bg:#E6F1FB; --c2-fg:#185FA5;
+      --c3-bg:#EAF3DE; --c3-fg:#3B6D11;
+      --c4-bg:#E1F5EE; --c4-fg:#0F6E56;
+      --c5-bg:#FAECE7; --c5-fg:#993C1D;
+      --c6-bg:#FBEAF0; --c6-fg:#993556;
+      --ca-bg:#FFF8E6; --ca-fg:#B45309;
+    }
+
+    html, body {
+      min-height: 100%;
+      background: var(--bg);
+      font-family: 'Thmanyah', 'Tajawal', 'Segoe UI', Arial, sans-serif;
+      color: var(--text-1);
+      direction: rtl;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .page { max-width: 720px; margin: 0 auto; padding: 2rem 1rem 4rem; }
+
+    /* ── Header ── */
+    .header { text-align: center; margin-bottom: 2rem; position: relative; }
+
+    .logo {
+      width: 64px; height: 64px; background: var(--brand);
+      border-radius: 18px; display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 1rem; box-shadow: 0 4px 20px rgba(83,74,183,0.25);
+    }
+    .logo svg { width: 32px; height: 32px; fill: #fff; }
+
+    .header h1 { font-size: clamp(19px,5vw,24px); font-weight: 700; margin-bottom: 4px; }
+    .welcome-msg { font-size: 14px; color: var(--text-2); margin-bottom: 2px; }
+
+    .logout-btn {
+      position: absolute; left: 0; top: 0;
+      display: flex; align-items: center; gap: 5px;
+      font-size: 13px; font-weight: 600; color: var(--text-3);
+      background: none; border: 1.5px solid var(--border); border-radius: 8px;
+      padding: 6px 12px; cursor: pointer; font-family: inherit;
+      transition: color 0.15s, border-color 0.15s;
+    }
+    .logout-btn:hover { color: var(--danger); border-color: var(--danger); }
+    .logout-btn svg { width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 2; }
+
+    /* ── Grid & Cards ── */
+    .grid { display: grid; grid-template-columns: 1fr; gap: 12px; }
+    @media (min-width: 520px) { .grid { grid-template-columns: repeat(2, 1fr); } }
+
+    .card {
+      display: flex; align-items: center; gap: 14px;
+      background: var(--surface); border: 1.5px solid var(--border);
+      border-radius: var(--radius-card); padding: 14px 16px;
+      text-decoration: none; color: inherit; cursor: pointer;
+      transition: transform 0.14s, border-color 0.14s, box-shadow 0.14s;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .card:hover { transform: translateY(-2px); border-color: var(--brand); box-shadow: 0 4px 16px rgba(83,74,183,0.12); }
+    .card:active { transform: scale(0.98); }
+
+    .icon-wrap {
+      width: 46px; height: 46px; border-radius: 12px;
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+    }
+    .icon-wrap svg { width: 22px; height: 22px; stroke: currentColor; fill: none; stroke-width: 1.8; }
+
+    .c1 .icon-wrap { background: var(--c1-bg); color: var(--c1-fg); }
+    .c2 .icon-wrap { background: var(--c2-bg); color: var(--c2-fg); }
+    .c3 .icon-wrap { background: var(--c3-bg); color: var(--c3-fg); }
+    .c4 .icon-wrap { background: var(--c4-bg); color: var(--c4-fg); }
+    .c5 .icon-wrap { background: var(--c5-bg); color: var(--c5-fg); }
+    .c6 .icon-wrap { background: var(--c6-bg); color: var(--c6-fg); }
+    .ca .icon-wrap { background: var(--ca-bg); color: var(--ca-fg); }
+
+    .card-text { flex: 1; min-width: 0; }
+    .card-num  { font-size: 11px; font-weight: 500; color: var(--text-3); margin-bottom: 3px; }
+    .card-name { font-size: 14.5px; font-weight: 600; color: var(--text-1); line-height: 1.45; }
+    .arrow { flex-shrink: 0; width: 18px; height: 18px; stroke: var(--text-3); transform: scaleX(-1); }
+
+    /* ── Export Panel ── */
+    .export-panel {
+      background: var(--surface); border: 1.5px solid var(--border);
+      border-radius: var(--radius-card); margin-bottom: 2rem; overflow: hidden;
+    }
+    .export-toggle {
+      width: 100%; display: flex; align-items: center; justify-content: space-between;
+      padding: 14px 18px; background: none; border: none; cursor: pointer;
+      font-family: inherit; color: var(--text-1);
+    }
+    .export-toggle:hover { background: var(--brand-light); }
+    .export-toggle-left { display: flex; align-items: center; gap: 10px; }
+    .export-icon-wrap {
+      width: 36px; height: 36px; background: var(--brand); border-radius: 10px;
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+    }
+    .export-icon-wrap svg { width: 18px; height: 18px; stroke: #fff; fill: none; stroke-width: 2; }
+    .export-toggle-title { font-size: 15px; font-weight: 700; }
+    .export-toggle-sub   { font-size: 12px; color: var(--text-3); margin-top: 1px; }
+    .export-chev { width: 18px; height: 18px; stroke: var(--text-3); transition: transform 0.2s; flex-shrink: 0; }
+    .export-chev.open { transform: rotate(180deg); }
+    .export-body { padding: 0 18px 18px; border-top: 1px solid var(--border); display: none; }
+    .export-body.open { display: block; }
+
+    .exp-step { margin-top: 14px; }
+    .exp-row  { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 10px; }
+    .exp-label { font-size: 13px; font-weight: 600; color: var(--text-2); white-space: nowrap; }
+    .exp-input {
+      flex: 1; min-width: 150px; padding: 9px 12px;
+      border: 1.5px solid var(--border-s); border-radius: 8px;
+      background: var(--surface-2); color: var(--text-1);
+      font-family: inherit; font-size: 14px; direction: rtl; outline: none;
+      transition: border-color 0.15s;
+    }
+    .exp-input:focus { border-color: var(--brand); }
+    .exp-input[type="date"] { direction: ltr; }
+
+    /* Mode toggle */
+    .exp-mode { display: flex; gap: 8px; margin-bottom: 12px; }
+    .exp-mode-btn {
+      flex: 1; padding: 8px; border: 1.5px solid var(--border-s);
+      border-radius: 8px; background: var(--surface-2);
+      font-family: inherit; font-size: 13px; font-weight: 600;
+      color: var(--text-2); cursor: pointer; transition: all 0.15s; text-align: center;
+    }
+    .exp-mode-btn.active { background: var(--brand-light); border-color: var(--brand); color: var(--brand); }
+
+    .exp-section-label { font-size: 12px; font-weight: 700; color: var(--text-3); letter-spacing: 0.05em; margin: 14px 0 8px; }
+    .exp-checkboxes { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+    @media (max-width: 520px) { .exp-checkboxes { grid-template-columns: 1fr; } }
+    .exp-check-item {
+      display: flex; align-items: center; gap: 8px;
+      padding: 7px 10px; border-radius: 8px; cursor: pointer;
+      border: 1px solid var(--border); background: var(--surface-2);
+      font-size: 13px; color: var(--text-1); user-select: none;
+      transition: border-color 0.15s, background 0.15s;
+    }
+    .exp-check-item:hover { border-color: var(--brand); background: var(--brand-light); }
+    .exp-check-item input[type="checkbox"] { accent-color: var(--brand); width: 15px; height: 15px; flex-shrink: 0; }
+
+    .exp-actions { display: flex; align-items: center; gap: 8px; margin-top: 14px; flex-wrap: wrap; }
+    .exp-sel-btn {
+      padding: 7px 14px; border: 1.5px solid var(--border);
+      border-radius: 8px; background: none; font-family: inherit;
+      font-size: 13px; color: var(--text-2); cursor: pointer; transition: border-color 0.15s;
+    }
+    .exp-sel-btn:hover { border-color: var(--brand); color: var(--brand); }
+    .exp-export-btn {
+      margin-right: auto; padding: 10px 22px;
+      background: var(--brand); color: #fff;
+      border: none; border-radius: 8px; font-family: inherit;
+      font-size: 14px; font-weight: 700; cursor: pointer;
+      display: flex; align-items: center; gap: 8px; transition: background 0.15s;
+    }
+    .exp-export-btn:hover   { background: var(--brand-dark); }
+    .exp-export-btn:disabled { opacity: 0.6; cursor: not-allowed; }
+    .exp-export-btn svg { width: 16px; height: 16px; stroke: #fff; fill: none; stroke-width: 2; }
+    .exp-status { margin-top: 10px; font-size: 13px; color: var(--text-2); display: none; }
+
+    /* ── Add User Modal ── */
+    .modal-overlay {
+      display: none; position: fixed; inset: 0;
+      background: rgba(0,0,0,0.45); z-index: 100;
+      align-items: center; justify-content: center; padding: 1rem;
+    }
+    .modal-overlay.open { display: flex; }
+    .modal {
+      background: var(--surface); border-radius: 18px;
+      padding: 1.75rem; width: 100%; max-width: 380px;
+      box-shadow: 0 8px 40px rgba(0,0,0,0.18);
+    }
+    .modal-title { font-size: 17px; font-weight: 700; margin-bottom: 1.25rem; }
+    .modal-field { margin-bottom: 1rem; }
+    .modal-label { display: block; font-size: 13px; font-weight: 600; color: var(--text-2); margin-bottom: 5px; }
+    .modal-input {
+      width: 100%; padding: 11px 13px;
+      border: 1.5px solid var(--border-s); border-radius: 9px;
+      background: var(--bg); color: var(--text-1);
+      font-family: inherit; font-size: 14px; direction: ltr; text-align: right;
+      outline: none; transition: border-color 0.15s;
+    }
+    .modal-input:focus { border-color: var(--brand); }
+    .modal-input::placeholder { color: var(--text-3); }
+    select.modal-input { direction: rtl; }
+    .modal-actions { display: flex; gap: 8px; margin-top: 1.25rem; }
+    .modal-cancel {
+      flex: 1; padding: 11px; border: 1.5px solid var(--border);
+      border-radius: 9px; background: none; font-family: inherit;
+      font-size: 14px; font-weight: 600; color: var(--text-2); cursor: pointer;
+    }
+    .modal-submit {
+      flex: 2; padding: 11px; background: var(--brand); color: #fff;
+      border: none; border-radius: 9px; font-family: inherit;
+      font-size: 14px; font-weight: 700; cursor: pointer; transition: background 0.15s;
+    }
+    .modal-submit:hover { background: var(--brand-dark); }
+    .modal-submit:disabled { opacity: 0.6; cursor: not-allowed; }
+    .modal-msg { font-size: 13px; margin-top: 10px; display: none; text-align: center; }
+
+    /* ══════════════════════════════════════════════════════════════
+       PRINT AREA
+       ══════════════════════════════════════════════════════════════ */
+    #printArea {
+      display: none;
+      font-family: 'Thmanyah', 'Tajawal', Arial, sans-serif;
+      direction: rtl; color: #1A1A1A; background: #fff;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+    @media print {
+      .page          { display: none !important; }
+      .modal-overlay { display: none !important; }
+      .preview-topbar { display: none !important; }
+      .preview-overlay { position: static !important; background: transparent !important; display: block !important; }
+      .preview-scroll  { overflow: visible !important; padding: 0 !important; }
+      .preview-page-wrap { width: auto !important; margin: 0 !important; padding: 0 !important; box-shadow: none !important; min-height: 0 !important; }
+      #printArea { display: block !important; }
+      @page { size: A4 portrait; margin: 1.5cm 2cm; }
+      * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+    }
+
+    /* ── Preview Overlay ───────────────────────────────────────── */
+    .preview-overlay {
+      display: none; position: fixed; inset: 0; z-index: 900;
+      background: #E4E3E0; flex-direction: column;
+      font-family: 'Thmanyah', 'Tajawal', Arial, sans-serif;
+    }
+    .preview-overlay.open { display: flex; }
+    .preview-topbar {
+      display: flex; align-items: center; justify-content: space-between;
+      background: #fff; border-bottom: 1px solid #E0E0E0;
+      padding: 10px 20px; flex-shrink: 0; direction: rtl; gap: 16px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+    }
+    .preview-topbar-center { text-align: center; flex: 1; }
+    .preview-topbar-title  { font-size: 14px; font-weight: 700; color: #1A1A1A; }
+    .preview-topbar-meta   { font-size: 11px; color: #888; margin-top: 2px; }
+    .preview-btn {
+      display: flex; align-items: center; gap: 6px;
+      border-radius: 8px; padding: 8px 16px; font-size: 13px;
+      cursor: pointer; font-family: inherit; font-weight: 600;
+      white-space: nowrap;
+    }
+    .preview-btn svg { width: 16px; height: 16px; stroke: currentColor; flex-shrink: 0; }
+    .preview-btn-close { background: #F5F4F2; border: 1px solid #DDDDD8; color: #444; }
+    .preview-btn-close:hover { background: #EBEBEB; }
+    .preview-btn-print { background: #534AB7; border: none; color: #fff; }
+    .preview-btn-print:hover { background: #4640A0; }
+    .preview-scroll { flex: 1; overflow-y: auto; padding: 28px 0 40px; }
+    .preview-page-wrap {
+      width: 210mm; margin: 0 auto;
+      background: #fff; box-shadow: 0 2px 28px rgba(0,0,0,0.16);
+      padding: 1.5cm 2cm; min-height: 297mm;
+    }
+    #printArea { display: none; }
+    .preview-overlay.open #printArea { display: block; }
+
+    /* Cover */
+    .pf-cover { page-break-after: always; padding: 0; }
+    .pf-cover-accent { height: 6px; background: linear-gradient(90deg, #534AB7, #8B85D4); }
+    .pf-cover-top {
+      text-align: center; padding: 1.4rem 0 1rem;
+      border-bottom: 1.5px solid #EBEBEB; margin-bottom: 1.2rem;
+    }
+    .pf-cover-main-title { font-size: 26px; font-weight: 700; color: #1A1A1A; }
+    .pf-cover-date { font-size: 14px; color: #534AB7; font-weight: 600; margin-top: 6px; }
+    .pf-cover-sub { font-size: 11px; color: #999; margin-top: 3px; }
+    .pf-cover-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+    .pf-cover-card { display: flex; align-items: stretch; border: 1px solid #E8E8E8; border-radius: 10px; overflow: hidden; }
+    .pf-cover-card-accent { width: 5px; flex-shrink: 0; }
+    .pf-cover-card-body { padding: 10px 14px; flex: 1; }
+    .pf-cover-card-name { font-size: 12px; font-weight: 700; margin-bottom: 6px; }
+    .pf-cover-card-stats { font-size: 11px; color: #777; display: flex; align-items: center; gap: 8px; }
+    .pf-cover-card-stat { display: flex; align-items: center; gap: 4px; }
+    .pf-cover-card-dot  { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+    .pf-cover-no-data   { font-size: 11px; color: #bbb; font-style: italic; }
+    .pf-missing-box { margin-top: 14px; border: 1.5px solid #F5C2C2; border-radius: 10px; overflow: hidden; }
+    .pf-missing-head { background: #FEF0F0; padding: 8px 14px; font-size: 12px; font-weight: 700; color: #B03030; }
+    .pf-missing-list { padding: 8px 14px 10px; display: flex; flex-wrap: wrap; gap: 6px; }
+    .pf-missing-tag  { background: #FEF0F0; border: 1px solid #F5C2C2; border-radius: 6px; padding: 3px 10px; font-size: 12px; color: #B03030; font-weight: 600; }
+
+    /* Shared free times */
+    .pf-free-box { margin-top: 14px; border: 1.5px solid #C2DEB0; border-radius: 10px; overflow: hidden; }
+    .pf-free-head { background: #EEF7E6; padding: 8px 14px; font-size: 12px; font-weight: 700; color: #3B6D11; }
+    .pf-free-body { padding: 8px 14px 10px; }
+    .pf-free-day  { font-size: 11px; font-weight: 700; color: #555; margin: 6px 0 4px; }
+    .pf-free-slots { display: flex; flex-wrap: wrap; gap: 5px; }
+    .pf-free-slot { background: #EEF7E6; border: 1px solid #C2DEB0; border-radius: 6px; padding: 3px 10px; font-size: 11px; color: #3B6D11; font-weight: 600; white-space: nowrap; }
+    .pf-free-none { font-size: 11px; color: #999; font-style: italic; }
+
+    /* Cover — response rate + per-form bars */
+    .pf-cover-rate-row { display: flex; align-items: center; gap: 14px; margin-bottom: 1.2rem; padding: 10px 14px; background: #F9F9F8; border-radius: 10px; border: 1px solid #EBEBEB; }
+    .pf-cover-rate-donut { flex-shrink: 0; line-height: 0; }
+    .pf-cover-rate-text { flex: 1; }
+    .pf-cover-rate-big { font-size: 18px; font-weight: 700; color: #534AB7; }
+    .pf-cover-rate-sub { font-size: 10.5px; color: #888; margin-top: 3px; }
+    .pf-cover-bars-section { margin-bottom: 1.2rem; }
+    .pf-cover-bars-title { font-size: 10px; font-weight: 700; color: #888; margin-bottom: 7px; letter-spacing: 0.04em; }
+    .pf-cover-bar-row { display: flex; align-items: center; gap: 8px; margin-bottom: 5px; }
+    .pf-cover-bar-label { font-size: 10px; color: #555; width: 110px; text-align: right; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; flex-shrink: 0; }
+    .pf-cover-bar-wrap { flex: 1; height: 11px; background: #EBEBEB; border-radius: 3px; overflow: hidden; }
+    .pf-cover-bar-fill { height: 100%; border-radius: 3px; opacity: 0.85; }
+    .pf-cover-bar-val { font-size: 10px; color: #555; font-weight: 700; min-width: 20px; text-align: left; }
+
+    /* Per-responder pages */
+    .pf-responder { page-break-before: always; padding-top: 0.4rem; }
+    .pf-resp-bar {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 12px 20px; border-radius: 10px; color: #fff; margin-bottom: 16px;
+    }
+    .pf-resp-bar-name { font-weight: 700; font-size: 15px; }
+    .pf-resp-bar-meta  { opacity: 0.8; font-size: 10px; }
+
+    /* Day header — centered divider */
+    .pf-day-header {
+      display: flex; align-items: center; gap: 10px;
+      font-size: 11px; font-weight: 700; color: #555;
+      margin: 16px 0 6px;
+    }
+    .pf-day-header::before, .pf-day-header::after {
+      content: ''; flex: 1; height: 1px; background: #DDDDD8;
+    }
+
+    /* Table */
+    .pf-table { width: 100%; border-collapse: collapse; font-size: 11px; margin-bottom: 0.8rem; }
+    .pf-table th {
+      border-top: none; border-left: none; border-right: none;
+      border-bottom: 2px solid rgba(0,0,0,0.18);
+      padding: 8px 10px; text-align: right; font-weight: 700; color: #fff; font-size: 10.5px;
+    }
+    .pf-table td {
+      border: none; border-bottom: 1px solid #EDEDED;
+      padding: 7px 10px; text-align: right; vertical-align: top;
+    }
+    .pf-table td.pf-nowrap { white-space: nowrap; }
+    .pf-table tbody tr:nth-child(even) { background: #F9F9F8; }
+    .pf-elapsed-row td { font-size:10px; color:#888; padding:2px 10px 6px; border-top:none !important; background:#fff !important; }
+    .pf-day-row td { font-weight: 700; font-size: 10px; background: #F2F2F0 !important; color: #333; padding: 5px 10px; border-top: 1.5px solid #DDDDD8; }
+
+    /* Summary box */
+    .pf-summary-box { margin-top: 12px; padding: 12px 14px; border-radius: 8px; background: #F5F4F2; }
+    .pf-summary-title { font-weight: 700; font-size: 11.5px; margin-bottom: 8px; }
+    .pf-summary-pills { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 10px; }
+    .pf-summary-pill {
+      display: flex; align-items: center; gap: 5px;
+      border: 1.5px solid; border-radius: 20px;
+      padding: 3px 10px 3px 8px; font-size: 10.5px;
+    }
+    .pf-pill-count {
+      font-weight: 700; font-size: 11px;
+      background: currentColor; color: #fff !important;
+      border-radius: 50%; width: 18px; height: 18px;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .pf-pill-type { font-weight: 600; }
+
+    /* تمّ / لم يتمّ ratio bar */
+    .pf-ratio-bar { height: 6px; border-radius: 3px; overflow: hidden; display: flex; }
+    .pf-ratio-done { background: #5AB467; }
+    .pf-ratio-nf   { background: #EF9A9A; }
+    .pf-ratio-label { font-size: 9.5px; color: #888; margin-top: 4px; display: flex; justify-content: space-between; }
+
+    /* Work-type label */
+    .pf-work-type-label {
+      font-size: 11px; font-weight: 700;
+      margin: 10px 0 2px; padding: 2px 8px;
+      border-right: 3px solid currentColor;
+    }
+
+    /* NF section header */
+    .pf-nf-header {
+      font-size: 11px; font-weight: 700; color: #9B3030;
+      padding: 3px 8px; margin: 14px 0 4px;
+      border-right: 3px solid #D03B3B;
+    }
+
+    /* Type section in aggregate */
+    .pf-type-header {
+      font-size: 12px; font-weight: 700; margin: 14px 0 4px;
+      padding-bottom: 3px; border-bottom: 2px solid currentColor;
+    }
+
+    /* Bar chart rows (aggregate) */
+    .pf-bars-section { margin: 10px 0 14px; padding: 10px 14px; background: #F9F9F8; border-radius: 8px; }
+    .pf-bars-title { font-size: 10px; font-weight: 700; color: #888; margin-bottom: 8px; letter-spacing: 0.04em; }
+    .pf-bar-row { display: flex; align-items: center; gap: 8px; margin-bottom: 5px; }
+    .pf-bar-label { font-size: 10.5px; color: #444; width: 90px; text-align: right; flex-shrink: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .pf-bar-wrap { flex: 1; height: 12px; background: #EBEBEB; border-radius: 4px; overflow: hidden; }
+    .pf-bar-fill { height: 100%; border-radius: 4px; opacity: 0.85; }
+    .pf-bar-val { font-size: 10px; color: #555; font-weight: 700; min-width: 20px; text-align: left; }
+
+    /* General notes */
+    .pf-general-notes { margin-top: 8px; padding: 10px 14px; border-radius: 8px; background: #F5F4F2; font-size: 11.5px; border-right: 3px solid #ccc; }
+    .pf-general-notes strong { display: block; margin-bottom: 4px; font-size: 11px; }
+
+    .pf-empty { margin-top: 1rem; padding: 24px; text-align: center; color: #999; font-size: 13px; border: 1px dashed #ccc; border-radius: 8px; }
+
+  </style>
+  <style>
+    /* ── Stats panel ──────────────────────────────────────────── */
+    .stats-date-row { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; flex-wrap: wrap; }
+    .stats-refresh-btn {
+      display: flex; align-items: center; gap: 6px;
+      background: var(--brand); color: #fff; border: none;
+      border-radius: 8px; padding: 7px 14px; font-size: 13px;
+      font-weight: 600; font-family: inherit; cursor: pointer;
+    }
+    .stats-refresh-btn:hover { background: #4640A0; }
+    .stats-refresh-btn svg { width: 14px; height: 14px; stroke: currentColor; }
+    .stats-refresh-btn:disabled { opacity: 0.6; cursor: default; }
+    .stats-overall {
+      display: flex; align-items: center; gap: 14px;
+      background: var(--surface-2); border-radius: 10px;
+      padding: 10px 14px; margin-bottom: 14px;
+      border: 1px solid var(--border);
+    }
+    .stats-overall-label { font-size: 12px; color: var(--text-2); }
+    .stats-overall-bar-wrap { flex: 1; height: 8px; background: var(--border); border-radius: 4px; overflow: hidden; }
+    .stats-overall-bar-fill { height: 100%; background: var(--brand); border-radius: 4px; transition: width 0.4s; }
+    .stats-overall-num { font-size: 13px; font-weight: 700; color: var(--brand); white-space: nowrap; }
+    .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    @media (max-width: 520px) { .stats-grid { grid-template-columns: 1fr; } }
+    .stats-card {
+      background: var(--surface); border: 1.5px solid var(--border);
+      border-radius: 12px; padding: 12px 14px; border-top: 3px solid var(--card-color, #534AB7);
+    }
+    .stats-card-name { font-size: 12px; font-weight: 700; color: var(--card-color, #534AB7); margin-bottom: 8px; }
+    .stats-card-bar-wrap { height: 6px; background: var(--border); border-radius: 3px; overflow: hidden; margin-bottom: 8px; }
+    .stats-card-bar-fill { height: 100%; border-radius: 3px; transition: width 0.4s; }
+    .stats-card-count { font-size: 11px; color: var(--text-3); margin-bottom: 8px; }
+    .stats-names { display: flex; flex-direction: column; gap: 3px; }
+    .stats-name-item { display: flex; align-items: center; gap: 6px; font-size: 12px; }
+    .stats-name-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+    .stats-status { font-size: 12px; color: var(--text-3); font-style: italic; text-align: center; padding: 10px 0; }
+
+    /* ── Users panel ──────────────────────────────────────────── */
+    .users-toolbar { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; flex-wrap: wrap; gap: 8px; }
+    .users-toolbar-title { font-size: 13px; font-weight: 700; color: var(--text-1); }
+    .users-add-btn {
+      display: flex; align-items: center; gap: 6px;
+      background: var(--brand); color: #fff; border: none;
+      border-radius: 8px; padding: 7px 14px; font-size: 13px;
+      font-weight: 600; font-family: inherit; cursor: pointer;
+    }
+    .users-add-btn:hover { background: #4640A0; }
+    .users-add-btn svg { width: 14px; height: 14px; stroke: currentColor; }
+    .users-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+    .users-table th { border-bottom: 2px solid var(--border); padding: 8px 10px; text-align: right; font-size: 12px; color: var(--text-3); font-weight: 700; }
+    .users-table td { border-bottom: 1px solid var(--border); padding: 9px 10px; text-align: right; vertical-align: middle; }
+    .users-table tbody tr:last-child td { border-bottom: none; }
+    .users-table tbody tr:hover { background: var(--surface-2); }
+    .users-role-badge {
+      display: inline-block; padding: 2px 9px; border-radius: 20px;
+      font-size: 11px; font-weight: 600;
+    }
+    .users-role-badge.admin { background: #EDE8FF; color: var(--brand); }
+    .users-role-badge.user  { background: #EEF7E6; color: #3B6D11; }
+    .users-action-btn {
+      background: none; border: 1px solid var(--border); border-radius: 6px;
+      padding: 4px 8px; font-size: 11px; cursor: pointer;
+      font-family: inherit; color: var(--text-2);
+    }
+    .users-action-btn:hover { background: var(--surface-2); }
+    .users-action-btn.del { color: #C03030; border-color: #F5C2C2; }
+    .users-action-btn.del:hover { background: #FEF0F0; }
+    .users-edit-row td { background: var(--surface-2) !important; }
+    .users-edit-input {
+      border: 1.5px solid var(--brand); border-radius: 6px;
+      padding: 4px 8px; font-size: 12px; font-family: inherit;
+      direction: rtl; width: 100%; box-sizing: border-box;
+    }
+    .users-edit-select {
+      border: 1.5px solid var(--brand); border-radius: 6px;
+      padding: 4px 8px; font-size: 12px; font-family: inherit;
+      direction: rtl; background: #fff;
+    }
+    .users-msg { font-size: 12px; margin-top: 10px; display: none; }
+
+    /* History panel */
+    .hist-date-row { display:flex; align-items:center; gap:10px; margin-bottom:16px; flex-wrap:wrap; }
+    .hist-empty { font-size:13px; color:var(--text-3); text-align:center; padding:20px 0; }
+    .hist-grid { display:grid; grid-template-columns:1fr; gap:10px; }
+    @media(min-width:480px){ .hist-grid { grid-template-columns:repeat(2,1fr); } }
+    .hist-card { background:var(--surface); border:1.5px solid var(--border); border-radius:12px; padding:14px 16px; }
+    .hist-card-name { font-size:13px; font-weight:700; color:var(--text-1); margin-bottom:4px; }
+    .hist-card-count { font-size:12px; color:var(--text-3); margin-bottom:12px; }
+    .hist-card-actions { display:flex; gap:8px; }
+    .hist-btn { flex:1; padding:8px; border:none; border-radius:8px; font-size:13px; font-weight:600; cursor:pointer; font-family:inherit; }
+    .hist-btn-edit { background:var(--brand-light); color:var(--brand); }
+    .hist-btn-edit:hover { background:#DDDCFA; }
+    .hist-btn-del  { background:var(--danger-bg); color:var(--danger); }
+    .hist-btn-del:hover { opacity:.85; }
+    .hist-status { font-size:13px; color:var(--text-3); }
+  </style>
+</head>
+<body>
+<div class="page">
+
+  <!-- Export Panel (admin only) -->
+  <div class="export-panel" id="exportPanel" style="display:none">
+    <button class="export-toggle" onclick="toggleExport()" aria-expanded="false" id="exportToggle">
+      <div class="export-toggle-left">
+        <div class="export-icon-wrap">
+          <svg viewBox="0 0 24 24"><path d="M12 3v12m0 0-4-4m4 4 4-4M3 17v2a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-2"/></svg>
+        </div>
+        <div>
+          <div class="export-toggle-title">تصدير البيانات — PDF</div>
+          <div class="export-toggle-sub">استخراج التقارير بصيغة PDF</div>
+        </div>
+      </div>
+      <svg class="export-chev" id="exportChev" viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+    </button>
+
+    <div class="export-body" id="exportBody">
+      <div class="exp-step">
+        <!-- Mode -->
+        <div class="exp-section-label">نوع التصدير:</div>
+        <div class="exp-mode">
+          <button class="exp-mode-btn active" id="modeDay" onclick="setMode('day')">يوم واحد</button>
+          <button class="exp-mode-btn" id="modeRange" onclick="setMode('range')">نطاق تاريخ</button>
+        </div>
+
+        <!-- Single day -->
+        <div id="panelDay">
+          <div class="exp-row">
+            <label class="exp-label">التاريخ:</label>
+            <input class="exp-input" type="date" id="expDate" />
+          </div>
+        </div>
+
+        <!-- Date range -->
+        <div id="panelRange" style="display:none">
+          <div class="exp-row">
+            <label class="exp-label">من:</label>
+            <input class="exp-input" type="date" id="expDateFrom" />
+          </div>
+          <div class="exp-row">
+            <label class="exp-label">إلى:</label>
+            <input class="exp-input" type="date" id="expDateTo" />
+          </div>
+        </div>
+
+        <div class="exp-section-label">الاستمارات المراد تصديرها:</div>
+        <div class="exp-checkboxes" id="expCheckboxes"></div>
+
+        <div class="exp-actions">
+          <button class="exp-sel-btn" onclick="toggleAllForms(true)">تحديد الكل</button>
+          <button class="exp-sel-btn" onclick="toggleAllForms(false)">إلغاء الكل</button>
+          <button class="exp-export-btn" id="expExportBtn" onclick="doExport()">
+            <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M12 18v-6m-3 3 3 3 3-3"/></svg>
+            تصدير PDF
+          </button>
+        </div>
+        <div class="exp-status" id="expStatus"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Stats Panel (admin only) -->
+  <div class="export-panel" id="statsPanel" style="display:none">
+    <button class="export-toggle" onclick="toggleStats()" aria-expanded="false" id="statsToggle">
+      <div class="export-toggle-left">
+        <div class="export-icon-wrap" style="background:#0F6E56">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 20V10M12 20V4M6 20v-6"/></svg>
+        </div>
+        <div>
+          <div class="export-toggle-title">لوحة الإحصائيات اليومية</div>
+          <div class="export-toggle-sub">معدّل الاستجابة لكل استمارة</div>
+        </div>
+      </div>
+      <svg class="export-chev" id="statsChev" viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+    </button>
+    <div class="export-body" id="statsBody">
+      <div class="exp-step">
+        <div class="stats-date-row">
+          <label class="exp-label">التاريخ:</label>
+          <input class="exp-input" type="date" id="statsDate" />
+          <button class="stats-refresh-btn" id="statsRefreshBtn" onclick="loadStats()">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M23 4v6h-6M1 20v-6h6"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
+            تحديث
+          </button>
+        </div>
+        <div id="statsContent"><div class="stats-status">اختر تاريخًا ثم اضغط تحديث</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Users Panel (admin only) -->
+  <div class="export-panel" id="usersPanel" style="display:none">
+    <button class="export-toggle" onclick="toggleUsers()" aria-expanded="false" id="usersToggle">
+      <div class="export-toggle-left">
+        <div class="export-icon-wrap" style="background:#185FA5">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        </div>
+        <div>
+          <div class="export-toggle-title">إدارة المستخدمين</div>
+          <div class="export-toggle-sub">تعديل وحذف المستخدمين</div>
+        </div>
+      </div>
+      <svg class="export-chev" id="usersChev" viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+    </button>
+    <div class="export-body" id="usersBody">
+      <div class="exp-step">
+        <div class="users-toolbar">
+          <div class="users-toolbar-title" id="usersCount"></div>
+          <button class="users-add-btn" onclick="document.getElementById('addUserModal').classList.add('open')">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="8.5" cy="7" r="4"/><line x1="20" y1="8" x2="20" y2="14"/><line x1="23" y1="11" x2="17" y2="11"/></svg>
+            إضافة مستخدم
+          </button>
+        </div>
+        <div id="usersTableWrap"></div>
+        <div class="users-msg" id="usersMsg"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- History Panel (all users except user_id=1) -->
+  <div class="export-panel" id="historyPanel" style="display:none">
+    <button class="export-toggle" onclick="toggleHistory()" aria-expanded="false" id="historyToggle">
+      <div class="export-toggle-left">
+        <div class="export-icon-wrap" style="background:#B45309">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        </div>
+        <div>
+          <div class="export-toggle-title">سجل الاستمارات المسجّلة مسبقًا</div>
+          <div class="export-toggle-sub">استعراض وتعديل وحذف استماراتك</div>
+        </div>
+      </div>
+      <svg class="export-chev" id="historyChev" viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+    </button>
+    <div class="export-body" id="historyBody">
+      <div class="exp-step">
+        <div class="hist-date-row">
+          <label class="exp-label">التاريخ:</label>
+          <input class="exp-input" type="date" id="historyDate" onchange="loadHistory()" />
+        </div>
+        <div id="historyContent"><div class="hist-empty">اختر تاريخًا لعرض الاستمارات المسجّلة</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Header -->
+  <header class="header">
+    <button class="logout-btn" onclick="doLogout()">
+      <svg viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"/></svg>
+      خروج
+    </button>
+    <div class="logo" aria-hidden="true">
+      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2M9 5a2 2 0 0 0 2 2h2a2 2 0 0 0 2-2M9 5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2m-6 9 2 2 4-4"/>
+      </svg>
+    </div>
+    <h1>بوابة الاستمارات</h1>
+    <p class="welcome-msg" id="welcomeMsg"></p>
+  </header>
+
+  <!-- Cards grid -->
+  <div class="grid" id="grid"></div>
+
+</div>
+
+<!-- Add User Modal -->
+<div class="modal-overlay" id="addUserModal">
+  <div class="modal">
+    <div class="modal-title">إضافة مستخدم جديد</div>
+    <div class="modal-field">
+      <label class="modal-label">رقم الهاتف</label>
+      <input class="modal-input" type="tel" id="newPhone" placeholder="05XXXXXXXX" inputmode="tel" />
+    </div>
+    <div class="modal-field">
+      <label class="modal-label">الاسم الكامل</label>
+      <input class="modal-input" type="text" id="newName" placeholder="أدخل الاسم الكامل" />
+    </div>
+    <div class="modal-field">
+      <label class="modal-label">الدور</label>
+      <select class="modal-input" id="newRole">
+        <option value="user">مستخدم</option>
+        <option value="admin">مسؤول (Admin)</option>
+      </select>
+    </div>
+    <div class="modal-actions">
+      <button class="modal-cancel" onclick="closeAddUser()">إلغاء</button>
+      <button class="modal-submit" id="addUserBtn" onclick="submitAddUser()">إضافة</button>
+    </div>
+    <div class="modal-msg" id="addUserMsg"></div>
+  </div>
+</div>
+
+<!-- Preview Overlay -->
+<div id="previewOverlay" class="preview-overlay">
+  <div class="preview-topbar">
+    <button class="preview-btn preview-btn-close" onclick="closePreview()">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+      إغلاق
+    </button>
+    <div class="preview-topbar-center">
+      <div class="preview-topbar-title">معاينة قبل الطباعة</div>
+      <div class="preview-topbar-meta" id="previewMeta"></div>
+    </div>
+    <button class="preview-btn preview-btn-print" onclick="window.print()">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M6 9V2h12v7M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2M6 14h12v8H6z"/></svg>
+      طباعة
+    </button>
+  </div>
+  <div class="preview-scroll">
+    <div class="preview-page-wrap">
+      <div id="printArea" dir="rtl"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+  /* ── Auth ─────────────────────────────────────────────────── */
+  const _user = JSON.parse(sessionStorage.getItem('user') || 'null');
+  if (!_user) window.location.href = 'index.html';
+
+  const IS_ADMIN = _user && _user.user_role === 'admin';
+
+  document.getElementById('welcomeMsg').textContent = 'أهلًا وسهلًا، ' + (_user ? _user.full_name : '');
+
+  function doLogout() {
+    sessionStorage.removeItem('user');
+    window.location.href = 'index.html';
+  }
+
+  /* ── Config ───────────────────────────────────────────────── */
+  const SHEET_URL   = "https://script.google.com/macros/s/AKfycbyx1sJwQM6-aQ8CgZ9TCPohsl7UXIpBR3ehDsMFpQHokE9msH6Mi7zw1BATQgNI1Lu2/exec";
+  const EXPORT_KEY  = "12345.naser";
+
+  const FORM_REGISTRY = [
+    { num:1, sheet:"برنامج الأعمال اليوميّة",        color:"#534AB7", file:"form1.html",  colorClass:"c1" },
+    { num:2, sheet:"مسؤول السّاحة",                   color:"#185FA5", file:"form5.html",  colorClass:"c2" },
+    { num:3, sheet:"مسؤول المعهد",                    color:"#3B6D11", file:"form6.html",  colorClass:"c3" },
+    { num:4, sheet:"مسؤول نشاطات المقارئ",            color:"#0F6E56", file:"form9.html",  colorClass:"c4" },
+    { num:5, sheet:"برنامج تشغيل مبنى مدينة نصر",    color:"#993C1D", file:"form10.html", colorClass:"c5", label:"استمارة برنامج التشغيل" },
+    { num:6, sheet:"برنامج تشغيل ساحة (1)",           color:"#993556", file:"form10.html", colorClass:"c5", hidden:true },
+  ];
+
+  const FORM_ICONS = [
+    `<svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M3 9h18M9 21V9"/></svg>`,
+    `<svg viewBox="0 0 24 24"><path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2M9 5a2 2 0 0 0 2 2h2a2 2 0 0 0 2-2M9 5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2m-6 9 2 2 4-4"/></svg>`,
+    `<svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M9 22V12h6v10"/></svg>`,
+    `<svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>`,
+    `<svg viewBox="0 0 24 24"><rect x="4" y="2" width="16" height="20" rx="2"/><path d="M9 22v-4h6v4M8 6h.01M12 6h.01M16 6h.01M8 10h.01M12 10h.01M16 10h.01M8 14h.01M12 14h.01M16 14h.01"/></svg>`,
+    `<svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>`,
+  ];
+
+  const RESPONDER_COL  = 2;
+  const DATA_START_COL = 3;
+
+  const WEEKDAYS = ['الأحد','الإثنين','الثلاثاء','الأربعاء','الخميس','الجمعة','السبت'];
+
+  /* ── Build cards ──────────────────────────────────────────── */
+  (function buildGrid() {
+    const grid = document.getElementById('grid');
+
+    let cardIdx = 0;
+    FORM_REGISTRY.forEach((f, idx) => {
+      if (f.hidden) return;
+      const a = document.createElement('a');
+      a.href = f.file;
+      a.className = `card ${f.colorClass}`;
+      a.innerHTML = `
+        <div class="icon-wrap">${FORM_ICONS[cardIdx]}</div>
+        <div class="card-text">
+          <div class="card-num">استمارة ${toArabicNum(f.num)}</div>
+          <div class="card-name">${f.label || f.sheet}</div>
+        </div>
+        <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+      `;
+      grid.appendChild(a);
+      cardIdx++;
+    });
+
+    if (_user && String(_user.user_id) !== '1') {
+      document.getElementById('historyPanel').style.display = 'block';
+      document.getElementById('historyDate').value = new Date().toISOString().slice(0, 10);
+    }
+
+    if (IS_ADMIN) {
+      document.getElementById('exportPanel').style.display = 'block';
+      document.getElementById('statsPanel').style.display  = 'block';
+      document.getElementById('usersPanel').style.display  = 'block';
+      buildFormCheckboxes();
+      document.getElementById('statsDate').value = new Date().toISOString().slice(0, 10);
+      loadUsers();
+    }
+  })();
+
+  /* ── Stats panel ──────────────────────────────────────────── */
+  function toggleStats() {
+    const body = document.getElementById('statsBody');
+    const chev = document.getElementById('statsChev');
+    const open = body.classList.toggle('open');
+    chev.classList.toggle('open', open);
+    document.getElementById('statsToggle').setAttribute('aria-expanded', open);
+    if (open && !document.querySelector('.stats-card')) loadStats();
+  }
+
+  async function loadStats() {
+    const date = document.getElementById('statsDate').value;
+    if (!date) return;
+    const btn = document.getElementById('statsRefreshBtn');
+    btn.disabled = true;
+    document.getElementById('statsContent').innerHTML = '<div class="stats-status">⏳ جاري التحميل...</div>';
+    try {
+      const url = `${SHEET_URL}?action=stats&key=${EXPORT_KEY}&date=${date}`;
+      const res  = await fetch(url, { redirect: 'follow' });
+      const json = await res.json();
+      if (json.status !== 'ok') throw new Error(json.message);
+      renderStats(json);
+    } catch (e) {
+      document.getElementById('statsContent').innerHTML = `<div class="stats-status">❌ ${e.message}</div>`;
+    } finally {
+      btn.disabled = false;
+    }
+  }
+
+  function renderStats(json) {
+    const { users, forms } = json;
+    const allNames = new Set(users.map(u => u.fullName));
+    const totalUsers = users.length;
+
+    // Overall response rate
+    const allResponded = new Set(Object.values(forms).flat());
+    const knownResponded = users.filter(u => allResponded.has(u.fullName)).length;
+    const overallPct = totalUsers > 0 ? Math.round(knownResponded / totalUsers * 100) : 0;
+
+    let html = `<div class="stats-overall">
+      <span class="stats-overall-label">الاستجابة العامّة</span>
+      <div class="stats-overall-bar-wrap"><div class="stats-overall-bar-fill" style="width:${overallPct}%"></div></div>
+      <span class="stats-overall-num">${knownResponded} / ${totalUsers}</span>
+    </div><div class="stats-grid">`;
+
+    FORM_REGISTRY.forEach(meta => {
+      const responded = forms[meta.sheet] || [];
+      const respondedSet = new Set(responded);
+      const respondedKnown = users.filter(u => respondedSet.has(u.fullName));
+      const notResponded   = users.filter(u => !respondedSet.has(u.fullName));
+      const pct = totalUsers > 0 ? Math.round(respondedKnown.length / totalUsers * 100) : 0;
+
+      const namesList = name => `<div class="stats-name-item">
+        <div class="stats-name-dot" style="background:${name.color}"></div>
+        <span>${name.fullName}</span></div>`;
+
+      html += `<div class="stats-card" style="--card-color:${meta.color}">
+        <div class="stats-card-name">${meta.label || meta.sheet}</div>
+        <div class="stats-card-bar-wrap"><div class="stats-card-bar-fill" style="width:${pct}%;background:${meta.color}"></div></div>
+        <div class="stats-card-count">${respondedKnown.length} / ${totalUsers} مستجيب (${pct}%)</div>
+        <div class="stats-names">
+          ${respondedKnown.map(u => `<div class="stats-name-item"><div class="stats-name-dot" style="background:#5AB467"></div><span style="color:#3B6D11;font-weight:600">${u.fullName}</span></div>`).join('')}
+          ${notResponded.map(u => `<div class="stats-name-item"><div class="stats-name-dot" style="background:#EF9A9A"></div><span style="color:#999">${u.fullName}</span></div>`).join('')}
+        </div>
+      </div>`;
+    });
+
+    html += '</div>';
+    document.getElementById('statsContent').innerHTML = html;
+  }
+
+  /* ── Users panel ───────────────────────────────────────────── */
+  function toggleUsers() {
+    const body = document.getElementById('usersBody');
+    const chev = document.getElementById('usersChev');
+    const open = body.classList.toggle('open');
+    chev.classList.toggle('open', open);
+    document.getElementById('usersToggle').setAttribute('aria-expanded', open);
+  }
+
+  let _usersCache = [];
+
+  async function loadUsers() {
+    try {
+      const url  = `${SHEET_URL}?action=users&key=${EXPORT_KEY}`;
+      const res  = await fetch(url, { redirect: 'follow' });
+      const json = await res.json();
+      if (json.status !== 'ok') throw new Error(json.message);
+      _usersCache = json.users || [];
+      renderUsersTable(_usersCache);
+    } catch (e) {
+      document.getElementById('usersTableWrap').innerHTML = `<div class="stats-status">❌ ${e.message}</div>`;
+    }
+  }
+
+  function renderUsersTable(users) {
+    document.getElementById('usersCount').textContent = `${users.length} مستخدم`;
+    if (!users.length) {
+      document.getElementById('usersTableWrap').innerHTML = '<div class="stats-status">لا يوجد مستخدمون</div>';
+      return;
+    }
+    let rows = users.map(u => `
+      <tr data-uid="${u.userId}">
+        <td>${u.fullName}</td>
+        <td>${u.phone}</td>
+        <td><span class="users-role-badge ${u.role}">${u.role === 'admin' ? 'مسؤول' : 'مستخدم'}</span></td>
+        <td style="white-space:nowrap;display:flex;gap:6px">
+          <button class="users-action-btn" onclick="startEditUser('${u.userId}')">تعديل</button>
+          <button class="users-action-btn del" onclick="confirmDeleteUser('${u.userId}','${u.fullName}')">حذف</button>
+        </td>
+      </tr>`).join('');
+    document.getElementById('usersTableWrap').innerHTML = `
+      <table class="users-table">
+        <thead><tr><th>الاسم</th><th>الهاتف</th><th>الدور</th><th>إجراء</th></tr></thead>
+        <tbody>${rows}</tbody>
+      </table>`;
+  }
+
+  function startEditUser(userId) {
+    const u = _usersCache.find(x => x.userId === userId);
+    if (!u) return;
+    const tr = document.querySelector(`tr[data-uid="${userId}"]`);
+    if (!tr) return;
+    tr.className = 'users-edit-row';
+    tr.innerHTML = `
+      <td><input class="users-edit-input" id="editName_${userId}" value="${u.fullName}" /></td>
+      <td>${u.phone}</td>
+      <td><select class="users-edit-select" id="editRole_${userId}">
+        <option value="user"  ${u.role==='user'?'selected':''}>مستخدم</option>
+        <option value="admin" ${u.role==='admin'?'selected':''}>مسؤول</option>
+      </select></td>
+      <td style="white-space:nowrap;display:flex;gap:6px">
+        <button class="users-action-btn" onclick="saveEditUser('${userId}')">حفظ</button>
+        <button class="users-action-btn" onclick="renderUsersTable(_usersCache)">إلغاء</button>
+      </td>`;
+  }
+
+  async function saveEditUser(userId) {
+    const fullName = document.getElementById(`editName_${userId}`)?.value?.trim();
+    const role     = document.getElementById(`editRole_${userId}`)?.value;
+    if (!fullName) return;
+    try {
+      await fetch(SHEET_URL, { method:'POST', mode:'no-cors', headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({ formId:'editUser', key:EXPORT_KEY, userId, fullName, role }) });
+      const u = _usersCache.find(x => x.userId === userId);
+      if (u) { u.fullName = fullName; u.role = role; }
+      showUsersMsg('✅ تم التعديل بنجاح', '#0F6E56');
+      renderUsersTable(_usersCache);
+    } catch { showUsersMsg('❌ حدث خطأ', '#D03B3B'); }
+  }
+
+  async function confirmDeleteUser(userId, name) {
+    if (!confirm(`هل تريد حذف المستخدم "${name}"؟`)) return;
+    try {
+      await fetch(SHEET_URL, { method:'POST', mode:'no-cors', headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({ formId:'deleteUser', key:EXPORT_KEY, userId }) });
+      _usersCache = _usersCache.filter(x => x.userId !== userId);
+      showUsersMsg('✅ تم الحذف', '#0F6E56');
+      renderUsersTable(_usersCache);
+    } catch { showUsersMsg('❌ حدث خطأ', '#D03B3B'); }
+  }
+
+  function showUsersMsg(msg, color) {
+    const el = document.getElementById('usersMsg');
+    el.textContent = msg; el.style.color = color; el.style.display = 'block';
+    setTimeout(() => { el.style.display = 'none'; }, 3000);
+  }
+
+  /* ── History panel ────────────────────────────────────────── */
+  const HISTORY_FORM_FILES = {
+    "برنامج الأعمال اليوميّة":      "form1.html",
+    "مسؤول السّاحة":                "form5.html",
+    "مسؤول المعهد":                 "form6.html",
+    "مسؤول نشاطات المقارئ":         "form9.html",
+    "برنامج تشغيل مبنى مدينة نصر": "form10.html",
+    "برنامج تشغيل ساحة (1)":        "form10.html",
+  };
+  const HISTORY_FORM_COLORS = {
+    "برنامج الأعمال اليوميّة":      "#534AB7",
+    "مسؤول السّاحة":                "#185FA5",
+    "مسؤول المعهد":                 "#3B6D11",
+    "مسؤول نشاطات المقارئ":         "#0F6E56",
+    "برنامج تشغيل مبنى مدينة نصر": "#993C1D",
+    "برنامج تشغيل ساحة (1)":        "#993556",
+  };
+
+  function toggleHistory() {
+    const body = document.getElementById('historyBody');
+    const chev = document.getElementById('historyChev');
+    const open = body.classList.toggle('open');
+    chev.classList.toggle('open', open);
+    document.getElementById('historyToggle').setAttribute('aria-expanded', open);
+    if (open && !document.querySelector('.hist-card')) loadHistory();
+  }
+
+  async function loadHistory() {
+    const date = document.getElementById('historyDate').value;
+    const cont = document.getElementById('historyContent');
+    if (!date) { cont.innerHTML = '<div class="hist-empty">اختر تاريخًا لعرض الاستمارات المسجّلة</div>'; return; }
+    cont.innerHTML = '<div class="hist-empty">⏳ جاري التحميل...</div>';
+    try {
+      const uid = _user ? String(_user.user_id) : '';
+      const url = `${SHEET_URL}?action=history&userId=${encodeURIComponent(uid)}&date=${date}`;
+      const res  = await fetch(url, { redirect: 'follow' });
+      const json = await res.json();
+      if (json.status !== 'ok') throw new Error(json.message);
+      renderHistory(json.history || [], date);
+    } catch (e) {
+      cont.innerHTML = `<div class="hist-empty">❌ ${e.message}</div>`;
+    }
+  }
+
+  function renderHistory(history, date) {
+    const cont = document.getElementById('historyContent');
+    if (!history.length) {
+      cont.innerHTML = '<div class="hist-empty">لا توجد استمارات مسجّلة في هذا التاريخ</div>';
+      return;
+    }
+    const fmt = date.split('-').reverse().join('/');
+    let html = `<div class="hist-grid">`;
+    history.forEach(h => {
+      const color = HISTORY_FORM_COLORS[h.formName] || '#666';
+      const file  = HISTORY_FORM_FILES[h.formName]  || 'form1.html';
+      const editUrl = `${file}?editMode=1&editDate=${encodeURIComponent(date)}&editForm=${encodeURIComponent(h.formName)}`;
+      html += `<div class="hist-card" style="border-color:${color}22">
+        <div class="hist-card-name" style="color:${color}">${h.formName}</div>
+        <div class="hist-card-count">${fmt} · ${h.count} ${h.label}</div>
+        <div class="hist-card-actions">
+          <button class="hist-btn hist-btn-edit" onclick="window.location.href='${editUrl}'">تعديل</button>
+          <button class="hist-btn hist-btn-del"  onclick="confirmDeleteHistory('${h.formName.replace(/'/g,"\\'")}','${date}')">حذف</button>
+        </div>
+      </div>`;
+    });
+    html += `</div>`;
+    cont.innerHTML = html;
+  }
+
+  async function confirmDeleteHistory(formName, date) {
+    if (!confirm(`هل تريد حذف جميع بيانات "${formName}" ليوم ${date.split('-').reverse().join('/')}؟\nلا يمكن التراجع عن هذا الإجراء.`)) return;
+    try {
+      const uid = _user ? String(_user.user_id) : '';
+      await fetch(SHEET_URL, {
+        method: 'POST', mode: 'no-cors',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ formId: 'deleteSubmission', form: formName, userId: uid, date })
+      });
+      await loadHistory();
+    } catch (e) {
+      alert('❌ حدث خطأ أثناء الحذف');
+    }
+  }
+
+  /* ── Export panel ─────────────────────────────────────────── */
+  function toggleExport() {
+    const body = document.getElementById('exportBody');
+    const chev = document.getElementById('exportChev');
+    const open = body.classList.toggle('open');
+    chev.classList.toggle('open', open);
+    document.getElementById('exportToggle').setAttribute('aria-expanded', open);
+  }
+
+  let exportMode = 'day';
+  function setMode(mode) {
+    exportMode = mode;
+    document.getElementById('panelDay').style.display   = mode === 'day'   ? '' : 'none';
+    document.getElementById('panelRange').style.display = mode === 'range' ? '' : 'none';
+    document.getElementById('modeDay').classList.toggle('active',   mode === 'day');
+    document.getElementById('modeRange').classList.toggle('active', mode === 'range');
+  }
+
+  function buildFormCheckboxes() {
+    const wrap = document.getElementById('expCheckboxes');
+    if (wrap.children.length) return;
+    FORM_REGISTRY.forEach(f => {
+      const lbl = document.createElement('label');
+      lbl.className = 'exp-check-item';
+      lbl.innerHTML = `
+        <input type="checkbox" value="${f.num}" checked />
+        <span style="width:8px;height:8px;border-radius:50%;background:${f.color};flex-shrink:0"></span>
+        ${f.label || f.sheet}
+      `;
+      wrap.appendChild(lbl);
+    });
+  }
+
+  function toggleAllForms(state) {
+    document.querySelectorAll('#expCheckboxes input[type=checkbox]').forEach(cb => cb.checked = state);
+  }
+
+  async function doExport() {
+    let dateFrom, dateTo;
+    if (exportMode === 'day') {
+      const d = document.getElementById('expDate').value;
+      if (!d) { showExpStatus('⚠️ يرجى اختيار التاريخ', '#D03B3B'); return; }
+      dateFrom = dateTo = d;
+    } else {
+      dateFrom = document.getElementById('expDateFrom').value;
+      dateTo   = document.getElementById('expDateTo').value;
+      if (!dateFrom || !dateTo) { showExpStatus('⚠️ يرجى اختيار نطاق التاريخ', '#D03B3B'); return; }
+      if (dateTo < dateFrom)    { showExpStatus('⚠️ تاريخ الانتهاء يجب أن يكون بعد تاريخ البداية', '#D03B3B'); return; }
+    }
+
+    const selected = [...document.querySelectorAll('#expCheckboxes input[type=checkbox]:checked')].map(cb => cb.value);
+    if (!selected.length) { showExpStatus('⚠️ يرجى اختيار استمارة واحدة على الأقل', '#D03B3B'); return; }
+
+    const btn = document.getElementById('expExportBtn');
+    btn.disabled = true;
+    showExpStatus('⏳ جاري تحميل البيانات...', 'var(--text-2)');
+
+    try {
+      const url  = `${SHEET_URL}?action=export&key=${EXPORT_KEY}&dateFrom=${dateFrom}&dateTo=${dateTo}&forms=${selected.join(',')}`;
+      const res  = await fetch(url, { redirect: 'follow' });
+      const json = await res.json();
+      if (json.status !== 'ok') throw new Error(json.message || 'خطأ غير معروف');
+      renderPrintArea(json.data, dateFrom, dateTo, selected.map(Number), json.users || []);
+      showExpStatus('✅ جاهز للمعاينة.', '#0F6E56');
+      setTimeout(openPreview, 200);
+    } catch (err) {
+      showExpStatus('❌ حدث خطأ: ' + err.message, '#D03B3B');
+    } finally {
+      btn.disabled = false;
+    }
+  }
+
+  function openPreview() {
+    const overlay = document.getElementById('previewOverlay');
+    overlay.classList.add('open');
+    document.body.style.overflow = 'hidden';
+    overlay.querySelector('.preview-scroll').scrollTop = 0;
+    const pages = document.querySelectorAll('#printArea .pf-cover, #printArea .pf-responder').length;
+    document.getElementById('previewMeta').textContent = pages ? `${pages} صفحة تقريبًا` : '';
+  }
+
+  function closePreview() {
+    document.getElementById('previewOverlay').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closePreview(); });
+
+  function showExpStatus(msg, color) {
+    const el = document.getElementById('expStatus');
+    el.textContent = msg; el.style.color = color; el.style.display = 'block';
+  }
+
+  /* ── Add User ─────────────────────────────────────────────── */
+  function closeAddUser() {
+    document.getElementById('addUserModal').classList.remove('open');
+    document.getElementById('newPhone').value = '';
+    document.getElementById('newName').value  = '';
+    document.getElementById('newRole').value  = 'user';
+    const msg = document.getElementById('addUserMsg');
+    msg.style.display = 'none'; msg.textContent = '';
+  }
+
+  async function submitAddUser() {
+    const phone    = document.getElementById('newPhone').value.trim();
+    const fullName = document.getElementById('newName').value.trim();
+    const role     = document.getElementById('newRole').value;
+    const msg      = document.getElementById('addUserMsg');
+    const btn      = document.getElementById('addUserBtn');
+
+    if (!phone || !fullName) {
+      msg.textContent = 'يرجى ملء جميع الحقول';
+      msg.style.color = '#D03B3B'; msg.style.display = 'block';
+      return;
+    }
+
+    btn.disabled = true; btn.textContent = 'جاري الإضافة...';
+    try {
+      await fetch(SHEET_URL, {
+        method: 'POST', mode: 'no-cors',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ formId: 'addUser', key: EXPORT_KEY, phone, fullName, role })
+      });
+      msg.textContent = '✅ تمت إضافة المستخدم بنجاح';
+      msg.style.color = '#0F6E56'; msg.style.display = 'block';
+      setTimeout(() => { closeAddUser(); loadUsers(); }, 1800);
+    } catch {
+      msg.textContent = '❌ حدث خطأ. حاول مجددًا.';
+      msg.style.color = '#D03B3B'; msg.style.display = 'block';
+    } finally {
+      btn.disabled = false; btn.textContent = 'إضافة';
+    }
+  }
+
+  /* ── Shared free time ────────────────────────────────────── */
+  const FREE_TIME_EXCLUDED = new Set(['مسؤول المعهد']);
+
+  function parseArabicTime(str) {
+    if (!str) return null;
+    str = String(str).trim();
+    const m = str.match(/^(\d+):(\d{2})\s*(ص|م)$/);
+    if (!m) return null;
+    let h = parseInt(m[1], 10);
+    const min = parseInt(m[2], 10);
+    if (m[3] === 'م' && h !== 12) h += 12;
+    if (m[3] === 'ص' && h === 12) h = 0;
+    return h * 60 + min;
+  }
+
+  function minsToArabicTime(mins) {
+    mins = ((mins % 1440) + 1440) % 1440;
+    const h = Math.floor(mins / 60);
+    const m = mins % 60;
+    const suffix = h >= 12 ? 'م' : 'ص';
+    const h12 = h % 12 || 12;
+    return `${h12}:${String(m).padStart(2,'0')} ${suffix}`;
+  }
+
+  // Hardcoded col indices for sheets whose header row may be stale
+  const SHEET_TIME_COLS = {
+    'برنامج الأعمال اليوميّة':        { date: 3, start: 12, end: 13 },
+    'مسؤول السّاحة':                   { date: 4, start:  7, end:  8 },
+    'مسؤول نشاطات المقارئ':            { date: 3, start:  9, end: 10 },
+    'برنامج تشغيل مبنى مدينة نصر':    { date: 3, start:  7, end:  8 },
+    'برنامج تشغيل ساحة (1)':           { date: 3, start:  7, end:  8 },
+  };
+
+  function computeSharedFreeTime(data, selectedNums) {
+    // byDate[date] = [ {start, end} busy intervals from any person ]
+    const byDate = {};
+
+    selectedNums.forEach(num => {
+      const meta = FORM_REGISTRY[num - 1];
+      if (!meta || FREE_TIME_EXCLUDED.has(meta.sheet)) return;
+      const sheet = data[meta.sheet];
+      if (!sheet || !sheet.rows.length) return;
+      const { rows } = sheet;
+      const cols = SHEET_TIME_COLS[meta.sheet];
+      if (!cols) return;
+      const { date: dateIdx, start: startIdx, end: endIdx } = cols;
+
+      rows.forEach(row => {
+        const date  = String(row[dateIdx]  || '').trim();
+        const start = parseArabicTime(String(row[startIdx] || ''));
+        const end   = parseArabicTime(String(row[endIdx]   || ''));
+        if (!date || start === null || end === null || end <= start) return;
+        if (!byDate[date]) byDate[date] = [];
+        byDate[date].push({ start, end });
+      });
+    });
+
+    // For each date: merge all busy intervals → find gaps (= shared free slots)
+    const result = {};
+    Object.entries(byDate).forEach(([date, intervals]) => {
+      if (!intervals.length) return;
+      const sorted = [...intervals].sort((a, b) => a.start - b.start);
+
+      // Merge overlapping/adjacent busy intervals
+      const merged = [{ ...sorted[0] }];
+      for (let i = 1; i < sorted.length; i++) {
+        const last = merged[merged.length - 1];
+        if (sorted[i].start <= last.end) {
+          last.end = Math.max(last.end, sorted[i].end);
+        } else {
+          merged.push({ ...sorted[i] });
+        }
+      }
+
+      // Gaps across the full day (00:00 → 24:00) = shared free time
+      const DAY_START = 0, DAY_END = 1440;
+      const free = [];
+      let cursor = DAY_START;
+      for (const block of merged) {
+        if (block.start > cursor)
+          free.push({ start: minsToArabicTime(cursor), end: minsToArabicTime(block.start) });
+        cursor = Math.max(cursor, block.end);
+      }
+      if (cursor < DAY_END)
+        free.push({ start: minsToArabicTime(cursor), end: minsToArabicTime(DAY_END) });
+
+      if (free.length) result[date] = free;
+    });
+
+    return result; // { "yyyy-MM-dd": [{start, end}] }
+  }
+
+  /* ── Chart helpers ────────────────────────────────────────── */
+  function svgDonut(value, total, color) {
+    const r = 22, cx = 36, cy = 36, sw = 7;
+    const circ = 2 * Math.PI * r;
+    const pct  = total > 0 ? Math.min(value / total, 1) : 0;
+    const filled = pct * circ;
+    const pctLabel = total > 0 ? Math.round(pct * 100) + '%' : '—';
+    return `<svg viewBox="0 0 72 72" width="72" height="72" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="#E8E8E8" stroke-width="${sw}"/>
+      <circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="${color}" stroke-width="${sw}"
+        stroke-dasharray="${filled.toFixed(2)} ${(circ-filled).toFixed(2)}"
+        transform="rotate(-90 ${cx} ${cy})"/>
+      <text x="${cx}" y="${cy-4}" text-anchor="middle" font-size="11" font-weight="bold" fill="${color}" font-family="Arial,sans-serif">${value}/${total}</text>
+      <text x="${cx}" y="${cy+9}" text-anchor="middle" font-size="9" fill="#888" font-family="Arial,sans-serif">${pctLabel}</text>
+    </svg>`;
+  }
+
+/* ── Print / Render ───────────────────────────────────────── */
+  function normalizeIso(val) {
+    if (!val) return '';
+    const s = String(val);
+    if (!s.includes('T')) return s.slice(0, 10);
+    const dt = new Date(s);
+    return `${dt.getFullYear()}-${String(dt.getMonth()+1).padStart(2,'0')}-${String(dt.getDate()).padStart(2,'0')}`;
+  }
+  function formatDisplayDate(iso) {
+    if (!iso) return '';
+    const s = normalizeIso(iso);
+    const [y, m, d] = s.split('-');
+    const wd = WEEKDAYS[new Date(s).getDay()];
+    return `${wd}، ${d}/${m}/${y}`;
+  }
+  function formatIsoDate(iso) {
+    if (!iso) return iso;
+    const s = normalizeIso(iso);
+    const [y, m, d] = s.split('-');
+    return `${d}/${m}/${y}`;
+  }
+  function toArabicNum(n) {
+    return n.toString().replace(/\d/g, d => '٠١٢٣٤٥٦٧٨٩'[d]);
+  }
+
+  function renderPrintArea(data, dateFrom, dateTo, selectedNums, allUsers) {
+    const area = document.getElementById('printArea');
+    area.innerHTML = '';
+
+    const dispFrom  = formatDisplayDate(dateFrom);
+    const dispTo    = (dateTo && dateTo !== dateFrom) ? formatDisplayDate(dateTo) : null;
+    const dateRange = dispTo ? `${dispFrom} — ${dispTo}` : dispFrom;
+
+    /* ── Cover ── */
+    const cover = document.createElement('div');
+    cover.className = 'pf-cover';
+    cover.innerHTML = `
+      <div class="pf-cover-accent"></div>
+      <div class="pf-cover-top">
+        <div class="pf-cover-main-title">بوّابة الاستمارات</div>
+        <div class="pf-cover-date">${dateRange}</div>
+        <div class="pf-cover-sub">الاستمارات المُصدَّرة: ${selectedNums.length}</div>
+      </div>
+      <div class="pf-cover-cards" id="pfCoverCards"></div>
+    `;
+    area.appendChild(cover);
+    const cardsWrap = cover.querySelector('#pfCoverCards');
+
+    const formRenderList = [];
+    const allResponders = new Set();
+
+    selectedNums.forEach(num => {
+      const meta  = FORM_REGISTRY[num - 1];
+      const sheet = data[meta.sheet];
+      if (!sheet) return;
+
+      const { headers, rows: rawRows } = sheet;
+      const workDateIdx = headers.indexOf('تاريخ اليوم');
+      const rows = workDateIdx >= 0
+        ? [...rawRows].sort((a, b) => String(a[workDateIdx]||'') < String(b[workDateIdx]||'') ? -1 : 1)
+        : rawRows;
+      const grouped = {}, order = [];
+      rows.forEach(row => {
+        const name = String(row[RESPONDER_COL] || '').trim() || '(بدون اسم)';
+        if (!grouped[name]) { grouped[name] = []; order.push(name); }
+        grouped[name].push(row);
+        allResponders.add(name);
+      });
+
+      // Cover card
+      const card = document.createElement('div');
+      card.className = 'pf-cover-card';
+      if (order.length) {
+        card.innerHTML = `
+          <div class="pf-cover-card-accent" style="background:${meta.color}"></div>
+          <div class="pf-cover-card-body">
+            <div class="pf-cover-card-name" style="color:${meta.color}">استمارة ${meta.sheet}</div>
+            <div class="pf-cover-card-stats">
+              <div class="pf-cover-card-stat"><div class="pf-cover-card-dot" style="background:${meta.color}"></div>${order.length} مستجيب</div>
+            </div>
+          </div>`;
+      } else {
+        card.innerHTML = `
+          <div class="pf-cover-card-accent" style="background:#E0E0E0"></div>
+          <div class="pf-cover-card-body">
+            <div class="pf-cover-card-name" style="color:#999">استمارة ${meta.sheet}</div>
+            <div class="pf-cover-no-data">لا توجد بيانات</div>
+          </div>`;
+      }
+      cardsWrap.appendChild(card);
+
+      if (order.length) formRenderList.push({ meta, headers, rows, order, grouped });
+    });
+
+    /* ── Cover: response rate + per-form bars ── */
+    if (allUsers && allUsers.length) {
+      const knownResponders = allUsers.filter(u => allResponders.has(u.full_name)).length;
+      const rateRow = document.createElement('div');
+      rateRow.className = 'pf-cover-rate-row';
+      rateRow.innerHTML = `
+        <div class="pf-cover-rate-donut">${svgDonut(knownResponders, allUsers.length, '#534AB7')}</div>
+        <div class="pf-cover-rate-text">
+          <div class="pf-cover-rate-big">${knownResponders} / ${allUsers.length}</div>
+          <div class="pf-cover-rate-sub">نسبة الاستجابة العامّة</div>
+        </div>`;
+      cover.insertBefore(rateRow, cardsWrap);
+    }
+    if (formRenderList.length) {
+      const maxResp = Math.max(...formRenderList.map(f => f.order.length), 1);
+      const barsDiv = document.createElement('div');
+      barsDiv.className = 'pf-cover-bars-section';
+      barsDiv.innerHTML = '<div class="pf-cover-bars-title">عدد المستجيبين لكل استمارة</div>';
+      formRenderList.forEach(({ meta, order }) => {
+        const pct = Math.max(3, (order.length / maxResp) * 100);
+        const row = document.createElement('div');
+        row.className = 'pf-cover-bar-row';
+        row.innerHTML = `
+          <span class="pf-cover-bar-label">${meta.sheet}</span>
+          <div class="pf-cover-bar-wrap"><div class="pf-cover-bar-fill" style="width:${pct}%;background:${meta.color}"></div></div>
+          <span class="pf-cover-bar-val">${order.length}</span>`;
+        barsDiv.appendChild(row);
+      });
+      cover.appendChild(barsDiv);
+    }
+
+    /* ── Missing users on cover ── */
+    if (allUsers && allUsers.length) {
+      const missing = allUsers.filter(u => !allResponders.has(u.full_name));
+      if (missing.length) {
+        const box = document.createElement('div');
+        box.className = 'pf-missing-box';
+        box.innerHTML = `
+          <div class="pf-missing-head">لم يملأ استمارة (${missing.length})</div>
+          <div class="pf-missing-list">${missing.map(u => `<span class="pf-missing-tag">${u.full_name}</span>`).join('')}</div>`;
+        cover.appendChild(box);
+      }
+    }
+
+    /* ── Shared free times on cover ── */
+    const freeByDate = computeSharedFreeTime(data, selectedNums);
+    const freeDates  = Object.keys(freeByDate).sort();
+    if (freeDates.length) {
+      const freeBox = document.createElement('div');
+      freeBox.className = 'pf-free-box';
+      const isMultiDay = freeDates.length > 1;
+      freeBox.innerHTML = `<div class="pf-free-head">أوقات الفراغ المشتركة</div>`;
+      const body = document.createElement('div');
+      body.className = 'pf-free-body';
+      freeDates.forEach(date => {
+        const slots = freeByDate[date];
+        if (isMultiDay) {
+          const dayEl = document.createElement('div');
+          dayEl.className = 'pf-free-day';
+          dayEl.textContent = formatDisplayDate(date);
+          body.appendChild(dayEl);
+        }
+        const slotsEl = document.createElement('div');
+        slotsEl.className = 'pf-free-slots';
+        slotsEl.innerHTML = slots.map(s => `<span class="pf-free-slot">${s.start} — ${s.end}</span>`).join('');
+        body.appendChild(slotsEl);
+      });
+      freeBox.appendChild(body);
+      cover.appendChild(freeBox);
+    }
+    
+
+
+    /* ── Per-form pages ── */
+    formRenderList.forEach(({ meta, headers, rows, order, grouped }) => {
+      if      (meta.sheet === 'برنامج الأعمال اليوميّة')      renderForm1Pages(area, meta, headers, rows, order, grouped, dateRange);
+      else if (meta.sheet === 'مسؤول السّاحة')                renderForm5Pages(area, meta, headers, rows, order, grouped, dateRange);
+      else if (meta.sheet === 'مسؤول المعهد')                 renderForm6Pages(area, meta, headers, rows, order, grouped, dateRange);
+      else if (meta.sheet === 'مسؤول نشاطات المقارئ')         renderForm9Pages(area, meta, headers, rows, order, grouped, dateRange);
+      else if (meta.sheet === 'برنامج تشغيل مبنى مدينة نصر') renderForm10Pages(area, meta, headers, rows, order, grouped, dateRange);
+      else if (meta.sheet === 'برنامج تشغيل ساحة (1)')        renderForm10Pages(area, meta, headers, rows, order, grouped, dateRange);
+      else renderGenericPages(area, meta, headers, rows, order, grouped, dateRange);
+    });
+  }
+
+  /* ── Arabic elapsed time helpers ─────────────────────────── */
+  const _HW=['','ساعة','ساعتان','ثلاث ساعات','أربع ساعات','خمس ساعات','ست ساعات','سبع ساعات','ثماني ساعات','تسع ساعات','عشر ساعات','إحدى عشرة ساعة','اثنتا عشرة ساعة'];
+  const _MW=['','دقيقة','دقيقتان','ثلاث دقائق','أربع دقائق','خمس دقائق','ست دقائق','سبع دقائق','ثماني دقائق','تسع دقائق','عشر دقائق','إحدى عشرة دقيقة','اثنتا عشرة دقيقة','ثلاث عشرة دقيقة','أربع عشرة دقيقة','خمس عشرة دقيقة','ست عشرة دقيقة','سبع عشرة دقيقة','ثماني عشرة دقيقة','تسع عشرة دقيقة'];
+  const _MT=['','عشر','عشرون','ثلاثون','أربعون','خمسون'];
+  const _MO=['','واحدة','اثنتان','ثلاث','أربع','خمس','ست','سبع','ثماني','تسع'];
+  function _arMin(n){if(!n)return'';if(n<20)return _MW[n];const t=Math.floor(n/10),o=n%10;return o?_MO[o]+' و'+_MT[t]+' دقيقة':_MT[t]+' دقيقة';}
+  function _arHr(n){if(!n)return'';return n<=12?_HW[n]:n+' ساعة';}
+  function _parseAMPM(str){if(!str)return null;str=String(str).trim();const m=str.match(/^(\d+):(\d{2})\s*(ص|م)$/);if(!m)return null;let h=parseInt(m[1]);const mn=parseInt(m[2]);if(m[3]==='م'&&h!==12)h+=12;if(m[3]==='ص'&&h===12)h=0;return h*60+mn;}
+  function pdfElapsed(s,e){const sv=_parseAMPM(s),ev=_parseAMPM(e);if(sv===null||ev===null)return'';const tot=ev-sv;if(tot<=0)return'';const h=Math.floor(tot/60),m=tot%60;const p=[];if(h)p.push(_arHr(h));if(m)p.push(_arMin(m));return p.join(' و');}
+  function addElapsedRow(tbody,startStr,endStr,colCount){const t=pdfElapsed(startStr,endStr);if(!t)return;const er=document.createElement('tr');er.className='pf-elapsed-row';er.innerHTML=`<td colspan="${colCount}">الوقت المستغرق: ${t}</td>`;tbody.appendChild(er);}
+
+  /* ── Form 1 special rendering ─────────────────────────────── */
+  function renderForm1Pages(area, meta, headers, rows, order, grouped, dateRange) {
+    // cols: 0=ts,1=dt,2=responder,3=تاريخ اليوم,4=اليوم,5=#,6=حالة,7=نوع,8=وصف,9=المادّة,10=من/إلى,11=السبب,12=بدء,13=انتهاء,14=حضور,15=غياب,16=ملاحظات
+    const C = {
+      responder:2, date:3, weekday:4, num:5, status:6, type:7,
+      desc:8, book:9, fromTo:10, reason:11, start:12, end:13,
+      present:14, absent:15, notes:16
+    };
+
+    function makeTable(thHtml, rows, tdFn, elapsedCols) {
+      const table = document.createElement('table');
+      table.className = 'pf-table';
+      const thead = document.createElement('thead');
+      thead.innerHTML = `<tr style="background:${meta.color}">${thHtml}</tr>`;
+      table.appendChild(thead);
+      const tbody = document.createElement('tbody');
+      const colCount = (thHtml.match(/<th/g)||[]).length;
+      rows.forEach(row => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = tdFn(row);
+        tbody.appendChild(tr);
+        if (elapsedCols) addElapsedRow(tbody, String(row[elapsedCols.s]||''), String(row[elapsedCols.e]||''), colCount);
+      });
+      table.appendChild(tbody);
+      return table;
+    }
+
+    function typeLabel(text, color) {
+      const el = document.createElement('div');
+      el.className = 'pf-work-type-label';
+      el.style.color = color || meta.color;
+      el.style.borderColor = color || meta.color;
+      el.textContent = text;
+      return el;
+    }
+
+    function renderDoneGroups(parent, doneRows) {
+      // Build consecutive same-type groups
+      const groups = [];
+      doneRows.forEach(row => {
+        const t = String(row[C.type]||'').trim();
+        if (!groups.length || groups[groups.length-1].type !== t)
+          groups.push({ type: t, rows: [row] });
+        else
+          groups[groups.length-1].rows.push(row);
+      });
+
+      groups.forEach(({ type, rows: gr }) => {
+        parent.appendChild(typeLabel(type));
+        if (type === 'مختلف') {
+          parent.appendChild(makeTable(
+            '<th>وصف العمل</th><th>وقت البدء</th><th>وقت الانتهاء</th><th>ملاحظات</th>',
+            gr,
+            r => `<td>${r[C.desc]??''}</td><td class="pf-nowrap">${r[C.start]??''}</td><td class="pf-nowrap">${r[C.end]??''}</td><td>${r[C.notes]??''}</td>`,
+            {s:C.start, e:C.end}
+          ));
+        } else {
+          parent.appendChild(makeTable(
+            '<th>المادّة / اسم الكتاب</th><th>من / إلى</th><th>وقت البدء</th><th>وقت الانتهاء</th><th>الحضور</th><th>الغياب</th><th>ملاحظات</th>',
+            gr,
+            r => `<td>${r[C.book]??''}</td><td>${r[C.fromTo]??''}</td><td class="pf-nowrap">${r[C.start]??''}</td><td class="pf-nowrap">${r[C.end]??''}</td><td>${r[C.present]??''}</td><td>${r[C.absent]??''}</td><td>${r[C.notes]??''}</td>`,
+            {s:C.start, e:C.end}
+          ));
+        }
+      });
+    }
+
+    function renderNFSection(parent, nfRows) {
+      if (!nfRows.length) return;
+      const hdr = document.createElement('div');
+      hdr.className = 'pf-nf-header';
+      hdr.textContent = 'الأعمال التي لم تتمّ ✗';
+      parent.appendChild(hdr);
+
+      // Consecutive same-type groups within NF
+      const groups = [];
+      nfRows.forEach(row => {
+        const t = String(row[C.type]||'').trim();
+        if (!groups.length || groups[groups.length-1].type !== t)
+          groups.push({ type: t, rows: [row] });
+        else
+          groups[groups.length-1].rows.push(row);
+      });
+
+      const NF_COLOR = '#9B3030';
+      groups.forEach(({ type, rows: gr }) => {
+        parent.appendChild(typeLabel(type, NF_COLOR));
+        if (type === 'مختلف') {
+          const t = document.createElement('table'); t.className = 'pf-table';
+          const thead = document.createElement('thead');
+          thead.innerHTML = `<tr style="background:${NF_COLOR}"><th>وصف العمل</th><th>السبب</th><th>ملاحظات</th></tr>`;
+          t.appendChild(thead);
+          const tbody = document.createElement('tbody');
+          gr.forEach(row => {
+            const tr = document.createElement('tr');
+            tr.innerHTML = `<td>${row[C.desc]??''}</td><td>${row[C.reason]??''}</td><td>${row[C.notes]??''}</td>`;
+            tbody.appendChild(tr);
+          });
+          t.appendChild(tbody);
+          parent.appendChild(t);
+        } else {
+          const t = document.createElement('table'); t.className = 'pf-table';
+          const thead = document.createElement('thead');
+          thead.innerHTML = `<tr style="background:${NF_COLOR}"><th>نوع العمل</th><th>المادّة / اسم الكتاب</th><th>السبب</th><th>ملاحظات</th></tr>`;
+          t.appendChild(thead);
+          const tbody = document.createElement('tbody');
+          gr.forEach(row => {
+            const tr = document.createElement('tr');
+            tr.innerHTML = `<td>${row[C.type]??''}</td><td>${row[C.book]??''}</td><td>${row[C.reason]??''}</td><td>${row[C.notes]??''}</td>`;
+            tbody.appendChild(tr);
+          });
+          t.appendChild(tbody);
+          parent.appendChild(t);
+        }
+      });
+    }
+
+    order.forEach(name => {
+      const personRows = grouped[name];
+      const div = document.createElement('div');
+      div.className = 'pf-responder';
+      div.innerHTML = `
+        <div class="pf-resp-bar" style="background:${meta.color}">
+          <span class="pf-resp-bar-name">${name}</span>
+          <span class="pf-resp-bar-meta">استمارة ${meta.sheet} · ${dateRange}</span>
+        </div>`;
+
+      // Group by work date
+      const byDate = {}, dateOrder = [];
+      personRows.forEach(row => {
+        const d = String(row[C.date]||'').trim();
+        if (!byDate[d]) { byDate[d] = []; dateOrder.push(d); }
+        byDate[d].push(row);
+      });
+
+      dateOrder.forEach(date => {
+        const allDay = byDate[date];
+        const weekday = allDay[0][C.weekday] || '';
+        const dh = document.createElement('div');
+        dh.className = 'pf-day-header';
+        dh.textContent = `${weekday}، ${formatIsoDate(date)}`;
+        div.appendChild(dh);
+
+        const doneRows = allDay
+          .filter(r => String(r[C.status]||'').trim() === 'تمّ')
+          .sort((a,b) => String(a[C.start]||'') < String(b[C.start]||'') ? -1 : 1);
+        const nfRows = allDay.filter(r => String(r[C.status]||'').trim() === 'لم يتمّ');
+
+        renderDoneGroups(div, doneRows);
+        renderNFSection(div, nfRows);
+      });
+
+      // ملخّص الأعمال — pills
+      const typeCounts = {};
+      personRows.forEach(row => {
+        const t = String(row[C.type]||'').trim();
+        if (t) typeCounts[t] = (typeCounts[t]||0) + 1;
+      });
+      if (Object.keys(typeCounts).length) {
+        const doneCount = personRows.filter(r => String(r[C.status]||'').trim() === 'تمّ').length;
+        const nfCount   = personRows.filter(r => String(r[C.status]||'').trim() === 'لم يتمّ').length;
+        const total     = doneCount + nfCount;
+        const donePct   = total > 0 ? Math.round(doneCount / total * 100) : 0;
+        const sb = document.createElement('div');
+        sb.className = 'pf-summary-box';
+        sb.innerHTML = `<div class="pf-summary-title" style="color:${meta.color}">ملخّص الأعمال</div>
+          <div class="pf-summary-pills">${Object.entries(typeCounts).map(([t,c]) =>
+            `<div class="pf-summary-pill" style="border-color:${meta.color};color:${meta.color}">
+               <span class="pf-pill-count" style="background:${meta.color}">${c}</span>
+               <span class="pf-pill-type">${t}</span>
+             </div>`).join('')}</div>` +
+          (total > 0 ? `<div class="pf-ratio-bar">
+            <div class="pf-ratio-done" style="width:${donePct}%"></div>
+            <div class="pf-ratio-nf"   style="width:${100 - donePct}%"></div>
+          </div>
+          <div class="pf-ratio-label">
+            <span>✓ ${doneCount} تمّ</span>
+            <span>${nfCount} لم يتمّ ✗</span>
+          </div>` : '');
+        div.appendChild(sb);
+      }
+
+      area.appendChild(div);
+    });
+
+    // Aggregate: per lesson type across all people (تمّ only, non-مختلف)
+    const typeAgg = {};
+    rows.forEach(row => {
+      const status = String(row[C.status]||'').trim();
+      const type   = String(row[C.type]||'').trim();
+      if (status !== 'تمّ' || !type || type === 'مختلف') return;
+      if (!typeAgg[type]) typeAgg[type] = [];
+      typeAgg[type].push({
+        date: String(row[C.date]||''), weekday: String(row[C.weekday]||''),
+        person: String(row[C.responder]||''),
+        book: String(row[C.book]||''), fromTo: String(row[C.fromTo]||''),
+        start: String(row[C.start]||''), end: String(row[C.end]||''),
+        present: String(row[C.present]||''), absent: String(row[C.absent]||''),
+        notes: String(row[C.notes]||'')
+      });
+    });
+
+    if (Object.keys(typeAgg).length) {
+      const aggDiv = document.createElement('div');
+      aggDiv.className = 'pf-responder';
+      aggDiv.innerHTML = `
+        <div class="pf-resp-bar" style="background:${meta.color}">
+          <span class="pf-resp-bar-name">ملخّص الدروس</span>
+          <span class="pf-resp-bar-meta">استمارة ${meta.sheet} · ${dateRange}</span>
+        </div>`;
+
+      // Bar chart: lessons per type
+      const maxTypeCount = Math.max(...Object.values(typeAgg).map(a => a.length), 1);
+      const barsDiv = document.createElement('div');
+      barsDiv.className = 'pf-bars-section';
+      barsDiv.innerHTML = '<div class="pf-bars-title">توزيع أعداد الدروس حسب النوع</div>';
+      Object.entries(typeAgg).forEach(([type, items]) => {
+        const pct = Math.max(3, (items.length / maxTypeCount) * 100);
+        const row = document.createElement('div'); row.className = 'pf-bar-row';
+        row.innerHTML = `<span class="pf-bar-label">${type}</span>
+          <div class="pf-bar-wrap"><div class="pf-bar-fill" style="width:${pct}%;background:${meta.color}"></div></div>
+          <span class="pf-bar-val">${items.length}</span>`;
+        barsDiv.appendChild(row);
+      });
+      aggDiv.appendChild(barsDiv);
+
+      Object.entries(typeAgg).forEach(([type, items]) => {
+        const th = document.createElement('div');
+        th.className = 'pf-type-header';
+        th.style.color = meta.color;
+        th.textContent = type;
+        aggDiv.appendChild(th);
+
+        const byDate = {}, dateOrder = [];
+        items.forEach(item => {
+          if (!byDate[item.date]) { byDate[item.date] = []; dateOrder.push(item.date); }
+          byDate[item.date].push(item);
+        });
+
+        dateOrder.forEach(date => {
+          const dayItems = byDate[date].sort((a,b) => a.start < b.start ? -1 : 1);
+          const dh = document.createElement('div');
+          dh.className = 'pf-day-header';
+          dh.textContent = `${dayItems[0].weekday}، ${formatIsoDate(date)}`;
+          aggDiv.appendChild(dh);
+
+          const table = document.createElement('table');
+          table.className = 'pf-table';
+          const thead = document.createElement('thead');
+          thead.innerHTML = `<tr style="background:${meta.color}"><th>المستجيب</th><th>المادّة / اسم الكتاب</th><th>من / إلى</th><th>وقت البدء</th><th>وقت الانتهاء</th><th>الحضور</th><th>الغياب</th><th>ملاحظات</th></tr>`;
+          table.appendChild(thead);
+          const tbody = document.createElement('tbody');
+          dayItems.forEach(item => {
+            const tr = document.createElement('tr');
+            tr.innerHTML = `<td>${item.person}</td><td>${item.book}</td><td>${item.fromTo}</td><td class="pf-nowrap">${item.start}</td><td class="pf-nowrap">${item.end}</td><td>${item.present}</td><td>${item.absent}</td><td>${item.notes}</td>`;
+            tbody.appendChild(tr);
+          });
+          table.appendChild(tbody);
+          aggDiv.appendChild(table);
+        });
+      });
+
+      area.appendChild(aggDiv);
+    }
+  }
+
+  /* ── Generic form rendering (forms 5,6,9,10,11) ────────────── */
+  /* ── Form 5 — مسؤول السّاحة ──────────────────────────────── */
+  function renderForm5Pages(area, meta, headers, rows, order, grouped, dateRange) {
+    // 0=ts,1=dt,2=responder,3=sahah,4=date,5=weekday,6=num,7=start,8=end,9=book,10=present,11=absent,12=notes
+    const C = { responder:2, sahah:3, date:4, weekday:5, num:6, start:7, end:8, book:9, present:10, absent:11, notes:12 };
+
+    function makeTable(dayRows) {
+      const t = document.createElement('table'); t.className = 'pf-table';
+      t.innerHTML = `<thead><tr style="background:${meta.color}"><th>رقم الدرس</th><th>اسم الكتاب</th><th>وقت البدء</th><th>وقت الانتهاء</th><th>الحضور</th><th>الغياب</th><th>ملاحظات</th></tr></thead>`;
+      const tbody = document.createElement('tbody');
+      dayRows.forEach(row => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `<td>${row[C.num]??''}</td><td>${row[C.book]??''}</td><td class="pf-nowrap">${row[C.start]??''}</td><td class="pf-nowrap">${row[C.end]??''}</td><td>${row[C.present]??''}</td><td>${row[C.absent]??''}</td><td>${row[C.notes]??''}</td>`;
+        tbody.appendChild(tr);
+        addElapsedRow(tbody, String(row[C.start]||''), String(row[C.end]||''), 7);
+      });
+      t.appendChild(tbody); return t;
+    }
+
+    order.forEach(name => {
+      const personRows = grouped[name];
+      const div = document.createElement('div'); div.className = 'pf-responder';
+      const sahah = String(personRows[0][C.sahah]||'');
+      div.innerHTML = `<div class="pf-resp-bar" style="background:${meta.color}"><span class="pf-resp-bar-name">${name}</span><span class="pf-resp-bar-meta">${sahah ? sahah + ' · ' : ''}${dateRange}</span></div>`;
+
+      const byDate = {}, dateOrder = [];
+      personRows.forEach(row => { const d = String(row[C.date]||'').trim(); if (!byDate[d]) { byDate[d]=[]; dateOrder.push(d); } byDate[d].push(row); });
+      dateOrder.forEach(date => {
+        const dayRows = byDate[date].sort((a,b) => String(a[C.start]||'') < String(b[C.start]||'') ? -1 : 1);
+        const dh = document.createElement('div'); dh.className = 'pf-day-header';
+        dh.textContent = `${dayRows[0][C.weekday]||''}، ${formatIsoDate(date)}`;
+        div.appendChild(dh); div.appendChild(makeTable(dayRows));
+      });
+
+      const totalP = personRows.reduce((s,r)=>s+(parseInt(r[C.present])||0),0);
+      const totalA = personRows.reduce((s,r)=>s+(parseInt(r[C.absent])||0),0);
+      if (totalP > 0 || totalA > 0) {
+        const sb = document.createElement('div'); sb.className = 'pf-summary-box';
+        sb.innerHTML = `<div class="pf-summary-title" style="color:${meta.color}">ملخّص الحضور</div><div class="pf-summary-pills">
+          <div class="pf-summary-pill" style="border-color:#5AB467;color:#5AB467"><span class="pf-pill-count" style="background:#5AB467">${totalP}</span><span class="pf-pill-type">إجمالي الحضور</span></div>
+          <div class="pf-summary-pill" style="border-color:#D03B3B;color:#D03B3B"><span class="pf-pill-count" style="background:#D03B3B">${totalA}</span><span class="pf-pill-type">إجمالي الغياب</span></div>
+        </div>`;
+        div.appendChild(sb);
+      }
+      area.appendChild(div);
+    });
+  }
+
+  /* ── Form 6 — مسؤول المعهد ───────────────────────────────── */
+  function renderForm6Pages(area, meta, headers, rows, order, grouped, dateRange) {
+    // 0=ts,1=dt,2=responder,3=sahah,4=date,5=weekday,6=level,7=num,8=maddah,9=fromTo,10=present,11=absent,12=notes,13=gn,14=rec
+    const C = { responder:2, sahah:3, date:4, weekday:5, level:6, num:7, maddah:8, fromTo:9, present:10, absent:11, notes:12, gn:13, rec:14 };
+
+    order.forEach(name => {
+      const personRows = grouped[name];
+      const div = document.createElement('div'); div.className = 'pf-responder';
+      const sahah = String(personRows[0][C.sahah]||'');
+      div.innerHTML = `<div class="pf-resp-bar" style="background:${meta.color}"><span class="pf-resp-bar-name">${name}</span><span class="pf-resp-bar-meta">${sahah ? sahah + ' · ' : ''}${dateRange}</span></div>`;
+
+      const byDate = {}, dateOrder = [];
+      personRows.forEach(row => { const d = String(row[C.date]||'').trim(); if (!byDate[d]) { byDate[d]=[]; dateOrder.push(d); } byDate[d].push(row); });
+      dateOrder.forEach(date => {
+        const dayRows = byDate[date];
+        const dh = document.createElement('div'); dh.className = 'pf-day-header';
+        dh.textContent = `${dayRows[0][C.weekday]||''}، ${formatIsoDate(date)}`;
+        div.appendChild(dh);
+
+        // Group by level within the day
+        const byLevel = {}, levelOrder = [];
+        dayRows.forEach(row => { const lv = String(row[C.level]||'').trim(); if (!byLevel[lv]) { byLevel[lv]=[]; levelOrder.push(lv); } byLevel[lv].push(row); });
+        levelOrder.forEach(level => {
+          if (level) {
+            const lbl = document.createElement('div'); lbl.className = 'pf-work-type-label';
+            lbl.style.color = meta.color; lbl.style.borderColor = meta.color; lbl.textContent = level;
+            div.appendChild(lbl);
+          }
+          const t = document.createElement('table'); t.className = 'pf-table';
+          t.innerHTML = `<thead><tr style="background:${meta.color}"><th>رقم الحصّة</th><th>اسم المادّة</th><th>من / إلى</th><th>الحضور</th><th>الغياب</th><th>ملاحظات</th></tr></thead>`;
+          const tbody = document.createElement('tbody');
+          byLevel[level].forEach(row => {
+            const tr = document.createElement('tr');
+            tr.innerHTML = `<td>${row[C.num]??''}</td><td>${row[C.maddah]??''}</td><td>${row[C.fromTo]??''}</td><td>${row[C.present]??''}</td><td>${row[C.absent]??''}</td><td>${row[C.notes]??''}</td>`;
+            tbody.appendChild(tr);
+          });
+          t.appendChild(tbody); div.appendChild(t);
+        });
+      });
+
+      const gnVal  = String(personRows.find(r=>String(r[C.gn]||'').trim())?.[C.gn]||'').trim();
+      const recVal = String(personRows.find(r=>String(r[C.rec]||'').trim())?.[C.rec]||'').trim();
+      if (gnVal)  { const el=document.createElement('div'); el.className='pf-general-notes'; el.style.borderColor=meta.color; el.innerHTML=`<strong>ملاحظات عامّة:</strong> ${gnVal}`; div.appendChild(el); }
+      if (recVal) { const el=document.createElement('div'); el.className='pf-general-notes'; el.style.borderColor=meta.color; el.innerHTML=`<strong>التوصيات:</strong> ${recVal}`; div.appendChild(el); }
+
+      const levelCounts = {};
+      personRows.forEach(row => { const lv=String(row[C.level]||'').trim(); if(lv) levelCounts[lv]=(levelCounts[lv]||0)+1; });
+      if (Object.keys(levelCounts).length) {
+        const sb = document.createElement('div'); sb.className = 'pf-summary-box';
+        sb.innerHTML = `<div class="pf-summary-title" style="color:${meta.color}">ملخّص الحصص</div><div class="pf-summary-pills">${
+          Object.entries(levelCounts).map(([lv,c])=>`<div class="pf-summary-pill" style="border-color:${meta.color};color:${meta.color}"><span class="pf-pill-count" style="background:${meta.color}">${c}</span><span class="pf-pill-type">${lv}</span></div>`).join('')
+        }</div>`;
+        div.appendChild(sb);
+      }
+      area.appendChild(div);
+    });
+  }
+
+  /* ── Form 9 — مسؤول نشاطات المقارئ ──────────────────────── */
+  function renderForm9Pages(area, meta, headers, rows, order, grouped, dateRange) {
+    // 0=ts,1=dt,2=responder,3=date,4=weekday,5=num,6=eventName,7=place,8=supervisor,9=start,10=end,11=cost,12=males,13=females,14=newAttendees,15=notes,16=gn
+    const C = { responder:2, date:3, weekday:4, num:5, eventName:6, place:7, supervisor:8, start:9, end:10, cost:11, males:12, females:13, newAttendees:14, notes:15, gn:16 };
+
+    order.forEach(name => {
+      const personRows = grouped[name];
+      const div = document.createElement('div'); div.className = 'pf-responder';
+      div.innerHTML = `<div class="pf-resp-bar" style="background:${meta.color}"><span class="pf-resp-bar-name">${name}</span><span class="pf-resp-bar-meta">استمارة ${meta.sheet} · ${dateRange}</span></div>`;
+
+      const byDate = {}, dateOrder = [];
+      personRows.forEach(row => { const d=String(row[C.date]||'').trim(); if(!byDate[d]){byDate[d]=[];dateOrder.push(d);} byDate[d].push(row); });
+      dateOrder.forEach(date => {
+        const dayRows = byDate[date].sort((a,b)=>String(a[C.start]||'')<String(b[C.start]||'')?-1:1);
+        const dh = document.createElement('div'); dh.className='pf-day-header';
+        dh.textContent=`${dayRows[0][C.weekday]||''}، ${formatIsoDate(date)}`;
+        div.appendChild(dh);
+        const t = document.createElement('table'); t.className='pf-table';
+        t.innerHTML=`<thead><tr style="background:${meta.color}"><th>#</th><th>اسم المناسبة</th><th>المكان</th><th>المسؤول</th><th>وقت البدء</th><th>وقت الانتهاء</th><th>ذكور</th><th>إناث</th><th>جدد</th><th>الكلفة</th><th>ملاحظات</th></tr></thead>`;
+        const tbody=document.createElement('tbody');
+        dayRows.forEach(row=>{ const tr=document.createElement('tr'); tr.innerHTML=`<td>${row[C.num]??''}</td><td>${row[C.eventName]??''}</td><td>${row[C.place]??''}</td><td>${row[C.supervisor]??''}</td><td class="pf-nowrap">${row[C.start]??''}</td><td class="pf-nowrap">${row[C.end]??''}</td><td>${row[C.males]??''}</td><td>${row[C.females]??''}</td><td>${row[C.newAttendees]??''}</td><td>${row[C.cost]??''}</td><td>${row[C.notes]??''}</td>`; tbody.appendChild(tr); addElapsedRow(tbody,String(row[C.start]||''),String(row[C.end]||''),11); });
+        t.appendChild(tbody); div.appendChild(t);
+      });
+
+      const gnVal=String(personRows.find(r=>String(r[C.gn]||'').trim())?.[C.gn]||'').trim();
+      if(gnVal){const el=document.createElement('div');el.className='pf-general-notes';el.style.borderColor=meta.color;el.innerHTML=`<strong>ملاحظات عامّة:</strong> ${gnVal}`;div.appendChild(el);}
+
+      const totalM=personRows.reduce((s,r)=>s+(parseInt(r[C.males])||0),0);
+      const totalF=personRows.reduce((s,r)=>s+(parseInt(r[C.females])||0),0);
+      const totalN=personRows.reduce((s,r)=>s+(parseInt(r[C.newAttendees])||0),0);
+      const numActs=personRows.filter(r=>String(r[C.eventName]||'').trim()).length;
+      const sb=document.createElement('div'); sb.className='pf-summary-box';
+      sb.innerHTML=`<div class="pf-summary-title" style="color:${meta.color}">ملخّص الأنشطة</div><div class="pf-summary-pills">
+        <div class="pf-summary-pill" style="border-color:${meta.color};color:${meta.color}"><span class="pf-pill-count" style="background:${meta.color}">${numActs}</span><span class="pf-pill-type">نشاط</span></div>
+        ${totalM>0?`<div class="pf-summary-pill" style="border-color:#185FA5;color:#185FA5"><span class="pf-pill-count" style="background:#185FA5">${totalM}</span><span class="pf-pill-type">ذكور</span></div>`:''}
+        ${totalF>0?`<div class="pf-summary-pill" style="border-color:#993556;color:#993556"><span class="pf-pill-count" style="background:#993556">${totalF}</span><span class="pf-pill-type">إناث</span></div>`:''}
+        ${totalN>0?`<div class="pf-summary-pill" style="border-color:#5AB467;color:#5AB467"><span class="pf-pill-count" style="background:#5AB467">${totalN}</span><span class="pf-pill-type">جدد</span></div>`:''}
+      </div>`;
+      div.appendChild(sb);
+      area.appendChild(div);
+    });
+  }
+
+  /* ── Form 10/11 — برنامج التشغيل ─────────────────────────── */
+  function renderForm10Pages(area, meta, headers, rows, order, grouped, dateRange) {
+    // 0=ts,1=dt,2=responder,3=date,4=weekday,5=num,6=title,7=start,8=end,9=notes,10=gn
+    const C = { responder:2, date:3, weekday:4, num:5, title:6, start:7, end:8, notes:9, gn:10 };
+
+    order.forEach(name => {
+      const personRows = grouped[name];
+      const div = document.createElement('div'); div.className='pf-responder';
+      div.innerHTML=`<div class="pf-resp-bar" style="background:${meta.color}"><span class="pf-resp-bar-name">${name}</span><span class="pf-resp-bar-meta">استمارة ${meta.sheet} · ${dateRange}</span></div>`;
+
+      const byDate={}, dateOrder=[];
+      personRows.forEach(row=>{const d=String(row[C.date]||'').trim();if(!byDate[d]){byDate[d]=[];dateOrder.push(d);}byDate[d].push(row);});
+      dateOrder.forEach(date=>{
+        const dayRows=byDate[date].sort((a,b)=>String(a[C.start]||'')<String(b[C.start]||'')?-1:1);
+        const dh=document.createElement('div'); dh.className='pf-day-header';
+        dh.textContent=`${dayRows[0][C.weekday]||''}، ${formatIsoDate(date)}`;
+        div.appendChild(dh);
+        const t=document.createElement('table'); t.className='pf-table';
+        t.innerHTML=`<thead><tr style="background:${meta.color}"><th>#</th><th>عنوان العمل</th><th>وقت البدء</th><th>وقت الانتهاء</th><th>ملاحظات</th></tr></thead>`;
+        const tbody=document.createElement('tbody');
+        dayRows.forEach(row=>{if(!String(row[C.title]||'').trim())return;const tr=document.createElement('tr');tr.innerHTML=`<td>${row[C.num]??''}</td><td>${row[C.title]??''}</td><td class="pf-nowrap">${row[C.start]??''}</td><td class="pf-nowrap">${row[C.end]??''}</td><td>${row[C.notes]??''}</td>`;tbody.appendChild(tr);addElapsedRow(tbody,String(row[C.start]||''),String(row[C.end]||''),5);});
+        t.appendChild(tbody); div.appendChild(t);
+      });
+
+      const gnVal=String(personRows.find(r=>String(r[C.gn]||'').trim())?.[C.gn]||'').trim();
+      if(gnVal){const el=document.createElement('div');el.className='pf-general-notes';el.style.borderColor=meta.color;el.innerHTML=`<strong>ملاحظات عامّة:</strong> ${gnVal}`;div.appendChild(el);}
+
+      const workCount=personRows.filter(r=>String(r[C.title]||'').trim()).length;
+      if(workCount>0){
+        const sb=document.createElement('div'); sb.className='pf-summary-box';
+        sb.innerHTML=`<div class="pf-summary-title" style="color:${meta.color}">ملخّص الأعمال</div><div class="pf-summary-pills">
+          <div class="pf-summary-pill" style="border-color:${meta.color};color:${meta.color}"><span class="pf-pill-count" style="background:${meta.color}">${workCount}</span><span class="pf-pill-type">عمل مُنجز</span></div>
+        </div>`;
+        div.appendChild(sb);
+      }
+      area.appendChild(div);
+    });
+  }
+
+  function renderGenericPages(area, meta, headers, rows, order, grouped, dateRange) {
+    const tableHeaders   = headers.slice(DATA_START_COL);
+    const lastHeader     = tableHeaders[tableHeaders.length - 1] || '';
+    const hasGeneralNotes = lastHeader === 'ملاحظات عامّة' || lastHeader === 'التوصيات';
+    const generalNotesCol = hasGeneralNotes ? headers.length - 1 : -1;
+    const tableCols      = headers.map((h,i)=>i).slice(DATA_START_COL);
+    const displayCols    = hasGeneralNotes ? tableCols.slice(0,-1) : tableCols;
+    const displayHeaders = displayCols.map(i => headers[i]);
+    const dayColIdx      = headers.indexOf('اليوم');
+    const startTimeColIdx = headers.indexOf('وقت البدء');
+
+    order.forEach(name => {
+      const respRows = startTimeColIdx >= 0
+        ? [...grouped[name]].sort((a, b) => String(a[startTimeColIdx]||'') < String(b[startTimeColIdx]||'') ? -1 : 1)
+        : grouped[name];
+      const div = document.createElement('div');
+      div.className = 'pf-responder';
+
+      const bar = document.createElement('div');
+      bar.className = 'pf-resp-bar';
+      bar.style.background = meta.color;
+      bar.innerHTML = `<span class="pf-resp-bar-name">${name}</span><span class="pf-resp-bar-meta">استمارة ${meta.sheet} · ${dateRange}</span>`;
+      div.appendChild(bar);
+
+      const table = document.createElement('table');
+      table.className = 'pf-table';
+      const thead = document.createElement('thead');
+      thead.innerHTML = `<tr style="background:${meta.color}">${displayHeaders.map(h=>`<th>${h}</th>`).join('')}</tr>`;
+      table.appendChild(thead);
+      const tbody = document.createElement('tbody');
+      let lastDay = null;
+      respRows.forEach(row => {
+        const hasData = displayCols.some(i => String(row[i]||'').trim() !== '');
+        if (!hasData) return;
+        if (dayColIdx !== -1) {
+          const dv = String(row[dayColIdx]||'').trim();
+          if (dv && dv !== lastDay) {
+            lastDay = dv;
+            const dtr = document.createElement('tr');
+            dtr.className = 'pf-day-row';
+            dtr.innerHTML = `<td colspan="${displayCols.length}">${dv}</td>`;
+            tbody.appendChild(dtr);
+          }
+        }
+        const tr = document.createElement('tr');
+        tr.innerHTML = displayCols.map(i => {
+          const isTime = (headers[i]||'').includes('وقت');
+          return `<td${isTime?' class="pf-nowrap"':''}>${row[i]??''}</td>`;
+        }).join('');
+        tbody.appendChild(tr);
+      });
+      table.appendChild(tbody);
+      div.appendChild(table);
+
+      if (hasGeneralNotes) {
+        const gnVal = String(respRows.find(r=>String(r[generalNotesCol]||'').trim())?.[generalNotesCol]||'').trim();
+        if (gnVal) {
+          const gn = document.createElement('div');
+          gn.className = 'pf-general-notes';
+          gn.style.borderColor = meta.color;
+          gn.innerHTML = `<strong>${lastHeader}:</strong> ${gnVal}`;
+          div.appendChild(gn);
+        }
+      }
+
+      area.appendChild(div);
+    });
+  }
+
+</script>
+</body>
+</html>

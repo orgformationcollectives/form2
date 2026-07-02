@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>بوابة الاستمارات — تسجيل الدخول</title>
+  <style>
+    @font-face { font-family: 'Thmanyah'; src: url('fonts/thmanyahsans-Regular.otf') format('opentype'); font-weight: 400; }
+    @font-face { font-family: 'Thmanyah'; src: url('fonts/thmanyahsans-Medium.otf')  format('opentype'); font-weight: 500; }
+    @font-face { font-family: 'Thmanyah'; src: url('fonts/thmanyahsans-Bold.otf')    format('opentype'); font-weight: 700; }
+    @font-face { font-family: 'Thmanyah'; src: url('fonts/thmanyahsans-Light.otf')   format('opentype'); font-weight: 300; }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      color-scheme: light;
+      --brand:      #534AB7;
+      --brand-dark: #3C3489;
+      --brand-light:#EEEDFE;
+      --bg:         #F5F4F2;
+      --surface:    #FFFFFF;
+      --border:     rgba(0,0,0,0.09);
+      --border-s:   rgba(0,0,0,0.14);
+      --text-1:     #1A1A1A;
+      --text-2:     #555550;
+      --text-3:     #999994;
+      --danger:     #D03B3B;
+    }
+
+    html, body {
+      min-height: 100vh;
+      background: var(--bg);
+      font-family: 'Thmanyah', 'Tajawal', Arial, sans-serif;
+      color: var(--text-1);
+      direction: rtl;
+      -webkit-font-smoothing: antialiased;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+    }
+
+    .login-card {
+      width: 100%; max-width: 400px;
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: 20px;
+      padding: 2rem 1.75rem 2.25rem;
+      box-shadow: 0 4px 30px rgba(0,0,0,0.07);
+    }
+
+    .logo {
+      width: 64px; height: 64px;
+      background: var(--brand); border-radius: 18px;
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 1.25rem;
+      box-shadow: 0 4px 20px rgba(83,74,183,0.28);
+    }
+    .logo svg { width: 30px; height: 30px; fill: #fff; }
+
+    .login-title {
+      text-align: center; font-size: 20px; font-weight: 700; margin-bottom: 4px;
+    }
+    .login-sub {
+      text-align: center; font-size: 13px; color: var(--text-3); margin-bottom: 1.75rem;
+    }
+
+    .field { margin-bottom: 1rem; }
+    .field-label {
+      display: block; font-size: 13px; font-weight: 600;
+      color: var(--text-2); margin-bottom: 6px;
+    }
+    .field-input {
+      width: 100%; padding: 12px 14px;
+      border: 1.5px solid var(--border-s); border-radius: 10px;
+      background: var(--bg); color: var(--text-1);
+      font-family: inherit; font-size: 15px;
+      direction: ltr; text-align: right;
+      outline: none; transition: border-color 0.15s;
+    }
+    .field-input:focus { border-color: var(--brand); }
+    .field-input::placeholder { color: var(--text-3); }
+
+    .submit-btn {
+      width: 100%; padding: 13px;
+      background: var(--brand); color: #fff;
+      border: none; border-radius: 10px;
+      font-family: inherit; font-size: 15px; font-weight: 700;
+      cursor: pointer; margin-top: 0.5rem;
+      transition: background 0.15s, opacity 0.15s;
+    }
+    .submit-btn:hover   { background: var(--brand-dark); }
+    .submit-btn:disabled { opacity: 0.6; cursor: not-allowed; }
+
+    .error-msg {
+      display: none; font-size: 13px; color: var(--danger);
+      background: #FDEAEA; border-radius: 8px;
+      padding: 9px 12px; margin-top: 1rem; text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div class="login-card">
+    <div class="logo" aria-hidden="true">
+      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2M9 5a2 2 0 0 0 2 2h2a2 2 0 0 0 2-2M9 5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2m-6 9 2 2 4-4"/>
+      </svg>
+    </div>
+    <div class="login-title">بوابة الاستمارات</div>
+    <div class="login-sub">أدخل رقم هاتفك للمتابعة</div>
+
+    <div class="field">
+      <label class="field-label" for="phoneInput">رقم الهاتف</label>
+      <input class="field-input" type="tel" id="phoneInput"
+        placeholder="05XXXXXXXX" autocomplete="username" inputmode="tel"
+        onkeydown="if(event.key==='Enter') document.getElementById('passInput').focus()" />
+    </div>
+
+    <div class="field">
+      <label class="field-label" for="passInput">كلمة المرور</label>
+      <input class="field-input" type="password" id="passInput"
+        placeholder="اكتب كلمة المرور" autocomplete="current-password"
+        onkeydown="if(event.key==='Enter') doLogin()" />
+    </div>
+
+    <button class="submit-btn" id="loginBtn" onclick="doLogin()">دخول</button>
+    <div class="error-msg" id="errorMsg"></div>
+  </div>
+
+<script>
+  const SHEET_URL = "https://script.google.com/macros/s/AKfycbyx1sJwQM6-aQ8CgZ9TCPohsl7UXIpBR3ehDsMFpQHokE9msH6Mi7zw1BATQgNI1Lu2/exec";
+
+  // Already logged in → skip to portal
+  if (sessionStorage.getItem('user')) window.location.href = 'portal.html';
+
+  async function doLogin() {
+    const phone = document.getElementById('phoneInput').value.trim();
+    const pass  = document.getElementById('passInput').value.trim();
+    const btn   = document.getElementById('loginBtn');
+
+    hideError();
+    if (!phone) { showError('يرجى إدخال رقم الهاتف'); return; }
+    if (pass !== phone) { showError('كلمة المرور غير صحيحة'); return; }
+
+    btn.disabled = true;
+    btn.textContent = 'جاري التحقق...';
+
+    try {
+      const res  = await fetch(`${SHEET_URL}?action=login&phone=${encodeURIComponent(phone)}`, { redirect: 'follow' });
+      const json = await res.json();
+      if (json.status !== 'ok') {
+        showError('رقم الهاتف غير مسجّل. تواصل مع المسؤول.');
+        return;
+      }
+      sessionStorage.setItem('user', JSON.stringify(json.user));
+      window.location.href = 'portal.html';
+    } catch {
+      showError('حدث خطأ في الاتصال. حاول مجددًا.');
+    } finally {
+      btn.disabled = false;
+      btn.textContent = 'دخول';
+    }
+  }
+
+  function showError(msg) {
+    const el = document.getElementById('errorMsg');
+    el.textContent = msg; el.style.display = 'block';
+  }
+  function hideError() {
+    document.getElementById('errorMsg').style.display = 'none';
+  }
+</script>
+</body>
+</html>
