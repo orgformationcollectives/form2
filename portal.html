@@ -9,6 +9,20 @@
     @font-face { font-family: 'Thmanyah'; src: url('fonts/thmanyahsans-Medium.otf')  format('opentype'); font-weight: 500; }
     @font-face { font-family: 'Thmanyah'; src: url('fonts/thmanyahsans-Bold.otf')    format('opentype'); font-weight: 700; }
     @font-face { font-family: 'Thmanyah'; src: url('fonts/thmanyahsans-Light.otf')   format('opentype'); font-weight: 300; }
+    @font-face { font-family: 'ThmanyahSerif'; src: url('fonts/thmanyahserifdisplay-Light.otf')   format('opentype'); font-weight: 300; }
+    @font-face { font-family: 'ThmanyahSerif'; src: url('fonts/thmanyahserifdisplay-Regular.otf') format('opentype'); font-weight: 400; }
+    @font-face { font-family: 'ThmanyahSerif'; src: url('fonts/thmanyahserifdisplay-Medium.otf')  format('opentype'); font-weight: 500; }
+    @font-face { font-family: 'ThmanyahSerif'; src: url('fonts/thmanyahserifdisplay-Bold.otf')    format('opentype'); font-weight: 700; }
+    @font-face { font-family: 'ThmanyahSerif'; src: url('fonts/thmanyahserifdisplay-Black.otf')   format('opentype'); font-weight: 900; }
+    @font-face { font-family: 'ThmanyahSerifText'; src: url('fonts/thmanyahseriftext-Light.otf')   format('opentype'); font-weight: 300; }
+    @font-face { font-family: 'ThmanyahSerifText'; src: url('fonts/thmanyahseriftext-Regular.otf') format('opentype'); font-weight: 400; }
+    @font-face { font-family: 'ThmanyahSerifText'; src: url('fonts/thmanyahseriftext-Medium.otf')  format('opentype'); font-weight: 500; }
+    @font-face { font-family: 'ThmanyahSerifText'; src: url('fonts/thmanyahseriftext-Bold.otf')    format('opentype'); font-weight: 700; }
+    @font-face { font-family: 'ThmanyahSerifText'; src: url('fonts/thmanyahseriftext-Black.otf')   format('opentype'); font-weight: 900; }
+    @font-face { font-family: 'Trado';         src: url('fonts/trado.ttf')                  format('truetype'); font-weight: 400; font-display: swap; }
+    @font-face { font-family: 'QCF2304';       src: url('fonts/QCF2304.ttf')                format('truetype'); font-weight: 400; font-display: swap; }
+    @font-face { font-family: 'QCF2106';       src: url('fonts/QCF2106.ttf')                format('truetype'); font-weight: 400; font-display: swap; }
+    @font-face { font-family: 'UthmanicHafs1'; src: url('fonts/UthmanicHafs1 Ver18.ttf')    format('truetype'); font-weight: 400; font-display: swap; }
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -59,8 +73,8 @@
     }
     .logo svg { width: 32px; height: 32px; fill: #fff; }
 
-    .header h1 { font-size: clamp(19px,5vw,24px); font-weight: 700; margin-bottom: 4px; }
-    .welcome-msg { font-size: 14px; color: var(--text-2); margin-bottom: 2px; }
+    .header h1 { font-size: clamp(19px,5vw,24px); font-weight: 700; margin-bottom: 4px; font-family: 'ThmanyahSerif', serif; }
+    .welcome-msg { font-size: 14px; color: var(--text-2); margin-bottom: 2px; font-family: 'ThmanyahSerifText', serif; }
 
     .logout-btn {
       position: absolute; left: 0; top: 0;
@@ -104,7 +118,7 @@
 
     .card-text { flex: 1; min-width: 0; }
     .card-num  { font-size: 11px; font-weight: 500; color: var(--text-3); margin-bottom: 3px; }
-    .card-name { font-size: 14.5px; font-weight: 600; color: var(--text-1); line-height: 1.45; }
+    .card-name { font-size: 14.5px; font-weight: 600; color: var(--text-1); line-height: 1.45; font-family: 'ThmanyahSerif', serif; }
     .arrow { flex-shrink: 0; width: 18px; height: 18px; stroke: var(--text-3); transform: scaleX(-1); }
 
     /* ── Export Panel ── */
@@ -124,8 +138,8 @@
       display: flex; align-items: center; justify-content: center; flex-shrink: 0;
     }
     .export-icon-wrap svg { width: 18px; height: 18px; stroke: #fff; fill: none; stroke-width: 2; }
-    .export-toggle-title { font-size: 15px; font-weight: 700; }
-    .export-toggle-sub   { font-size: 12px; color: var(--text-3); margin-top: 1px; }
+    .export-toggle-title { font-size: 15px; font-weight: 700; font-family: 'ThmanyahSerif', serif; }
+    .export-toggle-sub   { font-size: 12px; color: var(--text-3); margin-top: 1px; font-family: 'ThmanyahSerifText', serif; }
     .export-chev { width: 18px; height: 18px; stroke: var(--text-3); transition: transform 0.2s; flex-shrink: 0; }
     .export-chev.open { transform: rotate(180deg); }
     .export-body { padding: 0 18px 18px; border-top: 1px solid var(--border); display: none; }
@@ -291,40 +305,45 @@
       text-align: center; padding: 1.4rem 0 1rem;
       border-bottom: 1.5px solid #EBEBEB; margin-bottom: 1.2rem;
     }
-    .pf-cover-main-title { font-size: 26px; font-weight: 700; color: #1A1A1A; }
-    .pf-cover-date { font-size: 14px; color: #534AB7; font-weight: 600; margin-top: 6px; }
-    .pf-cover-sub { font-size: 11px; color: #999; margin-top: 3px; }
+    .pf-cover-main-title { font-size: 26px; font-weight: 700; color: #1A1A1A; font-family: 'ThmanyahSerif', serif; }
+    .pf-cover-date { font-size: 14px; color: #534AB7; font-weight: 600; margin-top: 6px; font-family: 'ThmanyahSerifText', serif; }
+    .pf-cover-sub { font-size: 11px; color: #999; margin-top: 3px; font-family: 'ThmanyahSerifText', serif; }
     .pf-cover-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
     .pf-cover-card { display: flex; align-items: stretch; border: 1px solid #E8E8E8; border-radius: 10px; overflow: hidden; }
     .pf-cover-card-accent { width: 5px; flex-shrink: 0; }
     .pf-cover-card-body { padding: 10px 14px; flex: 1; }
-    .pf-cover-card-name { font-size: 12px; font-weight: 700; margin-bottom: 6px; }
+    .pf-cover-card-name { font-size: 12px; font-weight: 700; margin-bottom: 6px; font-family: 'ThmanyahSerif', serif; }
     .pf-cover-card-stats { font-size: 11px; color: #777; display: flex; align-items: center; gap: 8px; }
     .pf-cover-card-stat { display: flex; align-items: center; gap: 4px; }
     .pf-cover-card-dot  { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
     .pf-cover-no-data   { font-size: 11px; color: #bbb; font-style: italic; }
+    .pf-submitted-box { margin-top: 14px; border: 1.5px solid #A8D8B4; border-radius: 10px; overflow: hidden; }
+    .pf-submitted-head { background: #E8F5EC; padding: 8px 14px; font-size: 12px; font-weight: 700; color: #2D6A4F; font-family: 'ThmanyahSerif', serif; }
+    .pf-submitted-list { padding: 8px 14px 10px; display: flex; flex-wrap: wrap; gap: 6px; }
+    .pf-submitted-tag  { background: #E8F5EC; border: 1px solid #A8D8B4; border-radius: 6px; padding: 3px 10px; font-size: 12px; color: #2D6A4F; font-weight: 600; }
     .pf-missing-box { margin-top: 14px; border: 1.5px solid #F5C2C2; border-radius: 10px; overflow: hidden; }
-    .pf-missing-head { background: #FEF0F0; padding: 8px 14px; font-size: 12px; font-weight: 700; color: #B03030; }
+    .pf-missing-head { background: #FEF0F0; padding: 8px 14px; font-size: 12px; font-weight: 700; color: #B03030; font-family: 'ThmanyahSerif', serif; }
     .pf-missing-list { padding: 8px 14px 10px; display: flex; flex-wrap: wrap; gap: 6px; }
     .pf-missing-tag  { background: #FEF0F0; border: 1px solid #F5C2C2; border-radius: 6px; padding: 3px 10px; font-size: 12px; color: #B03030; font-weight: 600; }
 
     /* Shared free times */
     .pf-free-box { margin-top: 14px; border: 1.5px solid #C2DEB0; border-radius: 10px; overflow: hidden; }
-    .pf-free-head { background: #EEF7E6; padding: 8px 14px; font-size: 12px; font-weight: 700; color: #3B6D11; }
+    .pf-free-head { background: #EEF7E6; padding: 8px 14px; font-size: 12px; font-weight: 700; color: #3B6D11; font-family: 'ThmanyahSerif', serif; }
     .pf-free-body { padding: 8px 14px 10px; }
     .pf-free-day  { font-size: 11px; font-weight: 700; color: #555; margin: 6px 0 4px; }
     .pf-free-slots { display: flex; flex-wrap: wrap; gap: 5px; }
     .pf-free-slot { background: #EEF7E6; border: 1px solid #C2DEB0; border-radius: 6px; padding: 3px 10px; font-size: 11px; color: #3B6D11; font-weight: 600; white-space: nowrap; }
     .pf-free-none { font-size: 11px; color: #999; font-style: italic; }
+    .pf-sahah-header { font-size:14px; font-weight:700; padding:8px 14px; margin:20px 0 6px; border-right:4px solid; border-radius:8px; background:rgba(0,0,0,0.03); font-family:'ThmanyahSerif',serif; page-break-after:avoid; }
 
     /* Cover — response rate + per-form bars */
     .pf-cover-rate-row { display: flex; align-items: center; gap: 14px; margin-bottom: 1.2rem; padding: 10px 14px; background: #F9F9F8; border-radius: 10px; border: 1px solid #EBEBEB; }
     .pf-cover-rate-donut { flex-shrink: 0; line-height: 0; }
     .pf-cover-rate-text { flex: 1; }
-    .pf-cover-rate-big { font-size: 18px; font-weight: 700; color: #534AB7; }
-    .pf-cover-rate-sub { font-size: 10.5px; color: #888; margin-top: 3px; }
+    .pf-cover-rate-big { font-size: 18px; font-weight: 700; color: #534AB7; font-family: 'ThmanyahSerif', serif; }
+    .pf-cover-rate-sub { font-size: 10.5px; color: #888; margin-top: 3px; font-family: 'ThmanyahSerifText', serif; }
     .pf-cover-bars-section { margin-bottom: 1.2rem; }
-    .pf-cover-bars-title { font-size: 10px; font-weight: 700; color: #888; margin-bottom: 7px; letter-spacing: 0.04em; }
+    .pf-cover-bars-title { font-size: 10px; font-weight: 700; color: #888; margin-bottom: 7px; letter-spacing: 0.04em; font-family: 'ThmanyahSerif', serif; }
     .pf-cover-bar-row { display: flex; align-items: center; gap: 8px; margin-bottom: 5px; }
     .pf-cover-bar-label { font-size: 10px; color: #555; width: 110px; text-align: right; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; flex-shrink: 0; }
     .pf-cover-bar-wrap { flex: 1; height: 11px; background: #EBEBEB; border-radius: 3px; overflow: hidden; }
@@ -337,14 +356,14 @@
       display: flex; align-items: center; justify-content: space-between;
       padding: 12px 20px; border-radius: 10px; color: #fff; margin-bottom: 16px;
     }
-    .pf-resp-bar-name { font-weight: 700; font-size: 15px; }
-    .pf-resp-bar-meta  { opacity: 0.8; font-size: 10px; }
+    .pf-resp-bar-name { font-weight: 700; font-size: 15px; font-family: 'ThmanyahSerif', serif; }
+    .pf-resp-bar-meta  { opacity: 0.8; font-size: 10px; font-family: 'ThmanyahSerifText', serif; }
 
     /* Day header — centered divider */
     .pf-day-header {
       display: flex; align-items: center; gap: 10px;
       font-size: 11px; font-weight: 700; color: #555;
-      margin: 16px 0 6px;
+      margin: 16px 0 6px; font-family: 'ThmanyahSerif', serif;
     }
     .pf-day-header::before, .pf-day-header::after {
       content: ''; flex: 1; height: 1px; background: #DDDDD8;
@@ -356,10 +375,12 @@
       border-top: none; border-left: none; border-right: none;
       border-bottom: 2px solid rgba(0,0,0,0.18);
       padding: 8px 10px; text-align: right; font-weight: 700; color: #fff; font-size: 10.5px;
+      font-family: 'ThmanyahSerif', serif;
     }
     .pf-table td {
       border: none; border-bottom: 1px solid #EDEDED;
       padding: 7px 10px; text-align: right; vertical-align: top;
+      font-family: 'ThmanyahSerifText', serif;
     }
     .pf-table td.pf-nowrap { white-space: nowrap; }
     .pf-table tbody tr:nth-child(even) { background: #F9F9F8; }
@@ -368,12 +389,13 @@
 
     /* Summary box */
     .pf-summary-box { margin-top: 12px; padding: 12px 14px; border-radius: 8px; background: #F5F4F2; }
-    .pf-summary-title { font-weight: 700; font-size: 11.5px; margin-bottom: 8px; }
+    .pf-summary-title { font-weight: 700; font-size: 11.5px; margin-bottom: 8px; font-family: 'ThmanyahSerif', serif; }
     .pf-summary-pills { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 10px; }
     .pf-summary-pill {
       display: flex; align-items: center; gap: 5px;
       border: 1.5px solid; border-radius: 20px;
       padding: 3px 10px 3px 8px; font-size: 10.5px;
+      font-family: 'ThmanyahSerifText', serif;
     }
     .pf-pill-count {
       font-weight: 700; font-size: 11px;
@@ -395,6 +417,7 @@
       font-size: 11px; font-weight: 700;
       margin: 10px 0 2px; padding: 2px 8px;
       border-right: 3px solid currentColor;
+      font-family: 'ThmanyahSerif', serif;
     }
 
     /* NF section header */
@@ -402,6 +425,7 @@
       font-size: 11px; font-weight: 700; color: #9B3030;
       padding: 3px 8px; margin: 14px 0 4px;
       border-right: 3px solid #D03B3B;
+      font-family: 'ThmanyahSerif', serif;
     }
 
     /* Type section in aggregate */
@@ -507,12 +531,35 @@
     .users-msg { font-size: 12px; margin-top: 10px; display: none; }
 
     /* History panel */
+    .reminder-banner { display:none; align-items:center; gap:12px; background:#FFF8E6; border:1.5px solid #F5B942; border-radius:12px; padding:12px 16px; margin-bottom:12px; font-size:13px; color:#7A4F00; }
+    .reminder-banner-icon { font-size:20px; flex-shrink:0; }
+    .reminder-banner-text { flex:1; font-weight:600; }
+    .reminder-banner-close { background:none; border:none; font-size:18px; color:#7A4F00; cursor:pointer; padding:0; line-height:1; opacity:0.6; }
+    .reminder-banner-close:hover { opacity:1; }
+
+    /* Ayah card */
+    .ayah-card {
+      background: linear-gradient(135deg, #FDFAF3 0%, #F6F0DC 100%);
+      border: 1px solid #D4C27A;
+      border-radius: 14px;
+      padding: 14px 20px;
+      margin-bottom: 16px;
+      text-align: center;
+      direction: rtl;
+    }
+    .ayah-line {
+      font-size: 22px;
+      line-height: 2.4;
+      color: #2C1F0E;
+      word-break: break-word;
+      white-space: normal;
+    }
     .hist-date-row { display:flex; align-items:center; gap:10px; margin-bottom:16px; flex-wrap:wrap; }
     .hist-empty { font-size:13px; color:var(--text-3); text-align:center; padding:20px 0; }
     .hist-grid { display:grid; grid-template-columns:1fr; gap:10px; }
     @media(min-width:480px){ .hist-grid { grid-template-columns:repeat(2,1fr); } }
     .hist-card { background:var(--surface); border:1.5px solid var(--border); border-radius:12px; padding:14px 16px; }
-    .hist-card-name { font-size:13px; font-weight:700; color:var(--text-1); margin-bottom:4px; }
+    .hist-card-name { font-size:13px; font-weight:700; color:var(--text-1); margin-bottom:4px; font-family:'ThmanyahSerif',serif; }
     .hist-card-count { font-size:12px; color:var(--text-3); margin-bottom:12px; }
     .hist-card-actions { display:flex; gap:8px; }
     .hist-btn { flex:1; padding:8px; border:none; border-radius:8px; font-size:13px; font-weight:600; cursor:pointer; font-family:inherit; }
@@ -644,6 +691,13 @@
     </div>
   </div>
 
+  <!-- Reminder banner -->
+  <div class="reminder-banner" id="reminderBanner">
+    <span class="reminder-banner-icon">🔔</span>
+    <span class="reminder-banner-text">لم تُسجَّل أي استمارة اليوم — لا تنسَ تسجيل أعمالك!</span>
+    <button class="reminder-banner-close" onclick="document.getElementById('reminderBanner').style.display='none'" title="إغلاق">✕</button>
+  </div>
+
   <!-- History Panel (all users except user_id=1) -->
   <div class="export-panel" id="historyPanel" style="display:none">
     <button class="export-toggle" onclick="toggleHistory()" aria-expanded="false" id="historyToggle">
@@ -683,6 +737,12 @@
     <h1>بوابة الاستمارات</h1>
     <p class="welcome-msg" id="welcomeMsg"></p>
   </header>
+
+  <!-- Ayah card -->
+  <div class="ayah-card">
+    <div class="ayah-line"><span style="font-family:'Trado',serif">﴿</span><span style="font-family:'QCF2304',serif">ﳟ ﳠ ﳡ ﳢ ﳣ ﳤ ﳥ ﳦ ﳧ ﳨ ﳩ ﳪ ﳫ</span><span style="font-family:'UthmanicHafs1',serif"> ١١٠ </span><span style="font-family:'Trado',serif">﴾</span></div>
+    <div class="ayah-line"><span style="font-family:'Trado',serif">﴿</span><span style="font-family:'QCF2106',serif">ﲼ ﲽ ﲾ ﲿﳀ ﳁ ﳂ ﳃ ﳄ ﳅﳆ ﳇ ﳈﳉ ﳊ ﳋ ﳌ ﳍ</span><span style="font-family:'UthmanicHafs1',serif"> ٢ </span><span style="font-family:'Trado',serif">﴾</span></div>
+  </div>
 
   <!-- Cards grid -->
   <div class="grid" id="grid"></div>
@@ -759,11 +819,15 @@
 
   const FORM_REGISTRY = [
     { num:1, sheet:"برنامج الأعمال اليوميّة",        color:"#534AB7", file:"form1.html",  colorClass:"c1" },
-    { num:2, sheet:"مسؤول السّاحة",                   color:"#185FA5", file:"form5.html",  colorClass:"c2" },
-    { num:3, sheet:"مسؤول المعهد",                    color:"#3B6D11", file:"form6.html",  colorClass:"c3" },
+    { num:2, sheet:"مسؤول السّاحة",                   color:"#185FA5", file:"form5.html",  colorClass:"c2", noStats:true, noExport:true },
+    { num:2, sheet:"مسؤول السّاحة ساحة (1)", label:"مسؤول ساحة (1)", realSheet:"مسؤول السّاحة", sahahFilter:"ساحة (1)", color:"#185FA5", file:"form5.html", colorClass:"c2", noGrid:true },
+    { num:2, sheet:"مسؤول السّاحة ساحة (2)", label:"مسؤول ساحة (2)", realSheet:"مسؤول السّاحة", sahahFilter:"ساحة (2)", color:"#1A72BB", file:"form5.html", colorClass:"c2", noGrid:true },
+    { num:3, sheet:"مسؤول المعهد",                    color:"#3B6D11", file:"form6.html",  colorClass:"c3", noStats:true, noExport:true },
+    { num:3, sheet:"مسؤول المعهد ساحة (1)", realSheet:"مسؤول المعهد", sahahFilter:"ساحة (1)", color:"#3B6D11", file:"form6.html", colorClass:"c3", noGrid:true },
+    { num:3, sheet:"مسؤول المعهد ساحة (2)", realSheet:"مسؤول المعهد", sahahFilter:"ساحة (2)", color:"#4D9020", file:"form6.html", colorClass:"c3", noGrid:true },
     { num:4, sheet:"مسؤول نشاطات المقارئ",            color:"#0F6E56", file:"form9.html",  colorClass:"c4" },
-    { num:5, sheet:"برنامج تشغيل مبنى مدينة نصر",    color:"#993C1D", file:"form10.html", colorClass:"c5", label:"استمارة برنامج التشغيل" },
-    { num:6, sheet:"برنامج تشغيل ساحة (1)",           color:"#993556", file:"form10.html", colorClass:"c5", hidden:true },
+    { num:5, sheet:"برنامج تشغيل مبنى مدينة نصر",    color:"#993C1D", file:"form10.html", colorClass:"c5", label:"مبنى مدينة نصر" },
+    { num:6, sheet:"برنامج تشغيل ساحة (1)", label:"ساحة (1)",          color:"#993556", file:"form10.html", colorClass:"c5", noGrid:true },
   ];
 
   const FORM_ICONS = [
@@ -786,7 +850,7 @@
 
     let cardIdx = 0;
     FORM_REGISTRY.forEach((f, idx) => {
-      if (f.hidden) return;
+      if (f.hidden || f.noGrid) return;
       const a = document.createElement('a');
       a.href = f.file;
       a.className = `card ${f.colorClass}`;
@@ -804,7 +868,19 @@
 
     if (_user && String(_user.user_id) !== '1') {
       document.getElementById('historyPanel').style.display = 'block';
-      document.getElementById('historyDate').value = new Date().toISOString().slice(0, 10);
+      const _today = new Date().toISOString().slice(0, 10);
+      document.getElementById('historyDate').value = _today;
+      // Reminder banner: show if no submissions today
+      (async () => {
+        try {
+          const _uid = String(_user.user_id);
+          const _r = await fetch(`${SHEET_URL}?action=history&userId=${encodeURIComponent(_uid)}&date=${_today}`, { redirect:'follow' });
+          const _j = await _r.json();
+          if (_j.status === 'ok' && !(_j.history||[]).length) {
+            document.getElementById('reminderBanner').style.display = 'flex';
+          }
+        } catch {}
+      })();
     }
 
     if (IS_ADMIN) {
@@ -863,6 +939,7 @@
     </div><div class="stats-grid">`;
 
     FORM_REGISTRY.forEach(meta => {
+      if (meta.noStats) return;
       const responded = forms[meta.sheet] || [];
       const respondedSet = new Set(responded);
       const respondedKnown = users.filter(u => respondedSet.has(u.fullName));
@@ -923,6 +1000,7 @@
         <td>${u.fullName}</td>
         <td>${u.phone}</td>
         <td><span class="users-role-badge ${u.role}">${u.role === 'admin' ? 'مسؤول' : 'مستخدم'}</span></td>
+        <td><span style="font-size:11px;color:${u.hasPassword?'#0F6E56':'#999'}">${u.hasPassword?'✔ معيّنة':'— افتراضية'}</span></td>
         <td style="white-space:nowrap;display:flex;gap:6px">
           <button class="users-action-btn" onclick="startEditUser('${u.userId}')">تعديل</button>
           <button class="users-action-btn del" onclick="confirmDeleteUser('${u.userId}','${u.fullName}')">حذف</button>
@@ -930,7 +1008,7 @@
       </tr>`).join('');
     document.getElementById('usersTableWrap').innerHTML = `
       <table class="users-table">
-        <thead><tr><th>الاسم</th><th>الهاتف</th><th>الدور</th><th>إجراء</th></tr></thead>
+        <thead><tr><th>الاسم</th><th>الهاتف</th><th>الدور</th><th>كلمة المرور</th><th>إجراء</th></tr></thead>
         <tbody>${rows}</tbody>
       </table>`;
   }
@@ -948,6 +1026,7 @@
         <option value="user"  ${u.role==='user'?'selected':''}>مستخدم</option>
         <option value="admin" ${u.role==='admin'?'selected':''}>مسؤول</option>
       </select></td>
+      <td><input class="users-edit-input" id="editPass_${userId}" type="text" placeholder="اتركه فارغًا للإبقاء" style="font-size:12px" /></td>
       <td style="white-space:nowrap;display:flex;gap:6px">
         <button class="users-action-btn" onclick="saveEditUser('${userId}')">حفظ</button>
         <button class="users-action-btn" onclick="renderUsersTable(_usersCache)">إلغاء</button>
@@ -957,12 +1036,15 @@
   async function saveEditUser(userId) {
     const fullName = document.getElementById(`editName_${userId}`)?.value?.trim();
     const role     = document.getElementById(`editRole_${userId}`)?.value;
+    const passVal  = document.getElementById(`editPass_${userId}`)?.value?.trim();
     if (!fullName) return;
+    const payload = { formId:'editUser', key:EXPORT_KEY, userId, fullName, role };
+    if (passVal) payload.password = passVal;
     try {
       await fetch(SHEET_URL, { method:'POST', mode:'no-cors', headers:{'Content-Type':'application/json'},
-        body: JSON.stringify({ formId:'editUser', key:EXPORT_KEY, userId, fullName, role }) });
+        body: JSON.stringify(payload) });
       const u = _usersCache.find(x => x.userId === userId);
-      if (u) { u.fullName = fullName; u.role = role; }
+      if (u) { u.fullName = fullName; u.role = role; if (passVal) u.hasPassword = true; }
       showUsersMsg('✅ تم التعديل بنجاح', '#0F6E56');
       renderUsersTable(_usersCache);
     } catch { showUsersMsg('❌ حدث خطأ', '#D03B3B'); }
@@ -1041,11 +1123,15 @@
       const color = HISTORY_FORM_COLORS[h.formName] || '#666';
       const file  = HISTORY_FORM_FILES[h.formName]  || 'form1.html';
       const editUrl = `${file}?editMode=1&editDate=${encodeURIComponent(date)}&editForm=${encodeURIComponent(h.formName)}`;
+      const copyUrl = `${file}?copyFrom=${encodeURIComponent(date)}&editForm=${encodeURIComponent(h.formName)}`;
+      const todayStr = new Date().toISOString().slice(0,10);
+      const isFuture = date >= todayStr;
       html += `<div class="hist-card" style="border-color:${color}22">
         <div class="hist-card-name" style="color:${color}">${h.formName}</div>
         <div class="hist-card-count">${fmt} · ${h.count} ${h.label}</div>
         <div class="hist-card-actions">
           <button class="hist-btn hist-btn-edit" onclick="window.location.href='${editUrl}'">تعديل</button>
+          ${!isFuture ? `<button class="hist-btn" style="background:#E6F4EA;color:#0F6E56;flex:1" onclick="window.location.href='${copyUrl}'">نسخ لليوم</button>` : ''}
           <button class="hist-btn hist-btn-del"  onclick="confirmDeleteHistory('${h.formName.replace(/'/g,"\\'")}','${date}')">حذف</button>
         </div>
       </div>`;
@@ -1090,11 +1176,12 @@
   function buildFormCheckboxes() {
     const wrap = document.getElementById('expCheckboxes');
     if (wrap.children.length) return;
-    FORM_REGISTRY.forEach(f => {
+    FORM_REGISTRY.forEach((f, idx) => {
+      if (f.noExport || f.hidden) return;
       const lbl = document.createElement('label');
       lbl.className = 'exp-check-item';
       lbl.innerHTML = `
-        <input type="checkbox" value="${f.num}" checked />
+        <input type="checkbox" value="${idx}" checked />
         <span style="width:8px;height:8px;border-radius:50%;background:${f.color};flex-shrink:0"></span>
         ${f.label || f.sheet}
       `;
@@ -1116,22 +1203,23 @@
       dateFrom = document.getElementById('expDateFrom').value;
       dateTo   = document.getElementById('expDateTo').value;
       if (!dateFrom || !dateTo) { showExpStatus('⚠️ يرجى اختيار نطاق التاريخ', '#D03B3B'); return; }
-      if (dateTo < dateFrom)    { showExpStatus('⚠️ تاريخ الانتهاء يجب أن يكون بعد تاريخ البداية', '#D03B3B'); return; }
+      if (dateTo < dateFrom)    { showExpStatus('⚠️ تاريخ الانتهاء ينبغي أن يكون بعد تاريخ البداية', '#D03B3B'); return; }
     }
 
-    const selected = [...document.querySelectorAll('#expCheckboxes input[type=checkbox]:checked')].map(cb => cb.value);
-    if (!selected.length) { showExpStatus('⚠️ يرجى اختيار استمارة واحدة على الأقل', '#D03B3B'); return; }
+    const selectedIdxs = [...document.querySelectorAll('#expCheckboxes input[type=checkbox]:checked')].map(cb => parseInt(cb.value));
+    if (!selectedIdxs.length) { showExpStatus('⚠️ يرجى اختيار استمارة واحدة على الأقل', '#D03B3B'); return; }
+    const backendNums = [...new Set(selectedIdxs.map(i => FORM_REGISTRY[i].num))];
 
     const btn = document.getElementById('expExportBtn');
     btn.disabled = true;
     showExpStatus('⏳ جاري تحميل البيانات...', 'var(--text-2)');
 
     try {
-      const url  = `${SHEET_URL}?action=export&key=${EXPORT_KEY}&dateFrom=${dateFrom}&dateTo=${dateTo}&forms=${selected.join(',')}`;
+      const url  = `${SHEET_URL}?action=export&key=${EXPORT_KEY}&dateFrom=${dateFrom}&dateTo=${dateTo}&forms=${backendNums.join(',')}`;
       const res  = await fetch(url, { redirect: 'follow' });
       const json = await res.json();
       if (json.status !== 'ok') throw new Error(json.message || 'خطأ غير معروف');
-      renderPrintArea(json.data, dateFrom, dateTo, selected.map(Number), json.users || []);
+      renderPrintArea(json.data, dateFrom, dateTo, selectedIdxs, json.users || []);
       showExpStatus('✅ جاهز للمعاينة.', '#0F6E56');
       setTimeout(openPreview, 200);
     } catch (err) {
@@ -1236,17 +1324,18 @@
     'برنامج تشغيل ساحة (1)':           { date: 3, start:  7, end:  8 },
   };
 
-  function computeSharedFreeTime(data, selectedNums) {
+  function computeSharedFreeTime(data, selectedIdxs) {
     // byDate[date] = [ {start, end} busy intervals from any person ]
     const byDate = {};
 
-    selectedNums.forEach(num => {
-      const meta = FORM_REGISTRY[num - 1];
-      if (!meta || FREE_TIME_EXCLUDED.has(meta.sheet)) return;
-      const sheet = data[meta.sheet];
+    selectedIdxs.forEach(idx => {
+      const meta = FORM_REGISTRY[idx];
+      const sheetKey = meta.realSheet || meta.sheet;
+      if (!meta || FREE_TIME_EXCLUDED.has(sheetKey)) return;
+      const sheet = data[sheetKey];
       if (!sheet || !sheet.rows.length) return;
       const { rows } = sheet;
-      const cols = SHEET_TIME_COLS[meta.sheet];
+      const cols = SHEET_TIME_COLS[sheetKey];
       if (!cols) return;
       const { date: dateIdx, start: startIdx, end: endIdx } = cols;
 
@@ -1337,7 +1426,7 @@
     return n.toString().replace(/\d/g, d => '٠١٢٣٤٥٦٧٨٩'[d]);
   }
 
-  function renderPrintArea(data, dateFrom, dateTo, selectedNums, allUsers) {
+  function renderPrintArea(data, dateFrom, dateTo, selectedIdxs, allUsers) {
     const area = document.getElementById('printArea');
     area.innerHTML = '';
 
@@ -1353,7 +1442,7 @@
       <div class="pf-cover-top">
         <div class="pf-cover-main-title">بوّابة الاستمارات</div>
         <div class="pf-cover-date">${dateRange}</div>
-        <div class="pf-cover-sub">الاستمارات المُصدَّرة: ${selectedNums.length}</div>
+        <div class="pf-cover-sub">الاستمارات المُصدَّرة: ${selectedIdxs.length}</div>
       </div>
       <div class="pf-cover-cards" id="pfCoverCards"></div>
     `;
@@ -1363,16 +1452,26 @@
     const formRenderList = [];
     const allResponders = new Set();
 
-    selectedNums.forEach(num => {
-      const meta  = FORM_REGISTRY[num - 1];
-      const sheet = data[meta.sheet];
+    selectedIdxs.forEach(idx => {
+      const meta = FORM_REGISTRY[idx];
+      if (!meta) return;
+      const sheetKey = meta.realSheet || meta.sheet;
+      const sheet = data[sheetKey];
       if (!sheet) return;
 
       const { headers, rows: rawRows } = sheet;
       const workDateIdx = headers.indexOf('تاريخ اليوم');
-      const rows = workDateIdx >= 0
+      let rows = workDateIdx >= 0
         ? [...rawRows].sort((a, b) => String(a[workDateIdx]||'') < String(b[workDateIdx]||'') ? -1 : 1)
         : rawRows;
+
+      // Apply sahah filter for virtual per-sahah entries
+      if (meta.sahahFilter) {
+        const sahahColIdx = headers.findIndex(h => h === 'اسم السّاحة' || h === 'اسم الساحة');
+        const col = sahahColIdx >= 0 ? sahahColIdx : 3;
+        rows = rows.filter(row => String(row[col] || '').trim() === meta.sahahFilter);
+      }
+
       const grouped = {}, order = [];
       rows.forEach(row => {
         const name = String(row[RESPONDER_COL] || '').trim() || '(بدون اسم)';
@@ -1381,6 +1480,7 @@
         allResponders.add(name);
       });
 
+      const displayName = meta.label || meta.sheet;
       // Cover card
       const card = document.createElement('div');
       card.className = 'pf-cover-card';
@@ -1388,7 +1488,7 @@
         card.innerHTML = `
           <div class="pf-cover-card-accent" style="background:${meta.color}"></div>
           <div class="pf-cover-card-body">
-            <div class="pf-cover-card-name" style="color:${meta.color}">استمارة ${meta.sheet}</div>
+            <div class="pf-cover-card-name" style="color:${meta.color}">استمارة ${displayName}</div>
             <div class="pf-cover-card-stats">
               <div class="pf-cover-card-stat"><div class="pf-cover-card-dot" style="background:${meta.color}"></div>${order.length} مستجيب</div>
             </div>
@@ -1397,13 +1497,13 @@
         card.innerHTML = `
           <div class="pf-cover-card-accent" style="background:#E0E0E0"></div>
           <div class="pf-cover-card-body">
-            <div class="pf-cover-card-name" style="color:#999">استمارة ${meta.sheet}</div>
+            <div class="pf-cover-card-name" style="color:#999">استمارة ${displayName}</div>
             <div class="pf-cover-no-data">لا توجد بيانات</div>
           </div>`;
       }
       cardsWrap.appendChild(card);
 
-      if (order.length) formRenderList.push({ meta, headers, rows, order, grouped });
+      if (order.length) formRenderList.push({ meta, headers, rows, order, grouped, sheetKey });
     });
 
     /* ── Cover: response rate + per-form bars ── */
@@ -1429,12 +1529,25 @@
         const row = document.createElement('div');
         row.className = 'pf-cover-bar-row';
         row.innerHTML = `
-          <span class="pf-cover-bar-label">${meta.sheet}</span>
+          <span class="pf-cover-bar-label">${meta.label || meta.sheet}</span>
           <div class="pf-cover-bar-wrap"><div class="pf-cover-bar-fill" style="width:${pct}%;background:${meta.color}"></div></div>
           <span class="pf-cover-bar-val">${order.length}</span>`;
         barsDiv.appendChild(row);
       });
       cover.appendChild(barsDiv);
+    }
+
+    /* ── Submitted users on cover ── */
+    if (allUsers && allUsers.length) {
+      const submitted = allUsers.filter(u => allResponders.has(u.full_name));
+      if (submitted.length) {
+        const box = document.createElement('div');
+        box.className = 'pf-submitted-box';
+        box.innerHTML = `
+          <div class="pf-submitted-head">ملأ استمارة (${submitted.length})</div>
+          <div class="pf-submitted-list">${submitted.map(u => `<span class="pf-submitted-tag">${u.full_name}</span>`).join('')}</div>`;
+        cover.appendChild(box);
+      }
     }
 
     /* ── Missing users on cover ── */
@@ -1451,7 +1564,7 @@
     }
 
     /* ── Shared free times on cover ── */
-    const freeByDate = computeSharedFreeTime(data, selectedNums);
+    const freeByDate = computeSharedFreeTime(data, selectedIdxs);
     const freeDates  = Object.keys(freeByDate).sort();
     if (freeDates.length) {
       const freeBox = document.createElement('div');
@@ -1480,13 +1593,13 @@
 
 
     /* ── Per-form pages ── */
-    formRenderList.forEach(({ meta, headers, rows, order, grouped }) => {
-      if      (meta.sheet === 'برنامج الأعمال اليوميّة')      renderForm1Pages(area, meta, headers, rows, order, grouped, dateRange);
-      else if (meta.sheet === 'مسؤول السّاحة')                renderForm5Pages(area, meta, headers, rows, order, grouped, dateRange);
-      else if (meta.sheet === 'مسؤول المعهد')                 renderForm6Pages(area, meta, headers, rows, order, grouped, dateRange);
-      else if (meta.sheet === 'مسؤول نشاطات المقارئ')         renderForm9Pages(area, meta, headers, rows, order, grouped, dateRange);
-      else if (meta.sheet === 'برنامج تشغيل مبنى مدينة نصر') renderForm10Pages(area, meta, headers, rows, order, grouped, dateRange);
-      else if (meta.sheet === 'برنامج تشغيل ساحة (1)')        renderForm10Pages(area, meta, headers, rows, order, grouped, dateRange);
+    formRenderList.forEach(({ meta, headers, rows, order, grouped, sheetKey }) => {
+      if      (sheetKey === 'برنامج الأعمال اليوميّة')      renderForm1Pages(area, meta, headers, rows, order, grouped, dateRange);
+      else if (sheetKey === 'مسؤول السّاحة')                renderForm5Pages(area, meta, headers, rows, order, grouped, dateRange);
+      else if (sheetKey === 'مسؤول المعهد')                 renderForm6Pages(area, meta, headers, rows, order, grouped, dateRange);
+      else if (sheetKey === 'مسؤول نشاطات المقارئ')         renderForm9Pages(area, meta, headers, rows, order, grouped, dateRange);
+      else if (sheetKey === 'برنامج تشغيل مبنى مدينة نصر') renderForm10Pages(area, meta, headers, rows, order, grouped, dateRange);
+      else if (sheetKey === 'برنامج تشغيل ساحة (1)')        renderForm10Pages(area, meta, headers, rows, order, grouped, dateRange);
       else renderGenericPages(area, meta, headers, rows, order, grouped, dateRange);
     });
   }
@@ -1787,12 +1900,11 @@
       t.appendChild(tbody); return t;
     }
 
-    order.forEach(name => {
+    function renderPerson(name) {
       const personRows = grouped[name];
       const div = document.createElement('div'); div.className = 'pf-responder';
       const sahah = String(personRows[0][C.sahah]||'');
       div.innerHTML = `<div class="pf-resp-bar" style="background:${meta.color}"><span class="pf-resp-bar-name">${name}</span><span class="pf-resp-bar-meta">${sahah ? sahah + ' · ' : ''}${dateRange}</span></div>`;
-
       const byDate = {}, dateOrder = [];
       personRows.forEach(row => { const d = String(row[C.date]||'').trim(); if (!byDate[d]) { byDate[d]=[]; dateOrder.push(d); } byDate[d].push(row); });
       dateOrder.forEach(date => {
@@ -1801,7 +1913,6 @@
         dh.textContent = `${dayRows[0][C.weekday]||''}، ${formatIsoDate(date)}`;
         div.appendChild(dh); div.appendChild(makeTable(dayRows));
       });
-
       const totalP = personRows.reduce((s,r)=>s+(parseInt(r[C.present])||0),0);
       const totalA = personRows.reduce((s,r)=>s+(parseInt(r[C.absent])||0),0);
       if (totalP > 0 || totalA > 0) {
@@ -1813,6 +1924,21 @@
         div.appendChild(sb);
       }
       area.appendChild(div);
+    }
+
+    // Group responders by sahah, then render each sahah section
+    const bySahah = {}, sahahOrder = [];
+    order.forEach(name => {
+      const s = String(grouped[name][0][C.sahah]||'') || '(بدون ساحة)';
+      if (!bySahah[s]) { bySahah[s]=[]; sahahOrder.push(s); }
+      bySahah[s].push(name);
+    });
+    sahahOrder.forEach(sahah => {
+      const sh = document.createElement('div'); sh.className = 'pf-sahah-header';
+      sh.style.color = meta.color; sh.style.borderColor = meta.color;
+      sh.textContent = sahah;
+      area.appendChild(sh);
+      bySahah[sahah].forEach(renderPerson);
     });
   }
 
@@ -1821,12 +1947,11 @@
     // 0=ts,1=dt,2=responder,3=sahah,4=date,5=weekday,6=level,7=num,8=maddah,9=fromTo,10=present,11=absent,12=notes,13=gn,14=rec
     const C = { responder:2, sahah:3, date:4, weekday:5, level:6, num:7, maddah:8, fromTo:9, present:10, absent:11, notes:12, gn:13, rec:14 };
 
-    order.forEach(name => {
+    function renderPerson(name) {
       const personRows = grouped[name];
       const div = document.createElement('div'); div.className = 'pf-responder';
       const sahah = String(personRows[0][C.sahah]||'');
       div.innerHTML = `<div class="pf-resp-bar" style="background:${meta.color}"><span class="pf-resp-bar-name">${name}</span><span class="pf-resp-bar-meta">${sahah ? sahah + ' · ' : ''}${dateRange}</span></div>`;
-
       const byDate = {}, dateOrder = [];
       personRows.forEach(row => { const d = String(row[C.date]||'').trim(); if (!byDate[d]) { byDate[d]=[]; dateOrder.push(d); } byDate[d].push(row); });
       dateOrder.forEach(date => {
@@ -1834,8 +1959,6 @@
         const dh = document.createElement('div'); dh.className = 'pf-day-header';
         dh.textContent = `${dayRows[0][C.weekday]||''}، ${formatIsoDate(date)}`;
         div.appendChild(dh);
-
-        // Group by level within the day
         const byLevel = {}, levelOrder = [];
         dayRows.forEach(row => { const lv = String(row[C.level]||'').trim(); if (!byLevel[lv]) { byLevel[lv]=[]; levelOrder.push(lv); } byLevel[lv].push(row); });
         levelOrder.forEach(level => {
@@ -1855,12 +1978,10 @@
           t.appendChild(tbody); div.appendChild(t);
         });
       });
-
       const gnVal  = String(personRows.find(r=>String(r[C.gn]||'').trim())?.[C.gn]||'').trim();
       const recVal = String(personRows.find(r=>String(r[C.rec]||'').trim())?.[C.rec]||'').trim();
       if (gnVal)  { const el=document.createElement('div'); el.className='pf-general-notes'; el.style.borderColor=meta.color; el.innerHTML=`<strong>ملاحظات عامّة:</strong> ${gnVal}`; div.appendChild(el); }
       if (recVal) { const el=document.createElement('div'); el.className='pf-general-notes'; el.style.borderColor=meta.color; el.innerHTML=`<strong>التوصيات:</strong> ${recVal}`; div.appendChild(el); }
-
       const levelCounts = {};
       personRows.forEach(row => { const lv=String(row[C.level]||'').trim(); if(lv) levelCounts[lv]=(levelCounts[lv]||0)+1; });
       if (Object.keys(levelCounts).length) {
@@ -1871,6 +1992,21 @@
         div.appendChild(sb);
       }
       area.appendChild(div);
+    }
+
+    // Group responders by sahah, then render each sahah section
+    const bySahah = {}, sahahOrder = [];
+    order.forEach(name => {
+      const s = String(grouped[name][0][C.sahah]||'') || '(بدون ساحة)';
+      if (!bySahah[s]) { bySahah[s]=[]; sahahOrder.push(s); }
+      bySahah[s].push(name);
+    });
+    sahahOrder.forEach(sahah => {
+      const sh = document.createElement('div'); sh.className = 'pf-sahah-header';
+      sh.style.color = meta.color; sh.style.borderColor = meta.color;
+      sh.textContent = sahah;
+      area.appendChild(sh);
+      bySahah[sahah].forEach(renderPerson);
     });
   }
 

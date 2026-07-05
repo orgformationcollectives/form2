@@ -9,6 +9,16 @@
     @font-face { font-family: 'Thmanyah'; src: url('fonts/thmanyahsans-Medium.otf')  format('opentype'); font-weight: 500; }
     @font-face { font-family: 'Thmanyah'; src: url('fonts/thmanyahsans-Bold.otf')    format('opentype'); font-weight: 700; }
     @font-face { font-family: 'Thmanyah'; src: url('fonts/thmanyahsans-Light.otf')   format('opentype'); font-weight: 300; }
+    @font-face { font-family: 'ThmanyahSerif'; src: url('fonts/thmanyahserifdisplay-Light.otf')   format('opentype'); font-weight: 300; }
+    @font-face { font-family: 'ThmanyahSerif'; src: url('fonts/thmanyahserifdisplay-Regular.otf') format('opentype'); font-weight: 400; }
+    @font-face { font-family: 'ThmanyahSerif'; src: url('fonts/thmanyahserifdisplay-Medium.otf')  format('opentype'); font-weight: 500; }
+    @font-face { font-family: 'ThmanyahSerif'; src: url('fonts/thmanyahserifdisplay-Bold.otf')    format('opentype'); font-weight: 700; }
+    @font-face { font-family: 'ThmanyahSerif'; src: url('fonts/thmanyahserifdisplay-Black.otf')   format('opentype'); font-weight: 900; }
+    @font-face { font-family: 'ThmanyahSerifText'; src: url('fonts/thmanyahseriftext-Light.otf')   format('opentype'); font-weight: 300; }
+    @font-face { font-family: 'ThmanyahSerifText'; src: url('fonts/thmanyahseriftext-Regular.otf') format('opentype'); font-weight: 400; }
+    @font-face { font-family: 'ThmanyahSerifText'; src: url('fonts/thmanyahseriftext-Medium.otf')  format('opentype'); font-weight: 500; }
+    @font-face { font-family: 'ThmanyahSerifText'; src: url('fonts/thmanyahseriftext-Bold.otf')    format('opentype'); font-weight: 700; }
+    @font-face { font-family: 'ThmanyahSerifText'; src: url('fonts/thmanyahseriftext-Black.otf')   format('opentype'); font-weight: 900; }
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -51,8 +61,8 @@
       margin: 0 auto 1rem; box-shadow: 0 4px 18px rgba(59,109,17,0.28);
     }
     .form-icon svg { width: 28px; height: 28px; fill: none; stroke: #fff; stroke-width: 2; }
-    .form-header h1 { font-size: 19px; font-weight: 700; color: var(--brand); margin-bottom: 2px; }
-    .form-header p  { font-size: 13px; color: var(--text-3); }
+    .form-header h1 { font-size: 21px; font-weight: 700; color: var(--brand); margin-bottom: 2px; font-family: 'ThmanyahSerif', serif; }
+    .form-header p  { font-size: 13px; color: var(--text-3); font-family: 'ThmanyahSerifText', serif; }
 
     .card {
       background: var(--surface); border: 1.5px solid var(--border);
@@ -61,13 +71,14 @@
     .card-title {
       font-size: 13px; font-weight: 700; color: var(--text-2); letter-spacing: 0.03em;
       margin-bottom: 1rem; padding-bottom: 8px; border-bottom: 1px solid var(--border);
+      font-family: 'ThmanyahSerif', serif;
     }
 
     .field { margin-bottom: 1rem; }
     .field:last-child { margin-bottom: 0; }
     .field-row { display: grid; gap: 12px; grid-template-columns: 1fr 1fr; }
     @media (max-width: 480px) { .field-row { grid-template-columns: 1fr; } }
-    .field-label { display: block; font-size: 12.5px; font-weight: 600; color: var(--text-2); margin-bottom: 5px; }
+    .field-label { display: block; font-size: 12.5px; font-weight: 600; color: var(--text-2); margin-bottom: 5px; font-family: 'ThmanyahSerifText', serif; }
     .opt-tag { font-weight: 400; color: var(--text-3); }
     .field-value {
       width: 100%; padding: 10px 12px;
@@ -98,7 +109,7 @@
 
     /* Mustawa cards */
     .works-header { display: flex; align-items: center; margin-bottom: 10px; }
-    .works-title  { font-size: 14px; font-weight: 700; }
+    .works-title  { font-size: 15px; font-weight: 700; font-family: 'ThmanyahSerif', serif; }
 
     .mustawa-card {
       background: var(--surface); border: 1.5px solid var(--border);
@@ -223,14 +234,20 @@
     .receipt-overlay.open { display:flex; }
     .receipt-card { background:#fff; border-radius:16px; padding:28px 24px; max-width:420px; width:90%; max-height:82vh; overflow-y:auto; }
     .receipt-icon { width:52px; height:52px; background:#EEF7E6; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:26px; margin:0 auto 12px; color:#3B6D11; }
-    .receipt-title { font-size:18px; font-weight:700; text-align:center; margin-bottom:3px; }
+    .receipt-title { font-size:18px; font-weight:700; text-align:center; margin-bottom:3px; font-family:'ThmanyahSerif',serif; }
     .receipt-sub { font-size:12px; color:#888; text-align:center; margin-bottom:18px; }
     .receipt-section { margin-bottom:12px; }
-    .receipt-section-title { font-size:11px; font-weight:700; color:#888; margin-bottom:6px; letter-spacing:.04em; }
+    .receipt-section-title { font-size:11px; font-weight:700; color:#888; margin-bottom:6px; letter-spacing:.04em; font-family:'ThmanyahSerif',serif; }
     .receipt-item { font-size:13px; padding:7px 10px; background:#F5F4F2; border-radius:7px; margin-bottom:4px; }
     .receipt-item strong { display:block; font-size:12px; color:#444; margin-bottom:2px; }
     .receipt-home-btn { width:100%; background:var(--brand); color:#fff; border:none; border-radius:10px; padding:12px; font-size:15px; font-weight:700; cursor:pointer; font-family:inherit; margin-top:8px; }
     .receipt-home-btn:hover { opacity:.9; }
+    @font-face { font-family: 'Trado';         src: url('fonts/trado.ttf')               format('truetype'); font-weight: 400; font-display: swap; }
+    @font-face { font-family: 'QCF2304';       src: url('fonts/QCF2304.ttf')             format('truetype'); font-weight: 400; font-display: swap; }
+    @font-face { font-family: 'QCF2106';       src: url('fonts/QCF2106.ttf')             format('truetype'); font-weight: 400; font-display: swap; }
+    @font-face { font-family: 'UthmanicHafs1'; src: url('fonts/UthmanicHafs1 Ver18.ttf') format('truetype'); font-weight: 400; font-display: swap; }
+    .ayah-card { background: linear-gradient(135deg,#FDFAF3 0%,#F6F0DC 100%); border:1px solid #D4C27A; border-radius:14px; padding:14px 20px; margin-bottom:18px; text-align:center; direction:rtl; }
+    .ayah-line { font-size:22px; line-height:2.4; color:#2C1F0E; word-break:break-word; white-space:normal; }
   </style>
 </head>
 <body>
@@ -247,6 +264,11 @@
     <h1>استمارة مسؤول المعهد</h1>
     <p>يُرجى تعبئة جميع الحقول بدقة</p>
   </header>
+
+  <div class="ayah-card">
+    <div class="ayah-line"><span style="font-family:'Trado',serif">﴿</span><span style="font-family:'QCF2304',serif">ﳟ ﳠ ﳡ ﳢ ﳣ ﳤ ﳥ ﳦ ﳧ ﳨ ﳩ ﳪ ﳫ</span><span style="font-family:'UthmanicHafs1',serif"> ١١٠ </span><span style="font-family:'Trado',serif">﴾</span></div>
+    <div class="ayah-line"><span style="font-family:'Trado',serif">﴿</span><span style="font-family:'QCF2106',serif">ﲼ ﲽ ﲾ ﲿﳀ ﳁ ﳂ ﳃ ﳄ ﳅﳆ ﳇ ﳈﳉ ﳊ ﳋ ﳌ ﳍ</span><span style="font-family:'UthmanicHafs1',serif"> ٢ </span><span style="font-family:'Trado',serif">﴾</span></div>
+  </div>
 
   <!-- Basic info -->
   <div class="card">
@@ -585,6 +607,24 @@
           const d = json.data;
           if (d.sahah)           document.getElementById('sahahSelect').value    = d.sahah;
           if (d.generalNotes)    document.getElementById('generalNotes').value   = d.generalNotes;
+          if (d.recommendations) document.getElementById('recommendations').value = d.recommendations;
+          document.getElementById('mustawaList').innerHTML = '';
+          d.mustawayat.forEach(m => addMustawa(m));
+          if (!d.mustawayat.length) addMustawa();
+        } else { addMustawa(); }
+      } catch { addMustawa(); }
+    } else if (_p.get('copyFrom')) {
+      const copyDate = _p.get('copyFrom') || '';
+      document.getElementById('workDate').value = new Date().toISOString().slice(0, 10);
+      onDateChange();
+      try {
+        const url = `${SHEET_URL}?action=submissionData&form=${encodeURIComponent(FORM_ID)}&userId=${encodeURIComponent(USER_ID)}&date=${encodeURIComponent(copyDate)}`;
+        const res  = await fetch(url, { redirect: 'follow' });
+        const json = await res.json();
+        if (json.status === 'ok' && json.data && json.data.mustawayat) {
+          const d = json.data;
+          if (d.sahah)           document.getElementById('sahahSelect').value     = d.sahah;
+          if (d.generalNotes)    document.getElementById('generalNotes').value    = d.generalNotes;
           if (d.recommendations) document.getElementById('recommendations').value = d.recommendations;
           document.getElementById('mustawaList').innerHTML = '';
           d.mustawayat.forEach(m => addMustawa(m));
