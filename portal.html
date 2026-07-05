@@ -826,7 +826,7 @@
     { num:3, sheet:"مسؤول المعهد ساحة (1)", realSheet:"مسؤول المعهد", sahahFilter:"ساحة (1)", color:"#3B6D11", file:"form6.html", colorClass:"c3", noGrid:true },
     { num:3, sheet:"مسؤول المعهد ساحة (2)", realSheet:"مسؤول المعهد", sahahFilter:"ساحة (2)", color:"#4D9020", file:"form6.html", colorClass:"c3", noGrid:true },
     { num:4, sheet:"مسؤول نشاطات المقارئ",            color:"#0F6E56", file:"form9.html",  colorClass:"c4" },
-    { num:5, sheet:"برنامج تشغيل مبنى مدينة نصر",    color:"#993C1D", file:"form10.html", colorClass:"c5", label:"مبنى مدينة نصر" },
+    { num:5, sheet:"برنامج تشغيل مبنى مدينة نصر",    color:"#993C1D", file:"form10.html", colorClass:"c5", label:"مبنى مدينة نصر", gridLabel:"برنامج التشغيل" },
     { num:6, sheet:"برنامج تشغيل ساحة (1)", label:"ساحة (1)",          color:"#993556", file:"form10.html", colorClass:"c5", noGrid:true },
   ];
 
@@ -858,7 +858,7 @@
         <div class="icon-wrap">${FORM_ICONS[cardIdx]}</div>
         <div class="card-text">
           <div class="card-num">استمارة ${toArabicNum(f.num)}</div>
-          <div class="card-name">${f.label || f.sheet}</div>
+          <div class="card-name">${f.gridLabel || f.label || f.sheet}</div>
         </div>
         <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
       `;
